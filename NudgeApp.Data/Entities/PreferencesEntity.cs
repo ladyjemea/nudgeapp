@@ -1,4 +1,4 @@
-﻿namespace DatabaseDesign
+﻿namespace NudgeApp.Data.Entities
 {
     using NudgeApp.Data;
 

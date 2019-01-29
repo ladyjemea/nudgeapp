@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 namespace NudgeApp.Web
 {
-    using Microsoft.AspNetCore.HttpsPolicy;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.EntityFrameworkCore;
@@ -30,6 +29,8 @@ namespace NudgeApp.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            this.ConfigureDependencyInjection(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +70,12 @@ namespace NudgeApp.Web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+        }
+
+        private void ConfigureDependencyInjection(IServiceCollection services)
+        {
+            NudgeApp.Data.DependencyInjectionConfigurator.Configure(services);
+            NudgeApp.DataManagement.DependencyInjectionConfigurator.Configure(services);
         }
     }
 }
