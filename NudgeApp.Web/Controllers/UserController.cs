@@ -41,9 +41,9 @@
 
         [HttpGet]
         [Route("updatePreferences")]
-        public IActionResult UpdatePreferences(string userName)
+        public IActionResult UpdatePreferences(string userName, PreferencesDto preferences)
         {
-            this.UserLogic.UpdateUserPreferences(userName);
+            this.UserLogic.UpdateUserPreferences(userName, preferences);
 
             return this.Ok();
         }

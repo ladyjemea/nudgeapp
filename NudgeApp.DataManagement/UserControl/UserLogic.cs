@@ -2,6 +2,7 @@
 {
     using System.Security.Cryptography;
     using System.Text;
+    using NudgeApp.Common.Dtos;
     using NudgeApp.Data.Repositories.User;
 
     public class UserLogic : IUserLogic
@@ -48,10 +49,16 @@
             return true;
         }
 
-        public void UpdateUserPreferences(string userName)
+        public void UpdateUserPreferences(string userName, PreferencesDto preferencesDto)
         {
             var user = this.UserRepository.GetUser(userName);
-            this.PreferencesRepository.UpdatePreferences(user.Id);
+            var preferences = this.PreferencesRepository.GetPreferences(user.Id) ?? this.PreferencesRepository.AddPreferences(user.Id);
+
+            preferences.ActualTravelType = preferencesDto.ActualTravelType;
+            preferences.AimedTransportationType = preferencesDto.AimedTransportationType = Common.Enums.TravelTypes.Walk;
+            preferences.PreferedTravelType = preferencesDto.PreferedTravelType;
+
+            this.PreferencesRepository.UpdatePreferences(preferences);
         }
 
         private string HashPassword(string password)
@@ -59,7 +66,7 @@
             using (SHA256 sha256Hash = SHA256.Create())
             {
                 // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password ?? ""));
 
                 // Convert byte array to a string   
                 StringBuilder builder = new StringBuilder();

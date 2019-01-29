@@ -1,6 +1,8 @@
 ﻿namespace NudgeApp.Data.Repositories.User
 {
     using System;
+    using System.Linq;
+    using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
 
@@ -12,7 +14,7 @@
             this.Db = db;
         }
 
-        public PreferencesEntity UpdatePreferences(Guid userId)
+        public PreferencesEntity AddPreferences(Guid userId)
         {
             var preferences = new PreferencesEntity
             {
@@ -26,6 +28,17 @@
             this.Db.SaveChanges();
 
             return result.Entity;
+        }
+
+        public void UpdatePreferences(PreferencesEntity preferences)
+        {
+            this.Db.PreferencesEntity.Update(preferences);
+            this.Db.SaveChanges();
+        }
+
+        public PreferencesEntity GetPreferences(Guid userId)
+        {
+            return this.Db.GetAll<PreferencesEntity>().Where(p => p.UserId == userId).FirstOrDefault();
         }
     }
 }
