@@ -1,0 +1,53 @@
+<h2 align="center"> SIGNUP </h2>
+
+<form id="signup" name="signup" method="post" action="" (click) ="validate();">
+
+  <label for="name"></label>
+  <input type="text" placeholder="Name*:" name="name" id="name" maxlength="50" />
+
+  <label for="email"></label>
+  <input type="text" placeholder="Email*:" name="email" id="email">
+
+  <label for="username"></label>
+  <input type="text" placeholder="Username*:" name="username" id="username" maxlength="50" />
+
+  <label for="password"></label>
+  <input type="password" placeholder="Password*:" name="password" id="password" minlength="6" maxlength="50" />
+
+  <label for="password"></label>
+  <input type="password" placeholder="Repeat Password*:" name="rpassword" id="rpassword" minlength="6" maxlength="50" />
+
+  <label for="address"></label>
+  <input type="text" placeholder="Home Adress*:" name="address" address id="address" maxlength="50" />
+
+  <p class="green">Preferred mode of transport</p>
+
+  <div class="custom-select" style="width: 100%; align-self: center; align-content: center;">
+    <select type="text" name="transportationmethod" id="transportationmethod">
+      <option value="0"> Transport types</option>
+      <option value="1">Driving</option>
+      <option value="2">Taxi</option>
+      <option value="3">Skiing</option>
+      <option value="4">Biking</option>
+      <option value="5">Bus</option>
+      <option value="6">Walking</option>
+    </select>
+  </div>
+
+  <br />
+
+  <label class="green">
+    <input type="checkbox" checked="checked" name="remember"> Enable Push Notifications
+  </label>
+
+  <p class="small">By creating an account you agree to our <a href="#" style="color:#00b300">Terms & Agreements</a>.</p>
+
+  <input type="submit" name="submit" value="Sign Up" />
+  <br /> <br />
+</form>
+
+<a href="index.html" class="cancelbtnsignup">Cancel</a>
+<!--<button type="button" class="cancelbtnsignup" formtarget="_blank">Cancel</button>-->
+
+
+<p>Already have an account? &nbsp <a href="login.html" class="signupp"> Login</a> </p>
