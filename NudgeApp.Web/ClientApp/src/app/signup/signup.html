@@ -1,24 +1,24 @@
 <h2 align="center"> SIGNUP </h2>
 
-<form id="signup" name="signup" method="post" action="" (click) ="validate();">
+<form  #signupForm="ngForm" (ngSubmit)="registerUser(signupForm)">
 
   <label for="name"></label>
-  <input type="text" placeholder="Name*:" name="name" id="name" maxlength="50" />
+  <input type="text" placeholder="Name*:" name="name" id="name" ng-model>
 
   <label for="email"></label>
-  <input type="text" placeholder="Email*:" name="email" id="email">
+  <input type="text" placeholder="Email*:" name="email" id="email" ngModel>
 
   <label for="username"></label>
-  <input type="text" placeholder="Username*:" name="username" id="username" maxlength="50" />
+  <input type="text" placeholder="Username*:" name="username" id="username" ngModel>
 
   <label for="password"></label>
-  <input type="password" placeholder="Password*:" name="password" id="password" minlength="6" maxlength="50" />
+  <input type="password" placeholder="Password*:" name="password" id="password" ngModel>
 
   <label for="password"></label>
-  <input type="password" placeholder="Repeat Password*:" name="rpassword" id="rpassword" minlength="6" maxlength="50" />
+  <input type="password" placeholder="Repeat Password*:" name="rpassword" id="rpassword" ngModel>
 
   <label for="address"></label>
-  <input type="text" placeholder="Home Adress*:" name="address" address id="address" maxlength="50" />
+  <input type="text" placeholder="Home Adress*:" name="address" address id="address" ngModel />
 
   <p class="green">Preferred mode of transport</p>
 
@@ -42,7 +42,7 @@
 
   <p class="small">By creating an account you agree to our <a href="#" style="color:#00b300">Terms & Agreements</a>.</p>
 
-  <input type="submit" name="submit" value="Sign Up" />
+  <button type="submit"> Sign Up </button>
   <br /> <br />
 </form>
 
