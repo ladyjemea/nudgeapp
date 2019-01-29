@@ -13,11 +13,18 @@
             this.UserRepository = userRepository;
         }
 
-        public void CreateUser(string userName, string password)
+        public bool CreateUser(string userName, string password)
         {
+            var user = this.UserRepository.GetUser(userName);
+
+            if (user != null)
+            {
+                return false;
+            }
             var passwordHash = this.HashPassword(password);
             
             this.UserRepository.CreateUser(userName, passwordHash);
+            return true;
         }
 
         public bool CheckPassword(string userName, string password)

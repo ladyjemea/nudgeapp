@@ -17,9 +17,12 @@
         [Route("createUser")]
         public IActionResult Create(string username, string password)
         {
-            this.UserLogic.CreateUser(username, password);
+            if (this.UserLogic.CreateUser(username, password))
+            {
+                return this.Ok();
+            }
 
-            return this.Ok();
+            return this.BadRequest("User already exists!");
         }
 
         [HttpGet]

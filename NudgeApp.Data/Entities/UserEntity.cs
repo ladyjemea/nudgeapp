@@ -1,7 +1,5 @@
 ﻿namespace NudgeApp.Data.Entities
 {
-    using NudgeApp.Data;
-
     public class UserEntity : DbEntity
     {
         public UserEntity() { }
