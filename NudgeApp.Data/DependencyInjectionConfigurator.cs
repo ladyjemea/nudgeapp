@@ -8,6 +8,7 @@
         public static void Configure(IServiceCollection services)
         {
             services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IPreferencesRepository, PreferencesRepository>();
         }
     }
 }

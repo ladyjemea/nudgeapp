@@ -1,9 +1,9 @@
-﻿using NudgeApp.Data.Entities;
-using System;
-using System.Linq;
-
-namespace NudgeApp.Data.Repositories.User
+﻿namespace NudgeApp.Data.Repositories.User
 {
+    using System;
+    using System.Linq;
+    using NudgeApp.Data.Entities;
+
     public class UserRepository : IUserRepository
     {
         private readonly INudgeDbContext Db;
@@ -13,13 +13,15 @@ namespace NudgeApp.Data.Repositories.User
             this.Db = db;
         }
 
-        public Guid CreateUser(string userName, string passwordHash)
+        public Guid CreateUser(string userName, string passwordHash, string name, string email, string address)
         {
             var user = new UserEntity
             {
-                Id = Guid.NewGuid(),
                 UserName = userName,
-                PasswordHash = passwordHash
+                PasswordHash = passwordHash,
+                Address = address,
+                Email = email,
+                Name = name
             };
 
             var result = this.Db.UserEntity.Add(user);
@@ -27,6 +29,12 @@ namespace NudgeApp.Data.Repositories.User
             this.Db.SaveChanges();
 
             return result.Entity.Id;
+        }
+
+        public void UpdateUser(UserEntity user)
+        {
+            this.Db.UserEntity.Update(user);
+            this.Db.SaveChanges();
         }
 
         public UserEntity GetUser(string userName)

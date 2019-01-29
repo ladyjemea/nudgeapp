@@ -5,7 +5,8 @@
 
     public interface IUserRepository
     {
-        Guid CreateUser(string userName, string passwordHash);
+        Guid CreateUser(string userName, string passwordHash, string name, string email, string address);
+        void UpdateUser(UserEntity user);
 
         UserEntity GetUser(string userName);
     }

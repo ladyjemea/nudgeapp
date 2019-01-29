@@ -7,13 +7,15 @@
     public class UserLogic : IUserLogic
     {
         private IUserRepository UserRepository;
+        private IPreferencesRepository PreferencesRepository;
 
-        public UserLogic(IUserRepository userRepository)
+        public UserLogic(IUserRepository userRepository, IPreferencesRepository preferencesRepository)
         {
             this.UserRepository = userRepository;
+            this.PreferencesRepository = preferencesRepository;
         }
 
-        public bool CreateUser(string userName, string password)
+        public bool CreateUser(string userName, string password, string name, string email, string address)
         {
             var user = this.UserRepository.GetUser(userName);
 
@@ -22,8 +24,8 @@
                 return false;
             }
             var passwordHash = this.HashPassword(password);
-            
-            this.UserRepository.CreateUser(userName, passwordHash);
+
+            this.UserRepository.CreateUser(userName, passwordHash, name, email, address);
             return true;
         }
 
@@ -44,6 +46,12 @@
             }
 
             return true;
+        }
+
+        public void UpdateUserPreferences(string userName)
+        {
+            var user = this.UserRepository.GetUser(userName);
+            this.PreferencesRepository.UpdatePreferences(user.Id);
         }
 
         private string HashPassword(string password)
