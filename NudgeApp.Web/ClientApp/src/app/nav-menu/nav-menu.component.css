@@ -16,3 +16,19 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
+a.nav-link{
+  background-color: #00b300;
+  border: none;
+  color: white;
+  width: 90px;
+  padding: 15px 32px;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+

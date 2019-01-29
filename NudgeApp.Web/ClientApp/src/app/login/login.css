@@ -1,0 +1,83 @@
+body {
+}
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #00b300;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  background-color: #00b300;
+  color: white;
+  padding: 12px 18px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+input[type=checkbox] {
+  align-content: center;
+}
+
+a.cancelbtn {
+  display: inline-block;
+  margin: 5px;
+  background-color: #f44336;
+  color: white;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 12px 18px;
+  right: 0;
+}
+
+.move{
+  
+}
+a.psw {
+  font-size: 16px;
+  color: white;
+  float: left 10px;
+  right: 0;
+  width: 210px;
+  background-color: #00b300;
+  border-radius: 10px;
+  text-align: center;
+  padding: 13px 18px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+    display: block;
+    float: none;
+  }
+
+  .cancelbtn {
+    width: 100%;
+  }
+}
+.signupp {
+  text-decoration: none;
+  font-size: 15px;
+  color: #00b300;
+  position: center;
+}
+
+p.green {
+  color: #00b300;
+}
+
+p.small {
+  color: #00b300;
+  font-size: 14px;
+}
+
+label.green {
+  color: #00b300;
+}
