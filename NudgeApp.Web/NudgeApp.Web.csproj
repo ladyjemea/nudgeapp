@@ -31,16 +31,22 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\login\login.ts" />
     <None Remove="ClientApp\src\app\signup\signup.ts" />
+    <None Remove="ClientApp\src\app\signup\userservice.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\login\login.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\signup\signup.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\signup\userservice.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NudgeApp.DataManagement\NudgeApp.DataManagement.csproj" />
     <ProjectReference Include="..\NudgeApp.Data\NudgeApp.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\assets\img\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
