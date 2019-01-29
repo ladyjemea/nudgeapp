@@ -1,13 +1,14 @@
 ﻿namespace NudgeApp.Data.Entities
 {
-    using NudgeApp.Data;
+    using System;
+    using NudgeApp.Common.Enums;
 
     public class PreferencesEntity : DbEntity
     {
-        public int PreferedTravelType { get; set; }
-        public int ActualTravelType { get; set; }
-        public int AimedTransportationType { get; set; }
-
-        public UserEntity User { get; set; }
+        public TravelTypes PreferedTravelType { get; set; }
+        public TravelTypes ActualTravelType { get; set; }
+        public TravelTypes AimedTransportationType { get; set; }        
+        public virtual UserEntity User { get; set; }
+        public Guid UserId { get; set; }
     }
 }

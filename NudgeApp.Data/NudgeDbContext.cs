@@ -10,6 +10,7 @@
         public const string connectionString = "Server=localhost; Database=NudgeAppDatabase; Trusted_Connection = True;";
 
         public DbSet<UserEntity> UserEntity { get; set; }
+        public DbSet<PreferencesEntity> PreferencesEntity { get; set; }
 
         public NudgeDbContext() : base() { }
 
@@ -25,6 +26,7 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserEntity>();
+            modelBuilder.Entity<PreferencesEntity>();
 
             base.OnModelCreating(modelBuilder);
         }

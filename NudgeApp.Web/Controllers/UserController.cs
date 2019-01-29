@@ -1,6 +1,7 @@
 ﻿namespace NudgeAppDataManagement.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using NudgeApp.Common.Dtos;
     using NudgeApp.DataManagement.UserControl;
 
     [Route("Api/User")]
@@ -15,9 +16,10 @@
 
         [HttpGet]
         [Route("createUser")]
-        public IActionResult Create(string username, string password)
+        public IActionResult Create(string username, string password, string name, string email, string address)
         {
-            if (this.UserLogic.CreateUser(username, password))
+
+            if (this.UserLogic.CreateUser(username, password, name, email, address))
             {
                 return this.Ok();
             }
@@ -35,6 +37,15 @@
             }
 
             return this.Unauthorized();
+        }
+
+        [HttpGet]
+        [Route("updatePreferences")]
+        public IActionResult UpdatePreferences(string userName)
+        {
+            this.UserLogic.UpdateUserPreferences(userName);
+
+            return this.Ok();
         }
     }
 }

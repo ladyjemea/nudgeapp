@@ -7,6 +7,7 @@
     public interface INudgeDbContext
     {
         DbSet<UserEntity> UserEntity { get; set; }
+        DbSet<PreferencesEntity> PreferencesEntity { get; set; }
 
         int SaveChanges();
 
