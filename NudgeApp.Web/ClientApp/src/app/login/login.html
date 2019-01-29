@@ -1,10 +1,11 @@
 <h2> LOGIN </h2>
 
-<form action="" method="post" (click) ="validation();">
-  <input type="text" name="username" id="username" placeholder="Enter Username">
+<form #loginForm="ngForm" (ngSubmit)="loginUser(loginForm)">
+
+  <input type="text" name="username" id="username" placeholder="Enter Username" ngModel>
   <br /><br />
 
-  <input type="password" name="password" id="password" placeholder="Enter Password">
+  <input type="password" name="password" id="password" placeholder="Enter Password" ngModel>
   <br /><br />
 
   <label>
@@ -13,10 +14,8 @@
   <br /><br />
 
   <input type="submit" name="submit" value="Login">
-  <br /><br />
 </form>
 
-<div id="result" style="color: red;"></div>
 
 <span class="move">
   <a class="psw" href=""> Forgot Password </a>

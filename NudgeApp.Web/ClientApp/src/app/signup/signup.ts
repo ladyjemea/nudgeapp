@@ -12,8 +12,8 @@ export class SignupComponent {
 
   constructor(private userService: userservice) { }
   public registerUser(form: NgForm) {
-    console.log(form.value.email);
+    console.log(form.value);
 
-    this.userService.callGet(form.value.username, form.value.password);
+    this.userService.createuser(form.value.username, form.value.password, form.value.name, form.value.email, form.value.address);
   }
 }

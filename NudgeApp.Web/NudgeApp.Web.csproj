@@ -32,12 +32,14 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\login\login.ts" />
+    <None Remove="ClientApp\src\app\login\userservice.ts" />
     <None Remove="ClientApp\src\app\signup\signup.ts" />
     <None Remove="ClientApp\src\app\signup\userservice.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\login\login.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\login\userservice.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\signup\signup.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\signup\userservice.ts" />
   </ItemGroup>
