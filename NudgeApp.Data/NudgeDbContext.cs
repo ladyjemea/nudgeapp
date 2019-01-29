@@ -1,5 +1,6 @@
 ﻿namespace NudgeApp.Data
 {
+    using System.Linq;
     using Microsoft.EntityFrameworkCore;
     using NudgeApp.Data.Entities;
 
@@ -26,6 +27,11 @@
             modelBuilder.Entity<UserEntity>();
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        public IQueryable<T> GetAll<T>() where T : class, IDbEntity
+        {
+            return Set<T>().AsNoTracking();
         }
     }
 }

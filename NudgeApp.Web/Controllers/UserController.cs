@@ -21,5 +21,17 @@
 
             return this.Ok();
         }
+
+        [HttpGet]
+        [Route("checkPassword")]
+        public IActionResult CheckPassword(string username, string password)
+        {
+            if (this.UserLogic.CheckPassword(username, password))
+            {
+                return this.Ok();
+            }
+
+            return this.Unauthorized();
+        }
     }
 }

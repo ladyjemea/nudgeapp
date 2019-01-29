@@ -15,7 +15,32 @@
 
         public void CreateUser(string userName, string password)
         {
-            var passwordHash = "";
+            var passwordHash = this.HashPassword(password);
+            
+            this.UserRepository.CreateUser(userName, passwordHash);
+        }
+
+        public bool CheckPassword(string userName, string password)
+        {
+            var passwordHash = this.HashPassword(password);
+
+            var user = this.UserRepository.GetUser(userName);
+
+            if (user == null)
+                return false;
+
+            var actualHash = user.PasswordHash;
+
+            if (passwordHash != actualHash)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private string HashPassword(string password)
+        {
             using (SHA256 sha256Hash = SHA256.Create())
             {
                 // ComputeHash - returns byte array  
@@ -27,10 +52,8 @@
                 {
                     builder.Append(bytes[i].ToString("x2"));
                 }
-                passwordHash = builder.ToString();
+                return builder.ToString();
             }
-
-            this.UserRepository.CreateUser(userName, passwordHash);
         }
     }
 }

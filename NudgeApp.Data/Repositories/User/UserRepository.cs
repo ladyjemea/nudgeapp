@@ -1,5 +1,6 @@
 ﻿using NudgeApp.Data.Entities;
 using System;
+using System.Linq;
 
 namespace NudgeApp.Data.Repositories.User
 {
@@ -26,6 +27,11 @@ namespace NudgeApp.Data.Repositories.User
             this.Db.SaveChanges();
 
             return result.Entity.Id;
+        }
+
+        public UserEntity GetUser(string userName)
+        {
+            return this.Db.GetAll<UserEntity>().Where(u => u.UserName == userName).FirstOrDefault();
         }
     }
 }

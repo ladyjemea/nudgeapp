@@ -2,7 +2,7 @@
 {
     using System;
 
-    public abstract class DbEntity
+    public abstract class DbEntity : IDbEntity
     {
         public Guid Id { get; set; }
 
