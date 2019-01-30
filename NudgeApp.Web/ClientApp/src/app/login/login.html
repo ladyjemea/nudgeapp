@@ -1,4 +1,4 @@
-<h2> LOGIN </h2>
+<h2 class=" center"> LOGIN </h2>
 
 <form #loginForm="ngForm" (ngSubmit)="loginUser(loginForm)">
 
@@ -8,19 +8,14 @@
   <input type="password" name="password" id="password" placeholder="Enter Password" ngModel>
   <br /><br />
 
-  <label>
-    <input type="checkbox" checked="checked" name="remember"> Remember Me
-  </label>
-  <br /><br />
-
   <input type="submit" name="submit" value="Login">
 </form>
+<br />
 
-
-<span class="move">
+<div class="move">
   <a class="psw" href=""> Forgot Password </a>
   <a class="cancelbtn" href="index.html"> Cancel </a>
-</span>
+</div>
 <br /><br />
 
-<p>Don't have an account?  <a href="signup.html" class="signupp"> Sign Up </a></p>
+<p class="sup">Don't have an account?  <a href="signup.html" class="signupp"> Sign Up </a></p>

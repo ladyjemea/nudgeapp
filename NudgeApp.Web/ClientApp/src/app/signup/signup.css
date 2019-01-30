@@ -1,7 +1,8 @@
 body {
   align-content: center;
 }
-.center{
+
+.center {
   text-align: center;
   color: #00b300;
 }
@@ -27,55 +28,54 @@ input[type=submit] {
   cursor: pointer;
   width: 100%;
 }
-
-.move{
+.green{
+  color: #00b300;
   display: flex;
   justify-content: center;
 }
-a.psw {
-  display: inline-block;
-  font-size: 16px;
-  color: white;
-  right: 0;
-  width: 200px;
-  background-color: #00b300;
-  border-radius: 10px;
+.small{
   text-align: center;
-  padding: 13px 14px;
-  margin: 2px;
 }
-a.cancelbtn {
-  display: inline-block;
-  font-size: 16px;
-  color: white;
-  right: 0;
-  width: 200px;
-  background-color: #f44336;
-  border-radius: 10px;
+.transport {
+  color: #00b300;
   text-align: center;
-  padding: 13px 14px;
-  margin: 2px;
+}
+.dropdown {
+  display: flex;
+  justify-content: center;
+}
+button[type=submit] {
+  background-color: #00b300;
+  color: white;
+  padding: 12px 18px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+a.cancelbtnsignup {
+  display: flex;
+  justify-content: center;
+  background-color: #f44336;
+  color: white;
+  padding: 12px 18px;
+  margin: 8px, 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  
+}
+.sup {
+  text-align: center;
 }
 
-.sup{
-  text-align: center;
-}
 .signupp {
   text-decoration: none;
   font-size: 15px;
   color: #00b300;
   position: center;
-}
-
-p.green {
-  color: #00b300;
-}
-
-p.small {
-  color: #00b300;
-  font-size: 14px;
-}
-
-label.green {
-  color: #00b300;
 }

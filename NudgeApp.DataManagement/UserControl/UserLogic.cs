@@ -3,6 +3,7 @@
     using System.Security.Cryptography;
     using System.Text;
     using NudgeApp.Common.Dtos;
+    using NudgeApp.Common.Enums;
     using NudgeApp.Data.Repositories.User;
 
     public class UserLogic : IUserLogic
@@ -49,14 +50,12 @@
             return true;
         }
 
-        public void UpdateUserPreferences(string userName, PreferencesDto preferencesDto)
+        public void UpdateUserPreferences(string userName, TravelTypes preferedTravelType)
         {
             var user = this.UserRepository.GetUser(userName);
             var preferences = this.PreferencesRepository.GetPreferences(user.Id) ?? this.PreferencesRepository.AddPreferences(user.Id);
 
-            preferences.ActualTravelType = preferencesDto.ActualTravelType;
-            preferences.AimedTransportationType = preferencesDto.AimedTransportationType = Common.Enums.TravelTypes.Walk;
-            preferences.PreferedTravelType = preferencesDto.PreferedTravelType;
+            preferences.PreferedTravelType = preferedTravelType;
 
             this.PreferencesRepository.UpdatePreferences(preferences);
         }
