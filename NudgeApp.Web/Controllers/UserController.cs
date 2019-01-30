@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using NudgeApp.Common.Dtos;
+    using NudgeApp.Common.Enums;
     using NudgeApp.DataManagement.Implementation.Interfaces;
 
     [Route("Api/User")]
@@ -41,7 +42,7 @@
 
         [HttpGet]
         [Route("updatePreferences")]
-        public IActionResult UpdatePreferences(string userName, NudgeApp.Common.Enums.TravelTypes travelType)
+        public IActionResult UpdatePreferences(string userName, TransportationType travelType)
         {
             this.UserLogic.UpdateUserPreferences(userName, travelType);
 

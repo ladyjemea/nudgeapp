@@ -1,10 +1,10 @@
-﻿namespace NudgeApp.DataManagement.UserControl
+﻿namespace NudgeApp.DataManagement.Implementation
 {
     using System.Security.Cryptography;
     using System.Text;
-    using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
-    using NudgeApp.Data.Repositories.User;
+    using NudgeApp.Data.Repositories.Interfaces;
+    using NudgeApp.DataManagement.Implementation.Interfaces;
 
     public class UserLogic : IUserLogic
     {
@@ -50,12 +50,12 @@
             return true;
         }
 
-        public void UpdateUserPreferences(string userName, TravelTypes preferedTravelType)
+        public void UpdateUserPreferences(string userName, TransportationType preferedTravelType)
         {
             var user = this.UserRepository.GetUser(userName);
             var preferences = this.PreferencesRepository.GetPreferences(user.Id) ?? this.PreferencesRepository.AddPreferences(user.Id);
 
-            preferences.PreferedTravelType = preferedTravelType;
+            preferences.PreferedTransportationType = preferedTravelType;
 
             this.PreferencesRepository.UpdatePreferences(preferences);
         }
