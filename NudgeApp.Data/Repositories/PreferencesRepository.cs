@@ -1,10 +1,10 @@
-﻿namespace NudgeApp.Data.Repositories.User
+﻿namespace NudgeApp.Data.Repositories
 {
     using System;
     using System.Linq;
-    using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
+    using NudgeApp.Data.Repositories.Interfaces;
 
     public class PreferencesRepository : IPreferencesRepository
     {
@@ -18,9 +18,9 @@
         {
             var preferences = new PreferencesEntity
             {
-                ActualTravelType = TravelTypes.Bus,
-                AimedTransportationType = TravelTypes.Bike,
-                PreferedTravelType = TravelTypes.Bike,
+                ActualTransportationType = TransportationType.Bus,
+                AimedTransportationType = TransportationType.Bike,
+                PreferedTransportationType = TransportationType.Bike,
                 UserId = userId
             };
 

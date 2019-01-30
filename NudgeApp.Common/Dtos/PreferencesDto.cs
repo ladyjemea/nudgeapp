@@ -3,8 +3,8 @@
     using NudgeApp.Common.Enums;
     public class PreferencesDto
     {
-        public TravelTypes PreferedTravelType { get; set; }
-        public TravelTypes ActualTravelType { get; set; }
-        public TravelTypes AimedTransportationType { get; set; }
+        public TransportationType PreferedTravelType { get; set; }
+        public TransportationType ActualTravelType { get; set; }
+        public TransportationType AimedTransportationType { get; set; }
     }
 }

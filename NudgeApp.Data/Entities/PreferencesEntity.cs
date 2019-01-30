@@ -5,9 +5,9 @@
 
     public class PreferencesEntity : DbEntity
     {
-        public TravelTypes PreferedTravelType { get; set; }
-        public TravelTypes ActualTravelType { get; set; }
-        public TravelTypes AimedTransportationType { get; set; }        
+        public TransportationType PreferedTransportationType { get; set; }
+        public TransportationType ActualTransportationType { get; set; }
+        public TransportationType AimedTransportationType { get; set; }        
         public virtual UserEntity User { get; set; }
         public Guid UserId { get; set; }
     }

@@ -2,12 +2,12 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using NudgeApp.Common.Dtos;
-    using NudgeApp.DataManagement.UserControl;
+    using NudgeApp.DataManagement.Implementation.Interfaces;
 
     [Route("Api/User")]
     public class UserController : Controller
     {
-        private IUserLogic UserLogic;
+        private readonly IUserLogic UserLogic;
 
         public UserController(IUserLogic userLogic)
         {

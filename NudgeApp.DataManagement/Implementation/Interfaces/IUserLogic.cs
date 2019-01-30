@@ -1,4 +1,4 @@
-﻿namespace NudgeApp.DataManagement.UserControl
+﻿namespace NudgeApp.DataManagement.Implementation.Interfaces
 {
     using NudgeApp.Common.Dtos;
     public interface IUserLogic

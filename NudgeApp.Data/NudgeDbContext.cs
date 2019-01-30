@@ -1,7 +1,9 @@
 ﻿namespace NudgeApp.Data
 {
+    using System;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using NudgeApp.Data.Entities;
 
     public class NudgeDbContext : DbContext, INudgeDbContext
@@ -11,6 +13,9 @@
 
         public DbSet<UserEntity> UserEntity { get; set; }
         public DbSet<PreferencesEntity> PreferencesEntity { get; set; }
+        public DbSet<NudgeEntity> NudgeEntity { get; set; }
+        public DbSet<EnvironmentalInfoEntity> EnvironmentalInfoEntity { get; set; }
+        public DbSet<TripEntity> TripEntity { get; set; }
 
         public NudgeDbContext() : base() { }
 
@@ -27,6 +32,9 @@
         {
             modelBuilder.Entity<UserEntity>();
             modelBuilder.Entity<PreferencesEntity>();
+            modelBuilder.Entity<NudgeEntity>();
+            modelBuilder.Entity<EnvironmentalInfoEntity>();
+            modelBuilder.Entity<TripEntity>();
 
             base.OnModelCreating(modelBuilder);
         }
@@ -34,6 +42,13 @@
         public IQueryable<T> GetAll<T>() where T : class, IDbEntity
         {
             return Set<T>().AsNoTracking();
+        }
+
+        public override EntityEntry Update(object entity)
+        {
+            ((DbEntity)entity).Modified = DateTime.UtcNow;
+
+            return base.Update(entity);
         }
     }
 }

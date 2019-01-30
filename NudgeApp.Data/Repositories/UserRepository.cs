@@ -1,8 +1,9 @@
-﻿namespace NudgeApp.Data.Repositories.User
+﻿namespace NudgeApp.Data.Repositories
 {
     using System;
     using System.Linq;
     using NudgeApp.Data.Entities;
+    using NudgeApp.Data.Repositories.Interfaces;
 
     public class UserRepository : IUserRepository
     {

@@ -1,4 +1,4 @@
-﻿namespace NudgeApp.Data.Repositories.User
+﻿namespace NudgeApp.Data.Repositories.Interfaces
 {
     using System;
     using NudgeApp.Common.Dtos;

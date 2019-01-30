@@ -1,7 +1,8 @@
 ﻿namespace NudgeApp.Data
 {
     using Microsoft.Extensions.DependencyInjection;
-    using NudgeApp.Data.Repositories.User;
+    using NudgeApp.Data.Repositories;
+    using NudgeApp.Data.Repositories.Interfaces;
 
     public static class DependencyInjectionConfigurator
     {
@@ -9,6 +10,9 @@
         {
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IPreferencesRepository, PreferencesRepository>();
+            services.AddSingleton<IEnvironmelntalInfoRepository, EnvironmelntalInfoRepository>();
+            services.AddSingleton<INudgeRepository, NudgeRepository>();
+            services.AddSingleton<ITripRepository, TripRepository>();
         }
     }
 }

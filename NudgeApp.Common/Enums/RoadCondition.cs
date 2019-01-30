@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public enum TransportationType
+    public enum RoadCondition
     {
-        Car,
-        Bus,
-        Bike,
-        Walk
+        Dry,
+        Wet,
+        Ice,
+        Snow
     }
 }

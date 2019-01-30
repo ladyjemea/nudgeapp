@@ -8,6 +8,9 @@
     {
         DbSet<UserEntity> UserEntity { get; set; }
         DbSet<PreferencesEntity> PreferencesEntity { get; set; }
+        DbSet<NudgeEntity> NudgeEntity { get; set; }
+        DbSet<EnvironmentalInfoEntity> EnvironmentalInfoEntity { get; set; }
+        DbSet<TripEntity> TripEntity { get; set; }
 
         int SaveChanges();
 
