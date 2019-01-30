@@ -18,9 +18,9 @@
         {
             var preferences = new PreferencesEntity
             {
-                ActualTransportationType = TransportationType.Bus,
-                AimedTransportationType = TransportationType.Bike,
-                PreferedTransportationType = TransportationType.Bike,
+                ActualTravelType = Common.Enums.TravelTypes.Bus,
+                AimedTransportationType = Common.Enums.TravelTypes.Bike,
+                PreferedTravelType = Common.Enums.TravelTypes.Bike,
                 UserId = userId
             };
 

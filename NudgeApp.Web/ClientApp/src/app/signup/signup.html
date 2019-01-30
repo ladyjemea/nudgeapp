@@ -1,6 +1,6 @@
-<h2 align="center"> SIGNUP </h2>
+<h2 class="center"> SIGNUP </h2>
 
-<form  #signupForm="ngForm" (ngSubmit)="registerUser(signupForm)">
+<form #signupForm="ngForm" (ngSubmit)="registerUser(signupForm)">
 
   <label for="name"></label>
   <input type="text" placeholder="Name*:" name="name" id="name" ngModel>
@@ -19,25 +19,22 @@
 
   <label for="address"></label>
   <input type="text" placeholder="Home Adress*:" name="address" address id="address" ngModel />
+  <br /><br />
+  <p class="transport">Preferred mode of transport   </p>
 
-  <p class="green">Preferred mode of transport</p>
-
-  <div class="custom-select" style="width: 100%; align-self: center; align-content: center;">
-    <select type="text" name="transportationmethod" id="transportationmethod">
-      <option value="0"> Transport types</option>
-      <option value="1">Driving</option>
-      <option value="2">Taxi</option>
-      <option value="3">Skiing</option>
-      <option value="4">Biking</option>
-      <option value="5">Bus</option>
-      <option value="6">Walking</option>
+  <div class="dropdown">
+    <select   (change)="Selected($event.target.value)">
+      <option value="0">Car</option>
+      <option value="1">Bus</option>
+      <option value="2">Bike</option>
+      <option value="3">Walk</option>
     </select>
   </div>
 
-  <br />
+  <br /> 
 
   <label class="green">
-    <input type="checkbox" checked="checked" name="remember"> Enable Push Notifications
+    <input type="checkbox" checked="checked" name="remember" /> &nbsp;&nbsp; Enable Push Notifications
   </label>
 
   <p class="small">By creating an account you agree to our <a href="#" style="color:#00b300">Terms & Agreements</a>.</p>
@@ -48,6 +45,6 @@
 
 <a href="index.html" class="cancelbtnsignup">Cancel</a>
 <!--<button type="button" class="cancelbtnsignup" formtarget="_blank">Cancel</button>-->
+<br />
 
-
-<p>Already have an account? &nbsp <a href="login.html" class="signupp"> Login</a> </p>
+<p class="sup">Already have an account? <a href="login.html" class="signupp"> Login</a> </p>

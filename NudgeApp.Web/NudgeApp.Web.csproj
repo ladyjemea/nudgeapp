@@ -21,27 +21,25 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Compile Remove="ClientApp\src\app\NewFolder\**" />
     <Content Remove="$(SpaRoot)**" />
-    <Content Remove="ClientApp\src\app\NewFolder\**" />
-    <EmbeddedResource Remove="ClientApp\src\app\NewFolder\**" />
     <None Remove="$(SpaRoot)**" />
-    <None Remove="ClientApp\src\app\NewFolder\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\login\login.ts" />
-    <None Remove="ClientApp\src\app\login\userservice.ts" />
+    <None Remove="ClientApp\src\app\preferredtravel\traveltypes.ts" />
     <None Remove="ClientApp\src\app\signup\signup.ts" />
     <None Remove="ClientApp\src\app\signup\userservice.ts" />
+    <None Remove="ClientApp\src\mainaccess\mainaccess.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\login\login.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\login\userservice.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\preferredtravel\traveltypes.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\signup\signup.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\signup\userservice.ts" />
+    <TypeScriptCompile Include="ClientApp\src\mainaccess\mainaccess.ts" />
   </ItemGroup>
 
   <ItemGroup>

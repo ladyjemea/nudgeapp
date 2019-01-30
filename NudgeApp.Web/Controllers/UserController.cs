@@ -41,9 +41,9 @@
 
         [HttpGet]
         [Route("updatePreferences")]
-        public IActionResult UpdatePreferences(string userName, PreferencesDto preferences)
+        public IActionResult UpdatePreferences(string userName, NudgeApp.Common.Enums.TravelTypes travelType)
         {
-            this.UserLogic.UpdateUserPreferences(userName, preferences);
+            this.UserLogic.UpdateUserPreferences(userName, travelType);
 
             return this.Ok();
         }

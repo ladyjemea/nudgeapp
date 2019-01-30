@@ -12,8 +12,9 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login';
-import { SignupComponent } from './signup/signup'
+import { SignupComponent } from './signup/signup';
 import { TravelComponent } from './travelnow/travelnow';
+import { MainaccessComponent } from './mainaccess/mainaccess';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { TravelComponent } from './travelnow/travelnow';
     FetchDataComponent,
     LoginComponent,
     SignupComponent,
-    TravelComponent
+    TravelComponent,
+    MainaccessComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -36,7 +38,8 @@ import { TravelComponent } from './travelnow/travelnow';
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
-      { path: 'travelnow', component: TravelComponent }
+      { path: 'travelnow', component: TravelComponent },
+      { path: 'mainaccess', component: MainaccessComponent}
      
     ]),
     AgmCoreModule.forRoot({
