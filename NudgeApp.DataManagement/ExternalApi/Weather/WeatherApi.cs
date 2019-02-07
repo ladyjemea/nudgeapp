@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Newtonsoft.Json;
+    using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
     using RestSharp;
 
     public class WeatherApi : IWeatherApi
@@ -12,15 +13,17 @@
 
         public IList<HourlyForecast> GetTromsWeather()
         {
-            var list = new List<HourlyForecast>();
-            list.Add(new HourlyForecast
+            var result = new List<HourlyForecast>();
+
+            /*result.Add(new HourlyForecast
             {
-                DateTime = DateTime.Now,
-                RainProbability = 100
+                Ceiling = new WeatherInfo { Unit = "sadad" },
+                DateTime = DateTime.Now
+
             });
 
-            return list;
-
+            return result; */
+            
             var client = new RestClient("http://dataservice.accuweather.com");
             var request = new RestRequest("forecasts/v1/hourly/12hour/" + Locationkey, Method.GET);
             request.AddParameter("apikey", APIkey);

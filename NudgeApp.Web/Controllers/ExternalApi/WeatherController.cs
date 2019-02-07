@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using NudgeApp.DataManagement.ExternalApi.Weather;
+    using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
 
     [Route("externalAPI/Weather")]
     public class WeatherController : Controller

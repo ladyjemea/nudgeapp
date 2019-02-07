@@ -1,0 +1,30 @@
+body {
+  align-content: center;
+}
+
+.center{
+  text-align: center;
+  color: #00b300;
+}
+
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #00b300;
+  border-radius: 10px;
+  box-sizing: border-box
+}
+
+input[type=submit] {
+  background-color: #00b300;
+  color: white;
+  padding: 12px 18px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}

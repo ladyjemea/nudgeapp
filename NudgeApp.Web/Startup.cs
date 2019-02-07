@@ -77,6 +77,7 @@ namespace NudgeApp.Web
         {
             NudgeApp.Data.DependencyInjectionConfigurator.Configure(services);
             NudgeApp.DataManagement.DependencyInjectionConfigurator.Configure(services);
+            NudgeApp.DataAnalysis.DependencyInjectionConfigurator.Configure(services);
         }
     }
 }

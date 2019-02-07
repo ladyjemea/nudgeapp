@@ -26,6 +26,6 @@ export class SignupComponent {
   public registerUser(form: NgForm) {
     console.log(form.value);
 
-    this.userService.createuser(form.value.username, form.value.password, form.value.name, form.value.email, form.value.address);
+    this.userService.createuser(form.value.username, form.value.password, form.value.name, form.value.email, form.value.address, this.selectedTravelType);
   }
 }

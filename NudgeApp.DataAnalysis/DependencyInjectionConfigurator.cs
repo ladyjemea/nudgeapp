@@ -1,9 +1,9 @@
-﻿namespace NudgeApp.DataManagement
+﻿namespace NudgeApp.DataAnalysis
 {
     using Microsoft.Extensions.DependencyInjection;
+    using NudgeApp.DataAnalysis.API;
     using NudgeApp.DataManagement.ExternalApi.Bus;
     using NudgeApp.DataManagement.ExternalApi.Weather;
-    using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
     using NudgeApp.DataManagement.Implementation;
     using NudgeApp.DataManagement.Implementation.Interfaces;
 
@@ -11,10 +11,7 @@
     {
         public static void Configure(IServiceCollection services)
         {
-            services.AddSingleton<IWeatherApi, WeatherApi>();
-            services.AddSingleton<ITripSearch, TripSearch>();
-            services.AddSingleton<IUserLogic, UserLogic>();
-            services.AddSingleton<INudgeLogic, NudgeLogic>();
+            services.AddSingleton<IAnalyzer, Analyzer>();
         }
     }
 }

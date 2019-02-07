@@ -21,8 +21,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\mainaccess\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\mainaccess\**" />
+    <EmbeddedResource Remove="ClientApp\src\mainaccess\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\mainaccess\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
@@ -31,7 +35,6 @@
     <None Remove="ClientApp\src\app\preferredtravel\traveltypes.ts" />
     <None Remove="ClientApp\src\app\signup\signup.ts" />
     <None Remove="ClientApp\src\app\signup\userservice.ts" />
-    <None Remove="ClientApp\src\mainaccess\mainaccess.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,10 +42,10 @@
     <TypeScriptCompile Include="ClientApp\src\app\preferredtravel\traveltypes.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\signup\signup.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\signup\userservice.ts" />
-    <TypeScriptCompile Include="ClientApp\src\mainaccess\mainaccess.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NudgeApp.DataAnalysis\NudgeApp.DataAnalysis.csproj" />
     <ProjectReference Include="..\NudgeApp.DataManagement\NudgeApp.DataManagement.csproj" />
     <ProjectReference Include="..\NudgeApp.Data\NudgeApp.Data.csproj" />
   </ItemGroup>

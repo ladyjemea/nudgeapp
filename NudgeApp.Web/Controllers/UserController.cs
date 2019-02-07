@@ -17,10 +17,10 @@
 
         [HttpGet]
         [Route("createUser")]
-        public IActionResult Create(string username, string password, string name, string email, string address)
+        public IActionResult Create(string username, string password, string name, string email, string address, TransportationType travelType)
         {
 
-            if (this.UserLogic.CreateUser(username, password, name, email, address))
+            if (this.UserLogic.CreateUser(username, password, name, email, address, travelType))
             {
                 return this.Ok();
             }
@@ -38,15 +38,6 @@
             }
 
             return this.Unauthorized();
-        }
-
-        [HttpGet]
-        [Route("updatePreferences")]
-        public IActionResult UpdatePreferences(string userName, TransportationType travelType)
-        {
-            this.UserLogic.UpdateUserPreferences(userName, travelType);
-
-            return this.Ok();
         }
     }
 }

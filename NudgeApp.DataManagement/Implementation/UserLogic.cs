@@ -1,5 +1,6 @@
 ﻿namespace NudgeApp.DataManagement.Implementation
 {
+    using System;
     using System.Security.Cryptography;
     using System.Text;
     using NudgeApp.Common.Enums;
@@ -17,7 +18,7 @@
             this.PreferencesRepository = preferencesRepository;
         }
 
-        public bool CreateUser(string userName, string password, string name, string email, string address)
+        public bool CreateUser(string userName, string password, string name, string email, string address, TransportationType travelType)
         {
             var user = this.UserRepository.GetUser(userName);
 
@@ -27,7 +28,9 @@
             }
             var passwordHash = this.HashPassword(password);
 
-            this.UserRepository.CreateUser(userName, passwordHash, name, email, address);
+            var userId = this.UserRepository.CreateUser(userName, passwordHash, name, email, address);
+
+            this.UpdateUserPreferences(userId, travelType);
             return true;
         }
 
@@ -50,11 +53,11 @@
             return true;
         }
 
-        public void UpdateUserPreferences(string userName, TransportationType preferedTravelType)
+        public void UpdateUserPreferences(Guid userId, TransportationType preferedTravelType)
         {
-            var user = this.UserRepository.GetUser(userName);
-            var preferences = this.PreferencesRepository.GetPreferences(user.Id) ?? this.PreferencesRepository.AddPreferences(user.Id);
-
+            //var user = this.UserRepository.GetUser(userName);
+            var preferences = this.PreferencesRepository.GetPreferences(userId) ?? this.PreferencesRepository.AddPreferences(userId);
+            
             preferences.PreferedTransportationType = preferedTravelType;
 
             this.PreferencesRepository.UpdatePreferences(preferences);

@@ -1,4 +1,4 @@
-﻿namespace NudgeApp.DataManagement.ExternalApi.Weather
+﻿namespace NudgeApp.DataManagement.ExternalApi.Weather.Interfaces
 {
     using System.Collections.Generic;
     public interface IWeatherApi

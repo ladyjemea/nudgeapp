@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-  <p>hey I am here... What now??</p>
-</body>
-</html>
+<h2 class="center"> Travel Now </h2>
+
+<form #travelForm="ngForm" (ngSubmit)="userLocation(travelForm)">
+
+  <input type="text" name="location" id="location" placeholder="Enter Location" ngModel>
+  <br /><br />
+
+  <input type="text" name="destination" id="destination" placeholder="Enter Destination" ngModel>
+  <br /><br />
+
+  <input type="submit" name="submit" value="Enter">
+</form>
