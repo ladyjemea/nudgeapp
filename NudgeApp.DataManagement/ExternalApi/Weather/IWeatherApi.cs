@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     public interface IWeatherApi
     {
-        IList<HourlyForecast> GetTromsWeather();
+        IList<HourlyForecast> Get12HTromsWeather();
+        IList<HourlyForecast> Get24HTromsWeather();
     }
 }

@@ -2,6 +2,7 @@
 {
     using Microsoft.Extensions.DependencyInjection;
     using NudgeApp.Data.OracleDb;
+    using NudgeApp.Data.OracleDb.Queries;
     using NudgeApp.Data.Repositories;
     using NudgeApp.Data.Repositories.Interfaces;
 
@@ -15,6 +16,7 @@
             services.AddSingleton<INudgeRepository, NudgeRepository>();
             services.AddSingleton<ITripRepository, TripRepository>();
             services.AddSingleton<INudgeOracleConnection, NudgeOracleConnection>();
+            services.AddSingleton<IAnonymousNudgesRepository, AnonymousNudgesRepository>();
         }
     }
 }
