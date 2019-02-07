@@ -16,10 +16,18 @@
         }
 
         [HttpGet]
-        [Route("getHourlyWeather")]
-        public ActionResult<IList<HourlyForecast>> GetWeather()
+        [Route("get12HourWeather")]
+        public ActionResult<IList<HourlyForecast>> Get12hWeather()
         {
-            var result = this.WeatherApi.GetTromsWeather();
+            var result = this.WeatherApi.Get12HTromsWeather();
+            return this.Ok(result);
+        }
+
+        [HttpGet]
+        [Route("get24HourWeather")]
+        public ActionResult<IList<HourlyForecast>> Get24hWeather()
+        {
+            var result = this.WeatherApi.Get24HTromsWeather();
             return this.Ok(result);
         }
     }

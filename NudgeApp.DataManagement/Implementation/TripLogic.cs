@@ -1,8 +1,5 @@
 ﻿namespace NudgeApp.DataManagement.Implementation
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
     using NudgeApp.Common.Dtos;
     using NudgeApp.Data.Repositories.Interfaces;
 

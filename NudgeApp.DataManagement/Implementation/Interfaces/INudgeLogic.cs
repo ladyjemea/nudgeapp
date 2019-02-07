@@ -4,5 +4,6 @@
     public interface INudgeLogic
     {
         void AddNudge(NudgeDto nudge, EnvironmelntalInfoDto envInfo, string userName);
+        void Test();
     }
 }

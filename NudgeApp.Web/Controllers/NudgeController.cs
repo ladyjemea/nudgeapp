@@ -21,5 +21,13 @@
             this.NudgeLogic.AddNudge(nudge, envInfo, userName);
             return this.Ok();
         }
+
+        [HttpGet]
+        [Route("test")]
+        public IActionResult Test()
+        {
+            this.NudgeLogic.Test();
+            return this.Ok();
+        }
     }
 }
