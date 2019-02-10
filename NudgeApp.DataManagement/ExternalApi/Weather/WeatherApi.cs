@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Newtonsoft.Json;
+    using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
     using RestSharp;
 
     public class WeatherApi : IWeatherApi

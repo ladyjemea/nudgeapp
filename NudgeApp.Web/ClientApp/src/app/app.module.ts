@@ -15,6 +15,9 @@ import { LoginComponent } from './login/login';
 import { SignupComponent } from './signup/signup';
 import { TravelComponent } from './travelnow/travelnow';
 import { MainaccessComponent } from './mainaccess/mainaccess';
+import { ServiceWorkerModule } from '@angular/service-worker';
+
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { MainaccessComponent } from './mainaccess/mainaccess';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: true }),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },

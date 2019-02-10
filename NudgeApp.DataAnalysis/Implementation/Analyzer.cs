@@ -17,7 +17,7 @@ namespace NudgeApp.DataAnalysis.API
 
         public IList<DateInfo> AnalyseWeather()
         {
-            var results = this.WeatherApi.GetTromsWeather();
+            var results = this.WeatherApi.Get12HTromsWeather();
             var neededResults = results.Select(r => new DateInfo
             {
                 date = r.DateTime,
@@ -49,7 +49,7 @@ namespace NudgeApp.DataAnalysis.API
 
             //var reallyColdTemperature = results.Where(r => r.Temperature.Value < -2).Select(r => new DateInfo { date = r.DateTime, temp = r.Temperature }).ToList();
             //var outdoorTemperature = results.Where(r => r.Temperature.Value < 10 && r.IsDaylight == false).Select(r => new DateInfo { date = r.DateTime, temp = r.Temperature, daylight = r.IsDaylight}).ToList();
-            var eventStartTime = new DateTime(2019, 2, 7, 20, 0, 0);
+            /*var eventStartTime = new DateTime(2019, 2, 7, 20, 0, 0);
             var outdoorTemp = results.Where(r => r.DateTime > eventStartTime.AddHours(-1) && r.DateTime < eventStartTime).Select(r => new DateInfo { date = r.DateTime, temp = r.Temperature, daylight = r.IsDaylight }).First();
             if (outdoorTemp.temp.Value > 20)
             {
@@ -59,7 +59,7 @@ namespace NudgeApp.DataAnalysis.API
             else if (outdoorTemp.temp.Value > 10)
             {
                 // take the bus
-            }
+            } */
 
             return neededResults;
             //return outdoorTemperature;
