@@ -29,7 +29,11 @@ export class MainaccessComponent {
     this.swPush.requestSubscription({
       serverPublicKey: this.VAPID_PUBLIC_KEY
     })
-      .then(sub => console.log(sub))
+      .then(sub => {
+        console.log(sub);
+        console.log(sub.getKey("p256dh"));
+        console.log(sub.getKey("auth"));
+      })
       .catch(err => console.error("Could not subscribe to notifications", err));
   }
  

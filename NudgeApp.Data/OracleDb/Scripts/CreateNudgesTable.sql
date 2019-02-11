@@ -1,4 +1,4 @@
-﻿Create table nudgeAd.Nudges (
+﻿Create table Nudges (
 Id int,
 Result int,
 UserPreferedTransportationType int,
