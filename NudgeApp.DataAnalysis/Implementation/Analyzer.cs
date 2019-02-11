@@ -17,7 +17,7 @@ namespace NudgeApp.DataAnalysis.API
 
         public IList<DateInfo> AnalyseWeather()
         {
-            var results = this.WeatherApi.GetTromsWeather();
+            var results = this.WeatherApi.Get12HTromsWeather();
             var neededResults = results.Select(r => new DateInfo
             {
                 date = r.DateTime,

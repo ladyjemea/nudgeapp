@@ -51,8 +51,8 @@
                 UserPreferedTransportationType = TransportationType.Car,
                 Wind = 30
             };
+            this.AnonymousNudgesRepository.Insert(entity);
             this.NudgeOracleConnection.Test();
-            //this.AnonymousNudgesRepository.Insert(entity);
         }
     }
 }
