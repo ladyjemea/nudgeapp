@@ -3,12 +3,14 @@ import { NgForm } from '@angular/forms';
 import 'rxjs';
 import { userservice } from '../signup/userservice';
 import { SwPush } from '@angular/service-worker';
+import { subscriptionservice } from '../services/SubscriptionService'
+import { Subscription } from '../types/Subscription'
 
 
 @Component({
   templateUrl: './mainaccess.html',
   styleUrls: ['./mainaccess.css'],
-  providers: [userservice, SwPush],
+  providers: [userservice, SwPush, subscriptionservice],
 })
 
 export class MainaccessComponent {
@@ -17,7 +19,8 @@ export class MainaccessComponent {
 
   constructor(
     private swPush: SwPush,
-    private userService: userservice) {
+    private userService: userservice,
+    private subscriptionservice: subscriptionservice) {
     this.subscribeToNotifications();
   }
 
@@ -30,11 +33,15 @@ export class MainaccessComponent {
       serverPublicKey: this.VAPID_PUBLIC_KEY
     })
       .then(sub => {
-        console.log(sub);
-        console.log(sub.getKey("p256dh"));
-        console.log(sub.getKey("auth"));
+        var subscription = new Subscription();
+        var dec = new TextDecoder("utf-8");
+        subscription.auth = dec.decode(sub.getKey("auth"));
+        subscription.p256dh = dec.decode(sub.getKey("p256dh"));
+        subscription.endpoint = sub.endpoint;
+        console.log(subscription);
+        this.subscriptionservice.addSubscription("lae", subscription);
       })
       .catch(err => console.error("Could not subscribe to notifications", err));
   }
- 
+
 }

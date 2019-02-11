@@ -17,6 +17,7 @@
             services.AddSingleton<ITripRepository, TripRepository>();
             services.AddSingleton<INudgeOracleConnection, NudgeOracleConnection>();
             services.AddSingleton<IAnonymousNudgesRepository, AnonymousNudgesRepository>();
+            services.AddSingleton<IPushNotificationRepository, PushNotificationRepository>();
         }
     }
 }

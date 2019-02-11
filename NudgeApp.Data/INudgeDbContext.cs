@@ -11,6 +11,7 @@
         DbSet<NudgeEntity> NudgeEntity { get; set; }
         DbSet<EnvironmentalInfoEntity> EnvironmentalInfoEntity { get; set; }
         DbSet<TripEntity> TripEntity { get; set; }
+        DbSet<PushNotificationEntity> PushNotificationEntity { get; set; }
 
         int SaveChanges();
 

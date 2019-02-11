@@ -16,6 +16,7 @@
         public DbSet<NudgeEntity> NudgeEntity { get; set; }
         public DbSet<EnvironmentalInfoEntity> EnvironmentalInfoEntity { get; set; }
         public DbSet<TripEntity> TripEntity { get; set; }
+        public DbSet<PushNotificationEntity> PushNotificationEntity { get; set; }
 
         public NudgeDbContext() : base() { }
 
