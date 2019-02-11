@@ -7,8 +7,8 @@
     {
         private readonly INudgeOracleConnection NudgeOracleConnection;
 
-        private const string select = "SELECT * FROM \"SYS\".\"Nudges\"";
-        private const string insert = "INSERT INTO SYS.Nudges";
+        private const string select = "SELECT * FROM \"Nudges\"";
+        private const string insert = "INSERT INTO Nudges";
 
         public AnonymousNudgesRepository(INudgeOracleConnection nudgeOracleConnection)
         {
@@ -34,7 +34,7 @@
             query += entity.Wind + ", ";
             query += entity.Precipitation;
 
-            query += ");";
+            query += ")";
 
             this.NudgeOracleConnection.Command(query);
         }
