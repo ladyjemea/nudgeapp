@@ -9,7 +9,7 @@
     public class TripRepository : ITripRepository
     {
         private readonly INudgeDbContext Db;
-        public TripRepository(NudgeDbContext db)
+        public TripRepository(INudgeDbContext db)
         {
             this.Db = db;
         }

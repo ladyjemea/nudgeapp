@@ -13,6 +13,8 @@
         DbSet<TripEntity> TripEntity { get; set; }
         DbSet<PushNotificationEntity> PushNotificationEntity { get; set; }
 
+        DbSet<TEntity> Set<TEntity>() where TEntity : class;
+
         int SaveChanges();
 
         IQueryable<T> GetAll<T>() where T : class, IDbEntity;

@@ -1,16 +1,10 @@
-﻿namespace NudgeApp.Data.OracleDb.Queries
+﻿namespace NudgeApp.Data.Entities
 {
     using NudgeApp.Common.Enums;
     using System;
 
-    public class AnonymousNudgeEntity
+    public class AnonymousNudgeEntity : DbEntity
     {
-        public AnonymousNudgeEntity()
-        {
-            this.Id = Guid.NewGuid();
-        }
-
-        public Guid Id { get; set; }
         public NudgeResult Result { get; set; }
         public TransportationType UserPreferedTransportationType { get; set; }
         public TransportationType ActualTransportationType { get; set; }

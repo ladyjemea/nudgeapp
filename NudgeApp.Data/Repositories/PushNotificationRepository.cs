@@ -8,7 +8,7 @@
     public class PushNotificationRepository : IPushNotificationRepository
     {
         private readonly INudgeDbContext Db;
-        public PushNotificationRepository(NudgeDbContext db)
+        public PushNotificationRepository(INudgeDbContext db)
         {
             this.Db = db;
         }

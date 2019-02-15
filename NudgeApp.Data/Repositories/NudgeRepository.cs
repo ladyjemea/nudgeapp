@@ -9,7 +9,7 @@
     public class NudgeRepository : INudgeRepository
     {
         private readonly INudgeDbContext Db;
-        public NudgeRepository(NudgeDbContext db)
+        public NudgeRepository(INudgeDbContext db)
         {
             this.Db = db;
         }

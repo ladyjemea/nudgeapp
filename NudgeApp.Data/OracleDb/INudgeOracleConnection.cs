@@ -1,8 +1,10 @@
 ﻿namespace NudgeApp.Data.OracleDb
 {
+    using System.Collections.Generic;
+
     public interface INudgeOracleConnection
     {
-        string Command(string command);
-        void Test();
+        string InsertCommand(string command);
+        IList<string> SelectCommand(string cmd);
     }
 }

@@ -9,7 +9,7 @@
     public class EnvironmelntalInfoRepository : IEnvironmelntalInfoRepository
     {
         private readonly INudgeDbContext Db;
-        public EnvironmelntalInfoRepository(NudgeDbContext db)
+        public EnvironmelntalInfoRepository(INudgeDbContext db)
         {
             this.Db = db;
         }

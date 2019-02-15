@@ -2,16 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
-    using System.Dynamic;
-    using MySql.Data.MySqlClient;
     using Oracle.ManagedDataAccess.Client;
 
     public class NudgeOracleConnection : INudgeOracleConnection
     {
         public static string ConnectionString = "User Id=nudgeAd; password=cosmin123; Data Source=localhost:1521/orcl;";
 
-        public string Command(string cmd)
+        public string InsertCommand(string cmd)
         {
             using (OracleConnection con = new OracleConnection(ConnectionString))
             {
@@ -26,7 +23,7 @@
                         return null;
                     }
                     catch (Exception ex)
-                        {
+                    {
                         Console.WriteLine(ex.Message);
                         con.Clone();
                     }
@@ -36,8 +33,9 @@
             return null;
         }
 
-        public void Test()
+        public IList<string> SelectCommand(string cmd)
         {
+            var result = new List<string>();
             using (OracleConnection con = new OracleConnection(ConnectionString))
             {
                 con.Open();
@@ -45,28 +43,32 @@
                 {
                     try
                     {
-                        var cmd = "SELECT * FROM \"SYS\".\"NUDGES\"";
-                        DataTable result = new DataTable();
+                        var line = "";
                         command.BindByName = true;
                         command.CommandText = cmd;
                         OracleDataReader reader = command.ExecuteReader();
-                        Console.WriteLine("nudge rows: " + reader.HasRows);
+
                         while (reader.Read())
                         {
-                            for(var i = 0; i < reader.FieldCount; i++)
+                            for (var i = 0; i < reader.FieldCount; i++)
                             {
-                                Console.WriteLine(reader[i]);
+                                line += reader[i];
+                                line += " ";
                             }
-                        }                       
+                            result.Add(line);
+                        }
 
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
-                        con.Close();
                     }
                 }
+
+                con.Close();
             }
+
+            return result;
         }
     }
 }

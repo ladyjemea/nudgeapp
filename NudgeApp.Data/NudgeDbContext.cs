@@ -5,11 +5,12 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using NudgeApp.Data.Entities;
+    using NudgeApp.Data.OracleDb.Queries;
 
     public class NudgeDbContext : DbContext, INudgeDbContext
     {
         // to update the database run the commnand: dotnet ef database update
-        public const string connectionString = "Server=localhost; Database=NudgeAppDatabase; Trusted_Connection = True;";
+        public const string connectionString = @"Server=localhost\MSSQLSERVER01; Database=NudgeAppDatabase; Trusted_Connection = True;";
 
         public DbSet<UserEntity> UserEntity { get; set; }
         public DbSet<PreferencesEntity> PreferencesEntity { get; set; }
@@ -17,6 +18,7 @@
         public DbSet<EnvironmentalInfoEntity> EnvironmentalInfoEntity { get; set; }
         public DbSet<TripEntity> TripEntity { get; set; }
         public DbSet<PushNotificationEntity> PushNotificationEntity { get; set; }
+        public DbSet<AnonymousNudgeEntity> AnonymousNudgeEntity { get; set; }
 
         public NudgeDbContext() : base() { }
 
@@ -36,6 +38,7 @@
             modelBuilder.Entity<NudgeEntity>();
             modelBuilder.Entity<EnvironmentalInfoEntity>();
             modelBuilder.Entity<TripEntity>();
+            modelBuilder.Entity<AnonymousNudgeEntity>();
 
             base.OnModelCreating(modelBuilder);
         }

@@ -3,51 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NudgeApp.Data;
 
 namespace NudgeApp.Data.Migrations
 {
     [DbContext(typeof(NudgeDbContext))]
-    partial class NudgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190215143611_AnonymousEntity")]
+    partial class AnonymousEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("NudgeApp.Data.Entities.AnonymousNudgeEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ActualTransportationType");
-
-                    b.Property<DateTime>("Created");
-
-                    b.Property<DateTime>("Modified");
-
-                    b.Property<int>("Precipitation");
-
-                    b.Property<int>("Result");
-
-                    b.Property<int>("Road");
-
-                    b.Property<int>("SkyCoverage");
-
-                    b.Property<int>("Temperature");
-
-                    b.Property<int>("UserPreferedTransportationType");
-
-                    b.Property<int>("Wind");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AnonymousNudgeEntity");
-                });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.EnvironmentalInfoEntity", b =>
                 {
@@ -193,6 +165,32 @@ namespace NudgeApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserEntity");
+                });
+
+            modelBuilder.Entity("NudgeApp.Data.OracleDb.Queries.AnonymousNudgeEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ActualTransportationType");
+
+                    b.Property<int>("Precipitation");
+
+                    b.Property<int>("Result");
+
+                    b.Property<int>("Road");
+
+                    b.Property<int>("SkyCoverage");
+
+                    b.Property<int>("Temperature");
+
+                    b.Property<int>("UserPreferedTransportationType");
+
+                    b.Property<int>("Wind");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AnonymousNudgeEntity");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.NudgeEntity", b =>

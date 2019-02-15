@@ -9,7 +9,7 @@
     {
         private readonly INudgeDbContext Db;
 
-        public UserRepository(NudgeDbContext db)
+        public UserRepository(INudgeDbContext db)
         {
             this.Db = db;
         }

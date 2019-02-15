@@ -9,7 +9,7 @@
     public class PreferencesRepository : IPreferencesRepository
     {
         private readonly INudgeDbContext Db;
-        public PreferencesRepository(NudgeDbContext db)
+        public PreferencesRepository(INudgeDbContext db)
         {
             this.Db = db;
         }
