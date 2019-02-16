@@ -47,7 +47,8 @@ import { environment } from 'src/environments/environment';
      
     ]),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDU5hPNrVwVNB1CNqF8V0fPy7f9p10T6Sk'
+      apiKey: 'AIzaSyCCbgVPkBgwul0cofmo-VSMOefNSzrAOEo',
+      libraries: ['geometry']
     })
   ],
 

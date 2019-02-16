@@ -8,7 +8,7 @@
   <input type="text" name="destination" id="destination" placeholder="Enter Destination" ngModel>
   <br /><br />
 
-  <input type="submit" name="submit" value="Enter">
+  <input type="submit" name="submit" value="Enter" (click)="test()">
   <div>
     <agm-map style="height:300px; width:300px" [latitude]="lat" [longitude]="lng">
       <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
