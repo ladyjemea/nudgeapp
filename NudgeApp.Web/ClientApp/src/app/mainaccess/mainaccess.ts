@@ -33,11 +33,11 @@ export class MainaccessComponent {
       serverPublicKey: this.VAPID_PUBLIC_KEY
     })
       .then(sub => {
+        var jsonSub = sub.toJSON();
         var subscription = new Subscription();
-        var dec = new TextDecoder("utf-8");
-        subscription.auth = dec.decode(sub.getKey("auth"));
-        subscription.p256dh = dec.decode(sub.getKey("p256dh"));
-        subscription.endpoint = sub.endpoint;
+        subscription.auth = jsonSub["keys"]["auth"];
+        subscription.p256dh = jsonSub["keys"]["p256dh"];
+        subscription.endpoint = sub["endpoint"];
         console.log(subscription);
         this.subscriptionservice.addSubscription("lae", subscription);
       })

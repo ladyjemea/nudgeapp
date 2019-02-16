@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="WebPush" Version="1.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NudgeApp.DataManagement\NudgeApp.DataManagement.csproj" />
   </ItemGroup>
 

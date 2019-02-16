@@ -10,7 +10,7 @@
     public class NudgeDbContext : DbContext, INudgeDbContext
     {
         // to update the database run the commnand: dotnet ef database update
-        public const string connectionString = @"Server=localhost\MSSQLSERVER01; Database=NudgeAppDatabase; Trusted_Connection = True;";
+        public const string connectionString = @"Server=localhost; Database=NudgeAppDatabase; Trusted_Connection = True;";
 
         public DbSet<UserEntity> UserEntity { get; set; }
         public DbSet<PreferencesEntity> PreferencesEntity { get; set; }

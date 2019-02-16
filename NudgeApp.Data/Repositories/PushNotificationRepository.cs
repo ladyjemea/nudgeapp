@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.Data.Repositories
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
@@ -33,6 +34,11 @@
         {
             this.Db.PushNotificationEntity.Update(entity);
             this.Db.SaveChanges();
+        }
+
+        public IList<PushNotificationEntity> GetAll()
+        {
+            return this.Db.GetAll<PushNotificationEntity>().ToList();
         }
 
         public PushNotificationEntity Get(Guid userId)

@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using NudgeApp.DataAnalysis.Implementation;
     using NudgeApp.DataManagement.Implementation;
     using NudgeApp.DataManagement.Implementation.Interfaces;
 
@@ -8,9 +9,11 @@
     public class PushNotificationController : Controller
     {
         private readonly IPushNotificationLogic PushNotificationLogic;
+        private readonly IPushNotificationService PushNotificationService;
 
-        public PushNotificationController(IPushNotificationLogic pushNotificationLogic)
+        public PushNotificationController(IPushNotificationLogic pushNotificationLogic, IPushNotificationService pushNotificationService)
         {
+            this.PushNotificationService = pushNotificationService;
             this.PushNotificationLogic = pushNotificationLogic;
         }
 
@@ -20,6 +23,15 @@
         {
             var username = "lae";
             this.PushNotificationLogic.SetSubscription(username, pushSubscription);
+
+            return this.Ok();
+        }
+
+        [HttpGet]
+        [Route("Test")]
+        public IActionResult Test()
+        {
+            this.PushNotificationService.PushAll();
 
             return this.Ok();
         }
