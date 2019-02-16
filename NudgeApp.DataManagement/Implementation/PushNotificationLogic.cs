@@ -26,10 +26,13 @@
             }
             else
             {
-                notification.Auth = pushSubscription.Auth;
-                notification.P256DH = pushSubscription.P256DH;
-                notification.Endpoint = pushSubscription.Endpoint;
-                this.PushNotificationRepository.Update(notification);
+                if (pushSubscription.Endpoint != notification.Endpoint)
+                {
+                    notification.Auth = pushSubscription.Auth;
+                    notification.P256DH = pushSubscription.P256DH;
+                    notification.Endpoint = pushSubscription.Endpoint;
+                    this.PushNotificationRepository.Update(notification);
+                }
             }
         }
     }

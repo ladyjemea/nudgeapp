@@ -17,14 +17,25 @@ export class MainaccessComponent {
 
   readonly VAPID_PUBLIC_KEY = "BD6e5GSCe5_Y08GgTyWlpFcQIPuMkLrEYfAiNBzrc-vkxPuYN3oeJqdvR3gjIGn_VxNu1G58J9zxbsd6-6FR70Y";
 
+  lat: number = 51.678418;
+  lng: number = 7.809007;
+ 
+
   constructor(
     private swPush: SwPush,
     private userService: userservice,
     private subscriptionservice: subscriptionservice) {
     this.subscribeToNotifications();
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position);
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
+    })
   }
 
   public userLocation(form: NgForm) {
+
 
   }
   private subscribeToNotifications() {

@@ -9,4 +9,9 @@
   <br /><br />
 
   <input type="submit" name="submit" value="Enter">
+  <div>
+    <agm-map style="height:300px; width:300px" [latitude]="lat" [longitude]="lng">
+      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    </agm-map>
+  </div>
 </form>

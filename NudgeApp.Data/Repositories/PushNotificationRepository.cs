@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.EntityFrameworkCore;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
@@ -43,7 +44,7 @@
 
         public PushNotificationEntity Get(Guid userId)
         {
-            var entity = this.Db.GetAll<PushNotificationEntity>().Where(p => p.UserId == userId).FirstOrDefault();
+            var entity = this.Db.GetAll<PushNotificationEntity>().Where(p => p.UserId == userId).AsNoTracking().FirstOrDefault();
             
             return entity;
         }
