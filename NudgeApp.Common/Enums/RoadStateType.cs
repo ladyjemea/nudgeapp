@@ -4,7 +4,7 @@
     {
         dry,
         wet,
-        rainy,
-        snowy
+        snow,
+        ice
     }
 }

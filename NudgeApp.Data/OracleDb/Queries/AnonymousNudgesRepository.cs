@@ -89,10 +89,10 @@
             query += (int)entity.UserPreferedTransportationType + ", ";
             query += (int)entity.ActualTransportationType + ", ";
             query += (int)entity.SkyCoverage + ", ";
-            query += (int)entity.Road + ", ";
+            query += (int)entity.RoadCondition + ", ";
             query += entity.Temperature + ", ";
             query += entity.Wind + ", ";
-            query += entity.Precipitation;
+            query += entity.PrecipitationProbability;
 
             query += ")";
 

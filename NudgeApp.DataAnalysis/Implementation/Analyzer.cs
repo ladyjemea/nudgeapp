@@ -68,13 +68,13 @@ namespace NudgeApp.DataAnalysis.API
         public class DateInfo
         {
             public DateTime date;
-            public WeatherInfo temp;
-            public WeatherInfo ceiling;
-            public WeatherInfo realfeel;
-            public WeatherInfo rain;
-            public WeatherInfo visibility;
-            public WeatherInfo snow;
-            public WeatherInfo ice;
+            public UnitInfo temp;
+            public UnitInfo ceiling;
+            public UnitInfo realfeel;
+            public UnitInfo rain;
+            public UnitInfo visibility;
+            public UnitInfo snow;
+            public UnitInfo ice;
             public int rainprobability;
             public int snowprobability;
             public int iceprobability;

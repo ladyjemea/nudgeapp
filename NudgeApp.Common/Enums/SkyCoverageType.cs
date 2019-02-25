@@ -2,8 +2,8 @@
 {
     public enum SkyCoverageType
     {
-        clear,
-        partlyCloudy,
-        cloudy
+        Clear,
+        PartlyCloudy,
+        Cloudy
     }
 }
