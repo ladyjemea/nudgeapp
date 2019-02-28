@@ -3,9 +3,8 @@
     using System;
     using NudgeApp.Data.Entities;
 
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<UserEntity>
     {
-        Guid CreateUser(string userName, string passwordHash, string name, string email, string address);
         void UpdateUser(UserEntity user);
 
         UserEntity GetUser(string userName);

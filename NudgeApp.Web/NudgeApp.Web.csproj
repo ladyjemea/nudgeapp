@@ -15,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="ODP.NetCore" Version="2.0.12" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.18.3" />
   </ItemGroup>
@@ -33,6 +34,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\login\login.ts" />
     <None Remove="ClientApp\src\app\preferredtravel\traveltypes.ts" />
+    <None Remove="ClientApp\src\app\services\JwtInterceptor.ts" />
     <None Remove="ClientApp\src\app\services\SubscriptionService.ts" />
     <None Remove="ClientApp\src\app\signup\signup.ts" />
     <None Remove="ClientApp\src\app\signup\userservice.ts" />
@@ -41,9 +43,10 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\login\login.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\preferredtravel\traveltypes.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\JwtInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\SubscriptionService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\signup\signup.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\signup\userservice.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\userservice.ts" />
   </ItemGroup>
 
   <ItemGroup>

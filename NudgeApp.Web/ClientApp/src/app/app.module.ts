@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AgmCoreModule } from '@agm/core';
@@ -18,6 +18,7 @@ import { MainaccessComponent } from './mainaccess/mainaccess';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { environment } from 'src/environments/environment';
+import { JwtInterceptor } from './services/JwtInterceptor';
 
 @NgModule({
   declarations: [
@@ -51,8 +52,9 @@ import { environment } from 'src/environments/environment';
       libraries: ['geometry']
     })
   ],
-
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

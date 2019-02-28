@@ -5,31 +5,13 @@
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
-    public class UserRepository : IUserRepository
+    public class UserRepository : Repository<UserEntity>, IUserRepository
     {
         private readonly INudgeDbContext Db;
 
-        public UserRepository(INudgeDbContext db)
+        public UserRepository(INudgeDbContext context) : base(context)
         {
-            this.Db = db;
-        }
-
-        public Guid CreateUser(string userName, string passwordHash, string name, string email, string address)
-        {
-            var user = new UserEntity
-            {
-                UserName = userName,
-                PasswordHash = passwordHash,
-                Address = address,
-                Email = email,
-                Name = name
-            };
-
-            var result = this.Db.UserEntity.Add(user);
-
-            this.Db.SaveChanges();
-
-            return result.Entity.Id;
+            this.Db = context;
         }
 
         public void UpdateUser(UserEntity user)

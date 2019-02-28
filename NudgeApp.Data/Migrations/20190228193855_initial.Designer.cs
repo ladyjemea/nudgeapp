@@ -10,16 +10,46 @@ using NudgeApp.Data;
 namespace NudgeApp.Data.Migrations
 {
     [DbContext(typeof(NudgeDbContext))]
-    [Migration("20190130102940_AddedMoreEntities")]
-    partial class AddedMoreEntities
+    [Migration("20190228193855_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("NudgeApp.Data.Entities.AnonymousNudgeEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ActualTransportationType");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime>("Modified");
+
+                    b.Property<int>("PrecipitationProbability");
+
+                    b.Property<int>("Result");
+
+                    b.Property<int>("RoadCondition");
+
+                    b.Property<int>("SkyCoverage");
+
+                    b.Property<float>("Temperature");
+
+                    b.Property<int>("UserPreferedTransportationType");
+
+                    b.Property<float>("Wind");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AnonymousNudgeEntity");
+                });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.EnvironmentalInfoEntity", b =>
                 {
@@ -95,6 +125,28 @@ namespace NudgeApp.Data.Migrations
                     b.ToTable("PreferencesEntity");
                 });
 
+            modelBuilder.Entity("NudgeApp.Data.Entities.PushNotificationEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Auth");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("Endpoint");
+
+                    b.Property<DateTime>("Modified");
+
+                    b.Property<string>("P256DH");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PushNotificationEntity");
+                });
+
             modelBuilder.Entity("NudgeApp.Data.Entities.TripEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -136,7 +188,9 @@ namespace NudgeApp.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("PasswordHash");
+                    b.Property<byte[]>("PasswordHash");
+
+                    b.Property<byte[]>("PasswordSalt");
 
                     b.Property<string>("UserName");
 

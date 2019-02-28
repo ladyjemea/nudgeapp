@@ -40,7 +40,7 @@
             this.context.SaveChanges();
         }
 
-        protected virtual TEntity Gett(Guid id)
+        public virtual TEntity Get(Guid id)
         {
             return this.DbSet.Find(id);
         }

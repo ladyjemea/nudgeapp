@@ -15,7 +15,7 @@ namespace NudgeApp.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -30,19 +30,19 @@ namespace NudgeApp.Data.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<int>("Precipitation");
+                    b.Property<int>("PrecipitationProbability");
 
                     b.Property<int>("Result");
 
-                    b.Property<int>("Road");
+                    b.Property<int>("RoadCondition");
 
                     b.Property<int>("SkyCoverage");
 
-                    b.Property<int>("Temperature");
+                    b.Property<float>("Temperature");
 
                     b.Property<int>("UserPreferedTransportationType");
 
-                    b.Property<int>("Wind");
+                    b.Property<float>("Wind");
 
                     b.HasKey("Id");
 
@@ -186,7 +186,9 @@ namespace NudgeApp.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("PasswordHash");
+                    b.Property<byte[]>("PasswordHash");
+
+                    b.Property<byte[]>("PasswordSalt");
 
                     b.Property<string>("UserName");
 

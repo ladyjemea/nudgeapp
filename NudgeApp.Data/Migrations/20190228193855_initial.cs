@@ -3,29 +3,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NudgeApp.Data.Migrations
 {
-    public partial class AddedMoreEntities : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ActualTravelType",
-                table: "PreferencesEntity");
-
-            migrationBuilder.DropColumn(
-                name: "PreferedTravelType",
-                table: "PreferencesEntity");
-
-            migrationBuilder.AddColumn<int>(
-                name: "ActualTransportationType",
-                table: "PreferencesEntity",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<int>(
-                name: "PreferedTransportationType",
-                table: "PreferencesEntity",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.CreateTable(
+                name: "AnonymousNudgeEntity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false),
+                    Result = table.Column<int>(nullable: false),
+                    UserPreferedTransportationType = table.Column<int>(nullable: false),
+                    ActualTransportationType = table.Column<int>(nullable: false),
+                    SkyCoverage = table.Column<int>(nullable: false),
+                    RoadCondition = table.Column<int>(nullable: false),
+                    Temperature = table.Column<float>(nullable: false),
+                    Wind = table.Column<float>(nullable: false),
+                    PrecipitationProbability = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnonymousNudgeEntity", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "EnvironmentalInfoEntity",
@@ -43,6 +44,42 @@ namespace NudgeApp.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EnvironmentalInfoEntity", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PushNotificationEntity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false),
+                    Endpoint = table.Column<string>(nullable: true),
+                    P256DH = table.Column<string>(nullable: true),
+                    Auth = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PushNotificationEntity", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserEntity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
+                    PasswordHash = table.Column<byte[]>(nullable: true),
+                    PasswordSalt = table.Column<byte[]>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserEntity", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,6 +105,29 @@ namespace NudgeApp.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_NudgeEntity_UserEntity_UserId",
+                        column: x => x.UserId,
+                        principalTable: "UserEntity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PreferencesEntity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false),
+                    PreferedTransportationType = table.Column<int>(nullable: false),
+                    ActualTransportationType = table.Column<int>(nullable: false),
+                    AimedTransportationType = table.Column<int>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PreferencesEntity", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PreferencesEntity_UserEntity_UserId",
                         column: x => x.UserId,
                         principalTable: "UserEntity",
                         principalColumn: "Id",
@@ -114,6 +174,11 @@ namespace NudgeApp.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PreferencesEntity_UserId",
+                table: "PreferencesEntity",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TripEntity_EnvironmentalInfoId",
                 table: "TripEntity",
                 column: "EnvironmentalInfoId");
@@ -127,7 +192,16 @@ namespace NudgeApp.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AnonymousNudgeEntity");
+
+            migrationBuilder.DropTable(
                 name: "NudgeEntity");
+
+            migrationBuilder.DropTable(
+                name: "PreferencesEntity");
+
+            migrationBuilder.DropTable(
+                name: "PushNotificationEntity");
 
             migrationBuilder.DropTable(
                 name: "TripEntity");
@@ -135,25 +209,8 @@ namespace NudgeApp.Data.Migrations
             migrationBuilder.DropTable(
                 name: "EnvironmentalInfoEntity");
 
-            migrationBuilder.DropColumn(
-                name: "ActualTransportationType",
-                table: "PreferencesEntity");
-
-            migrationBuilder.DropColumn(
-                name: "PreferedTransportationType",
-                table: "PreferencesEntity");
-
-            migrationBuilder.AddColumn<int>(
-                name: "ActualTravelType",
-                table: "PreferencesEntity",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<int>(
-                name: "PreferedTravelType",
-                table: "PreferencesEntity",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.DropTable(
+                name: "UserEntity");
         }
     }
 }

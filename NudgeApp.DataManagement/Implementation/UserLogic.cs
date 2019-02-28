@@ -4,6 +4,7 @@
     using System.Security.Cryptography;
     using System.Text;
     using NudgeApp.Common.Enums;
+    using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
     using NudgeApp.DataManagement.Implementation.Interfaces;
 
@@ -26,58 +27,72 @@
             {
                 return false;
             }
-            var passwordHash = this.HashPassword(password);
 
-            var userId = this.UserRepository.CreateUser(userName, passwordHash, name, email, address);
+            byte[] passwordHash, passwordSalt;
+            GenerateHash(password, out passwordHash, out passwordSalt);
+
+            var userId = Guid.NewGuid();
+            this.UserRepository.Insert(new UserEntity
+            {
+                Id = userId,
+                UserName = userName,
+                Address = address,
+                Email = email,
+                Name = name,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
+            });
 
             this.UpdateUserPreferences(userId, travelType);
             return true;
         }
 
-        public bool CheckPassword(string userName, string password)
+        public UserEntity CheckPassword(string userName, string password)
         {
-            var passwordHash = this.HashPassword(password);
-
             var user = this.UserRepository.GetUser(userName);
 
             if (user == null)
-                return false;
+                return null;
 
-            var actualHash = user.PasswordHash;
-
-            if (passwordHash != actualHash)
+            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return user;
         }
 
         public void UpdateUserPreferences(Guid userId, TransportationType preferedTravelType)
         {
             //var user = this.UserRepository.GetUser(userName);
             var preferences = this.PreferencesRepository.GetPreferences(userId) ?? this.PreferencesRepository.AddPreferences(userId);
-            
+
             preferences.PreferedTransportationType = preferedTravelType;
 
             this.PreferencesRepository.UpdatePreferences(preferences);
         }
 
-        private string HashPassword(string password)
+        private static void GenerateHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            using (SHA256 sha256Hash = SHA256.Create())
+            using (var hmac = new HMACSHA512())
             {
-                // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password ?? ""));
-
-                // Convert byte array to a string   
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
+        }
+
+        private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
+        {
+            using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != storedHash[i]) return false;
+                }
+            }
+
+            return true;
         }
     }
 }

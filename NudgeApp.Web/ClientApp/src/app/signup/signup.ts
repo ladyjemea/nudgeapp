@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs';
-import { userservice } from './userservice';
+import { userservice } from '../services/userservice';
 import { TravelTypes } from '../preferredtravel/traveltypes';
 
 @Component({
