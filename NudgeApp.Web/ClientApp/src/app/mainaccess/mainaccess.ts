@@ -39,13 +39,14 @@ export class MainaccessComponent {
     })
   }
   test() {
+    //gets the current location of the user
     this.mapsAPILoader.load().then(() => {
       var geocoder = new google.maps.Geocoder;
       var latlng = new google.maps.LatLng(this.lat, this.lng);
       /*geocoder.geocode({ 'location': latlng }, function (results, status) {
         console.log(results);
       });*/
-      var address = 'Norway, Tromso, orneveien 14';
+      var address = 'Norway, Tromsø, Luleåvegen 19'; // should get the destination from the input field "enter destination"
       geocoder.geocode({ 'address': address }, function (results, status) {
         console.log(results[0].geometry.location);
         //const distance = google.maps.geometry.spherical.computeDistanceBetween(latlng, results[0].geometry.location);
@@ -54,6 +55,7 @@ export class MainaccessComponent {
           origin: latlng,
           destination: results[0].geometry.location,
           travelMode: google.maps.TravelMode.WALKING
+     
         };
 
         /*var directionsService = new google.maps.DirectionsService();
@@ -66,7 +68,7 @@ export class MainaccessComponent {
         distanceMatrixService.getDistanceMatrix({
           origins: [latlng],
           destinations: [results[0].geometry.location],
-          travelMode: google.maps.TravelMode.BICYCLING
+          travelMode: google.maps.TravelMode.WALKING
         }, (result, status) => { console.log(result.rows[0].elements[0].duration); });
       });
     });

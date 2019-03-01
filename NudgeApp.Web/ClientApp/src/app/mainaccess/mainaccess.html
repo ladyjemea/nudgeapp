@@ -1,17 +1,23 @@
 <h2 class="center"> Travel Now </h2>
 
 <form #travelForm="ngForm" (ngSubmit)="userLocation(travelForm)">
-
-  <input type="text" name="location" id="location" placeholder="Enter Location" ngModel>
-  <br /><br />
-
-  <input type="text" name="destination" id="destination" placeholder="Enter Destination" ngModel>
-  <br /><br />
-
-  <input type="submit" name="submit" value="Enter" (click)="test()">
-  <div>
+  <!--<div class="map">
     <agm-map style="height:300px; width:300px" [latitude]="lat" [longitude]="lng">
       <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
     </agm-map>
+  </div>-->
+
+  <div>
+    <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="onChooseLocation($event)"> 
+      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    </agm-map>
   </div>
+  <!--onChooseLocation not working. used to get the location on the map if the user clicks on it.
+  It should als register as the destination and the travel distance calculated for the user-->
+  <br />
+
+  <input type="text" name="destination" id="destination" placeholder="Enter Destination" ngModel>
+  <br /><br />
+  <input type="submit" name="submit" value="Enter" (click)="test()">
+
 </form>

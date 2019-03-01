@@ -38,8 +38,8 @@
                 {
                     notification = new Notification
                     {
-                        title = "Angular news!",
-                        body = "Newsletter available!",
+                        title = "NudgeApp News",
+                        body = "It is a good day to have some fun in the sun!",
                         data = new NotificationData
                         {
                             dateOfArrival = DateTime.Now,
@@ -94,7 +94,7 @@
 
         private class NotificationPayload
         {
-            public Notification notification { get; set; }
+            public Notification notification { get; set; }   
         }
     }
 }
