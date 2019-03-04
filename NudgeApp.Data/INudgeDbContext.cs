@@ -2,10 +2,12 @@
 {
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
     using NudgeApp.Data.Entities;
 
     public interface INudgeDbContext
     {
+        DatabaseFacade Database { get; }
         DbSet<UserEntity> UserEntity { get; set; }
         DbSet<PreferencesEntity> PreferencesEntity { get; set; }
         DbSet<NudgeEntity> NudgeEntity { get; set; }

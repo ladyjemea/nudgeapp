@@ -20,22 +20,5 @@ export class userservice {
       this.router.navigateByUrl('mainaccess');
     }, error => console.error(error));
   }
-
-  checkpassword(username: string, password: string): void {
-
-    this.http.get('http://localhost:5000/User/authenticate?username=' + username + '&password=' + password).pipe(map(user => {
-      // login successful if there's a jwt token in the respons
-      console.log(user);
-      console.log(user['id']);
-      console.log(user['token']);
-      if (user && user['token']) {
-        console.log('got in!');
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('currentUser', JSON.stringify(user))
-        this.router.navigateByUrl('mainaccess');
-      }
-    })).subscribe();
-
-  }
 }
 

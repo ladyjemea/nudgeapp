@@ -34,6 +34,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\login\login.ts" />
     <None Remove="ClientApp\src\app\preferredtravel\traveltypes.ts" />
+    <None Remove="ClientApp\src\app\services\AuthenticationService.ts" />
     <None Remove="ClientApp\src\app\services\JwtInterceptor.ts" />
     <None Remove="ClientApp\src\app\services\SubscriptionService.ts" />
     <None Remove="ClientApp\src\app\signup\signup.ts" />
@@ -43,6 +44,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\login\login.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\preferredtravel\traveltypes.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\AuthenticationService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\JwtInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\SubscriptionService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\signup\signup.ts" />
