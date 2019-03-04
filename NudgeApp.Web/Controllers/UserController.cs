@@ -8,7 +8,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
-    using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.DataManagement.Implementation.Interfaces;
     using NudgeApp.Web.Helpers;
@@ -67,6 +66,13 @@
                 Username = user.UserName,
                 Token = tokenString
             });
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult CheckToken()
+        {
+            return this.Ok();
         }
     }
 }

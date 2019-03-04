@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from './services/AuthenticationService';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [AuthenticationService]
 })
 export class AppComponent {
-  //title = 'app';
-  logitude: 7.809007;
-  latitude: 51.678418;
+  title = 'app';
 
-    onChooseLocation(event) {
-    console.log(event);
+  constructor(private authenticationService: AuthenticationService) {
+    this.authenticationService.checkToken();
   }
 }

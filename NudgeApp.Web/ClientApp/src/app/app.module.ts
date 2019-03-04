@@ -24,7 +24,6 @@ import { MainaccessComponent } from './mainaccess/mainaccess';
 import { CalendarComponent } from './calendar/calendar';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
-import { environment } from 'src/environments/environment';
 import { JwtInterceptor } from './services/JwtInterceptor';
 
 
@@ -33,8 +32,6 @@ import { JwtInterceptor } from './services/JwtInterceptor';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
     LoginComponent,
     SignupComponent,
     TravelComponent,
@@ -52,8 +49,6 @@ import { JwtInterceptor } from './services/JwtInterceptor';
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: true }),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
       { path: 'travelnow', component: TravelComponent },
