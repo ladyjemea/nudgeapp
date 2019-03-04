@@ -32,20 +32,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\login\login.ts" />
-    <None Remove="ClientApp\src\app\preferredtravel\traveltypes.ts" />
+    <None Remove="ClientApp\src\app\components\login\login.ts" />
     <None Remove="ClientApp\src\app\services\JwtInterceptor.ts" />
     <None Remove="ClientApp\src\app\services\SubscriptionService.ts" />
-    <None Remove="ClientApp\src\app\signup\signup.ts" />
-    <None Remove="ClientApp\src\app\signup\userservice.ts" />
+    <None Remove="ClientApp\src\app\components\signup\signup.ts" />
+    <None Remove="ClientApp\src\app\components\signup\userservice.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\login\login.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\preferredtravel\traveltypes.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\login\login.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\types\traveltypes.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\JwtInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\SubscriptionService.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\signup\signup.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\signup\signup.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\userservice.ts" />
   </ItemGroup>
 

@@ -1,13 +1,13 @@
-/// <reference path="../../../node_modules/@types/googlemaps/index.d.ts"/>
+/// <reference path="../../../../node_modules/@types/googlemaps/index.d.ts"/>
 
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import 'rxjs';
 import { SwPush } from '@angular/service-worker';
-import { subscriptionservice } from '../services/SubscriptionService'
-import { Subscription } from '../types/Subscription'
+import { subscriptionservice } from '../../services/SubscriptionService'
+import { Subscription } from '../../types/Subscription'
 import { MapsAPILoader } from '@agm/core';
-import { userservice } from '../services/userservice';
+import { userservice } from '../../services/userservice';
 
 
 @Component({

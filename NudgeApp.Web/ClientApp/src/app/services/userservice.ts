@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { TravelTypes } from '../preferredtravel/traveltypes';
+import { TravelTypes } from '../types/traveltypes';
 
 @Injectable()
 export class userservice {
