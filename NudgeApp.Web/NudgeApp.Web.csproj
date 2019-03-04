@@ -22,19 +22,25 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\login\**" />
+    <Compile Remove="ClientApp\src\app\preferredtravel\**" />
     <Compile Remove="ClientApp\src\mainaccess\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\login\**" />
+    <Content Remove="ClientApp\src\app\preferredtravel\**" />
     <Content Remove="ClientApp\src\mainaccess\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\login\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\preferredtravel\**" />
     <EmbeddedResource Remove="ClientApp\src\mainaccess\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\login\**" />
+    <None Remove="ClientApp\src\app\preferredtravel\**" />
     <None Remove="ClientApp\src\mainaccess\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\calendar\calendar.ts" />
-    <None Remove="ClientApp\src\app\login\login.ts" />
-    <None Remove="ClientApp\src\app\preferredtravel\traveltypes.ts" />
+    <None Remove="ClientApp\src\app\components\calendar\calendar.ts" />
     <None Remove="ClientApp\src\app\services\JwtInterceptor.ts" />
     <None Remove="ClientApp\src\app\services\SubscriptionService.ts" />
     <None Remove="ClientApp\src\app\components\signup\signup.ts" />
@@ -42,9 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\calendar\calendar.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\login\login.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\preferredtravel\traveltypes.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\calendar\calendar.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\JwtInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\SubscriptionService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\signup\signup.ts" />
