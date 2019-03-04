@@ -20,4 +20,3 @@ export class userservice {
     }, error => console.error(error));
   }
 }
-

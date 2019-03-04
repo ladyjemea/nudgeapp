@@ -4,11 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FlatpickrModule } from 'angularx-flatpickr';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-//import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-//import { DemoComponent } from './component';
 
 import { AgmCoreModule } from '@agm/core';
 
@@ -19,7 +14,6 @@ import { LoginComponent } from './components/login/login';
 import { SignupComponent } from './components/signup/signup';
 import { TravelComponent } from './components/travelnow/travelnow';
 import { MainaccessComponent } from './components/mainaccess/mainaccess';
-import { CalendarComponent } from './components/calendar/calendar';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { JwtInterceptor } from './services/JwtInterceptor';
@@ -33,25 +27,20 @@ import { JwtInterceptor } from './services/JwtInterceptor';
     LoginComponent,
     SignupComponent,
     TravelComponent,
-    MainaccessComponent,
-    CalendarComponent
+    MainaccessComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     CommonModule,
-    NgbModalModule,
-    FlatpickrModule.forRoot(),
-  //  CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: true }),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
       { path: 'travelnow', component: TravelComponent },
-      { path: 'mainaccess', component: MainaccessComponent },
-      { path: 'calendar', component: CalendarComponent }
+      { path: 'mainaccess', component: MainaccessComponent }
      
     ]),
     AgmCoreModule.forRoot({

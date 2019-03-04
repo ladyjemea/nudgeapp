@@ -7,13 +7,13 @@ import { SwPush } from '@angular/service-worker';
 import { subscriptionservice } from '../../services/SubscriptionService'
 import { Subscription } from '../../types/Subscription'
 import { MapsAPILoader } from '@agm/core';
-import { userservice } from '../../services/userservice';
+import { TravelVariant } from '../../types/TravelVariant';
 
 
 @Component({
   templateUrl: './mainaccess.html',
   styleUrls: ['./mainaccess.css'],
-  providers: [userservice, SwPush, subscriptionservice],
+  providers: [SwPush, subscriptionservice],
 })
 
 export class MainaccessComponent {
@@ -23,23 +23,22 @@ export class MainaccessComponent {
   lat: number;
   lng: number;
 
+  travelVariants: TravelVariant[];
 
-  constructor(
-    private swPush: SwPush,
-    private userService: userservice,
-    private subscriptionservice: subscriptionservice, private mapsAPILoader: MapsAPILoader) {
+  constructor(private swPush: SwPush, private subscriptionservice: subscriptionservice, private mapsAPILoader: MapsAPILoader) {
+    
     this.subscribeToNotifications();
-
+    this.travelVariants = [];
+    this.travelVariants.push(<TravelVariant>{ time: "some time", type: "walking" });
+    this.travelVariants.push(<TravelVariant>{ time: "another time", type: "bike" });
+    console.log(this.travelVariants);
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position);
       this.lat = position.coords.latitude;
       this.lng = position.coords.longitude;
-
-
-    })
+    });
   }
+
   test() {
-    //gets the current location of the user
     this.mapsAPILoader.load().then(() => {
       var geocoder = new google.maps.Geocoder;
       var latlng = new google.maps.LatLng(this.lat, this.lng);
@@ -55,7 +54,7 @@ export class MainaccessComponent {
           origin: latlng,
           destination: results[0].geometry.location,
           travelMode: google.maps.TravelMode.WALKING
-     
+
         };
 
         /*var directionsService = new google.maps.DirectionsService();
@@ -74,8 +73,6 @@ export class MainaccessComponent {
     });
   }
 
-
-
   public userLocation(form: NgForm) {
     this.mapsAPILoader.load().then(() => {
       var geocoder = new google.maps.Geocoder;
@@ -89,24 +86,19 @@ export class MainaccessComponent {
           travelMode: google.maps.TravelMode.WALKING
         };
 
-        /*var directionsService = new google.maps.DirectionsService();
-        directionsService.route(request, (result, status) => {
-          console.log('Travel: ');
-          console.log(result);
-        });*/
         console.log('times:')
         var distanceMatrixService = new google.maps.DistanceMatrixService();
         distanceMatrixService.getDistanceMatrix({
           origins: [latlng],
           destinations: [results[0].geometry.location],
           travelMode: google.maps.TravelMode.WALKING
-        }, (result, status) => { console.log('walk: ');console.log(result.rows[0].elements[0].duration); });
+        }, (result, status) => { console.log('walk: '); console.log(result.rows[0].elements[0].duration); });
 
         distanceMatrixService.getDistanceMatrix({
           origins: [latlng],
           destinations: [results[0].geometry.location],
           travelMode: google.maps.TravelMode.BICYCLING
-        }, (result, status) => { console.log('bike: '); console.log( result.rows[0].elements[0].duration); });
+        }, (result, status) => { console.log('bike: '); console.log(result.rows[0].elements[0].duration); });
 
         distanceMatrixService.getDistanceMatrix({
           origins: [latlng],
