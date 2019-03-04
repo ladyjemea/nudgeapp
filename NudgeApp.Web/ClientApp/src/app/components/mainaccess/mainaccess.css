@@ -28,3 +28,7 @@ input[type=submit] {
   cursor: pointer;
   width: 100%;
 }
+agm-map {
+ height:500px;
+ width:100%;
+}

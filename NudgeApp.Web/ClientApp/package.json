@@ -35,10 +35,13 @@
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26",
     "sw-precache": "5.2.1",
-    "@types/googlemaps": "3.30.16"
+    "@types/googlemaps": "3.30.16",
+    "@ng-bootstrap/ng-bootstrap": "4.0.4",
+    "angular-calendar": "0.27.0-beta.9",
+    "angularx-flatpickr": "6.1.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.13.1",
+    "@angular-devkit/build-angular": "^0.13.4",
     "@angular/cli": "~6.0.0",
     "@angular/compiler-cli": "6.1.10",
     "@angular/language-service": "^6.0.0",
