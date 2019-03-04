@@ -11,12 +11,12 @@ export class AuthenticationService {
   constructor(private http: HttpClient, private router: Router) { }
 
   checkpassword(username: string, password: string): void {
-
+    console.log(username);
     var params = new HttpParams();
     params = params.append('username', username);
     params = params.append('password', password);
-
-    this.http.get('http://localhost:5000/User/authenticate?username=', { params: params }).pipe(map(user => {
+    console.log(params);
+    this.http.get('http://localhost:5000/User/authenticate', { params: params }).pipe(map(user => {
       if (user && user['token']) {
         localStorage.setItem('currentUser', JSON.stringify(user))
         AuthenticationService.loggedIn = true;

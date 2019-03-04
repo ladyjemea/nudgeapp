@@ -1,5 +1,5 @@
-export class Subscription {
-  public endpoint: string;
-  public p256dh: string;
-  public auth: string;
+export interface Subscription {
+  endpoint: string;
+  p256dh: string;
+  auth: string;
 }

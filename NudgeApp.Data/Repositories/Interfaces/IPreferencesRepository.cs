@@ -1,12 +1,11 @@
 ﻿namespace NudgeApp.Data.Repositories.Interfaces
 {
     using System;
-    using NudgeApp.Common.Dtos;
     using NudgeApp.Data.Entities;
-    public interface IPreferencesRepository
+
+    public interface IPreferencesRepository : IRepository<PreferencesEntity>
     {
         PreferencesEntity AddPreferences(Guid userId);
-        void UpdatePreferences(PreferencesEntity preferencesId);
         PreferencesEntity GetPreferences(Guid userId);
     }
 }

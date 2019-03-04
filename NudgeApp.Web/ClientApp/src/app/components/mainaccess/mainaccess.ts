@@ -121,7 +121,7 @@ export class MainaccessComponent {
     })
       .then(sub => {
         var jsonSub = sub.toJSON();
-        var subscription = new Subscription();
+        var subscription = <Subscription>{};
         subscription.auth = jsonSub["keys"]["auth"];
         subscription.p256dh = jsonSub["keys"]["p256dh"];
         subscription.endpoint = sub["endpoint"];

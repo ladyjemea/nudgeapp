@@ -69,7 +69,7 @@
 
             preferences.PreferedTransportationType = preferedTravelType;
 
-            this.PreferencesRepository.UpdatePreferences(preferences);
+            this.PreferencesRepository.Update(preferences);
         }
 
         private static void GenerateHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

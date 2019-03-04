@@ -8,5 +8,6 @@
         TEntity Get(Guid id);
         void Insert(TEntity entity);
         void InsertWIthNoSave(TEntity entity);
+        void Update(TEntity entity);
     }
 }
