@@ -2,9 +2,10 @@
 {
     using System;
     using NudgeApp.Common.Dtos;
-    public interface INudgeRepository
+    using NudgeApp.Data.Entities;
+
+    public interface INudgeRepository : IRepository<NudgeEntity>
     {
         Guid Create(NudgeDto nudge, Guid userId, Guid envInfoId);
-        NudgeDto Get(Guid id);
     }
 }

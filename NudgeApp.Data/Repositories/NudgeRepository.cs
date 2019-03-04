@@ -1,18 +1,13 @@
 ﻿namespace NudgeApp.Data.Repositories
 {
     using System;
-    using System.Linq;
     using NudgeApp.Common.Dtos;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
-    public class NudgeRepository : INudgeRepository
+    public class NudgeRepository : Repository<NudgeEntity>, INudgeRepository
     {
-        private readonly INudgeDbContext Db;
-        public NudgeRepository(INudgeDbContext db)
-        {
-            this.Db = db;
-        }
+        public NudgeRepository(INudgeDbContext context) : base(context) { }
 
         public Guid Create(NudgeDto nudge, Guid userId, Guid envInfoId)
         {
@@ -24,25 +19,8 @@
                 TransportationType = nudge.TransportationType
             };
 
-            var result = this.Db.NudgeEntity.Add(entity);
-            return result.Entity.Id;
-        }
-
-        public NudgeDto Get(Guid id)
-        {
-            var entity = this.Db.GetAll<NudgeEntity>().Where(e => e.Id == id).FirstOrDefault();
-
-            NudgeDto result = null;
-            if (entity != null)
-            {
-                result = new NudgeDto
-                {
-                    NudgeResult = entity.NudgeResult,
-                    TransportationType = entity.TransportationType
-                };
-            }
-
-            return result;
+            this.Insert(entity);
+            return entity.Id;
         }
     }
 }

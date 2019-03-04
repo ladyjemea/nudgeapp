@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\calendar\calendar.ts" />
+    <None Remove="ClientApp\src\app\components\calendar\calendar.ts" />
     <None Remove="ClientApp\src\app\login\login.ts" />
     <None Remove="ClientApp\src\app\preferredtravel\traveltypes.ts" />
     <None Remove="ClientApp\src\app\services\JwtInterceptor.ts" />
@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\calendar\calendar.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\calendar\calendar.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\preferredtravel\traveltypes.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\JwtInterceptor.ts" />
