@@ -126,6 +126,8 @@ namespace NudgeApp.Web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            app.ApplicationServices.GetService<INudgeDbContext>().Database.Migrate();
         }
 
         private void ConfigureDependencyInjection(IServiceCollection services)

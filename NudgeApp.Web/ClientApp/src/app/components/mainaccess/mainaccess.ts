@@ -20,8 +20,8 @@ export class MainaccessComponent {
 
   readonly VAPID_PUBLIC_KEY = "BD6e5GSCe5_Y08GgTyWlpFcQIPuMkLrEYfAiNBzrc-vkxPuYN3oeJqdvR3gjIGn_VxNu1G58J9zxbsd6-6FR70Y";
 
-  lat: number = 51.678418;
-  lng: number = 7.809007;
+  lat: number;
+  lng: number;
 
 
   constructor(
@@ -75,8 +75,44 @@ export class MainaccessComponent {
 
 
   public userLocation(form: NgForm) {
+    this.mapsAPILoader.load().then(() => {
+      var geocoder = new google.maps.Geocoder;
+      var latlng = new google.maps.LatLng(this.lat, this.lng);
 
+      var address = form.value.destination;
+      geocoder.geocode({ 'address': address }, function (results, status) {
+        var request = {
+          origin: latlng,
+          destination: results[0].geometry.location,
+          travelMode: google.maps.TravelMode.WALKING
+        };
 
+        /*var directionsService = new google.maps.DirectionsService();
+        directionsService.route(request, (result, status) => {
+          console.log('Travel: ');
+          console.log(result);
+        });*/
+        console.log('times:')
+        var distanceMatrixService = new google.maps.DistanceMatrixService();
+        distanceMatrixService.getDistanceMatrix({
+          origins: [latlng],
+          destinations: [results[0].geometry.location],
+          travelMode: google.maps.TravelMode.WALKING
+        }, (result, status) => { console.log('walk: ');console.log(result.rows[0].elements[0].duration); });
+
+        distanceMatrixService.getDistanceMatrix({
+          origins: [latlng],
+          destinations: [results[0].geometry.location],
+          travelMode: google.maps.TravelMode.BICYCLING
+        }, (result, status) => { console.log('bike: '); console.log( result.rows[0].elements[0].duration); });
+
+        distanceMatrixService.getDistanceMatrix({
+          origins: [latlng],
+          destinations: [results[0].geometry.location],
+          travelMode: google.maps.TravelMode.TRANSIT
+        }, (result, status) => { console.log('bus: '); console.log(result); });
+      });
+    });
   }
   private subscribeToNotifications() {
 

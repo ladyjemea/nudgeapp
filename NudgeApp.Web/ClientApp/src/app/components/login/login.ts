@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs';
-import { userservice } from '../../services/userservice';
+import { userservice } from '../services/userservice';
+import { AuthenticationService } from '../services/AuthenticationService';
 
 @Component({
   templateUrl: './login.html',
@@ -11,10 +12,10 @@ import { userservice } from '../../services/userservice';
 })
 export class LoginComponent {
 
-  constructor(private userService: userservice) { }
+  constructor(private authenticationService: AuthenticationService) { }
   public loginUser(form: NgForm) {
     //console.log(form.value);
 
-    this.userService.checkpassword(form.value.username, form.value.password);
+    this.authenticationService.checkpassword(form.value.username, form.value.password);
   }
 }
