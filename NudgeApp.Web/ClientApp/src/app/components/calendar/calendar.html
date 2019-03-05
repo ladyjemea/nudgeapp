@@ -1,27 +1,3 @@
-<ng-template #modalContent let-close="close">
-  <div class="modal-header">
-    <h5 class="modal-title">Event action occurred</h5>
-    <button type="button" class="close" (click)="close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div>
-      Action:
-      <pre>{{ modalData?.action }}</pre>
-    </div>
-    <div>
-      Event:
-      <pre>{{ modalData?.event | json }}</pre>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="close()">
-      OK
-    </button>
-  </div>
-</ng-template>
-
 <div class="row text-center">
   <div class="col-md-4">
     <div class="btn-group">
@@ -70,39 +46,11 @@
   </div>
 </div>
 <br />
-<div [ngSwitch]="view">
-  <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
-                           [viewDate]="viewDate"
-                           [events]="events"
-                           [refresh]="refresh"
-                           [activeDayIsOpen]="activeDayIsOpen"
-                           (dayClicked)="dayClicked($event.day)"
-                           (eventClicked)="handleEvent('Clicked', $event.event)"
-                           (eventTimesChanged)="eventTimesChanged($event)">
-  </mwl-calendar-month-view>
-  <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
-                          [viewDate]="viewDate"
-                          [events]="events"
-                          [refresh]="refresh"
-                          (eventClicked)="handleEvent('Clicked', $event.event)"
-                          (eventTimesChanged)="eventTimesChanged($event)">
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day"
-                         [viewDate]="viewDate"
-                         [events]="events"
-                         [refresh]="refresh"
-                         (eventClicked)="handleEvent('Clicked', $event.event)"
-                         (eventTimesChanged)="eventTimesChanged($event)">
-  </mwl-calendar-day-view>
-</div>
 
 <br /><br /><br />
 
 <h3>
-  Edit events
-  <button class="btn btn-primary pull-right" (click)="addEvent()">
-    Add new
-  </button>
+  Add Events
   <div class="clearfix"></div>
 </h3>
 
@@ -110,11 +58,9 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th>Primary color</th>
-      <th>Secondary color</th>
-      <th>Starts at</th>
+      <th>Address</th>
       <th>Ends at</th>
-      <th>Remove</th>
+      <th>Add Event</th>
     </tr>
   </thead>
 
@@ -123,50 +69,20 @@
       <td>
         <input type="text"
                class="form-control"
-               [(ngModel)]="event.title"
-               (keyup)="refresh.next()" />
+               [(ngModel)]="event.title" />
       </td>
       <td>
-        <input type="color"
-               [(ngModel)]="event.color.primary"
-               (change)="refresh.next()" />
+        <input type="text"
+               class="form-control"/>
       </td>
+
+
       <td>
-        <input type="color"
-               [(ngModel)]="event.color.secondary"
-               (change)="refresh.next()" />
-      </td>
+        <input type="time"
+               class="form-control" />
       <td>
-        <input class="form-control"
-               type="text"
-               mwlFlatpickr
-               [(ngModel)]="event.start"
-               (ngModelChange)="refresh.next()"
-               [altInput]="true"
-               [convertModelValue]="true"
-               [enableTime]="true"
-               dateFormat="Y-m-dTH:i"
-               altFormat="F j, Y H:i"
-               placeholder="Not set" />
-      </td>
-      <td>
-        <input class="form-control"
-               type="text"
-               mwlFlatpickr
-               [(ngModel)]="event.end"
-               (ngModelChange)="refresh.next()"
-               [altInput]="true"
-               [convertModelValue]="true"
-               [enableTime]="true"
-               dateFormat="Y-m-dTH:i"
-               altFormat="F j, Y H:i"
-               placeholder="Not set" />
-      </td>
-      <td>
-        <button class="btn btn-danger"
-                (click)="events.splice(index, 1); refresh.next()">
-          Delete
-        </button>
+
+        <button (click)="addEvent()">Add Event</button>
       </td>
     </tr>
   </tbody>

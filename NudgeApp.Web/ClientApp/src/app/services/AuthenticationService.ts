@@ -16,7 +16,7 @@ export class AuthenticationService {
     params = params.append('username', username);
     params = params.append('password', password);
 
-    this.http.get('http://localhost:5000/User/authenticate?username=', { params: params }).pipe(map(user => {
+    this.http.get('http://localhost:5000/User/authenticate', { params: params }).pipe(map(user => {
       if (user && user['token']) {
         localStorage.setItem('currentUser', JSON.stringify(user))
         AuthenticationService.loggedIn = true;

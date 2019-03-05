@@ -22,7 +22,21 @@ export class MainaccessComponent {
 
   lat: number;
   lng: number;
+  
+   onChooseLocation($event) {
+    console.log($event.coords.lat);
+     console.log($event.coords.lng);
 
+     this.mapsAPILoader.load().then(() => {
+       var geocoder = new google.maps.Geocoder;
+       var latlng = new google.maps.LatLng($event.coords.lat, $event.coords.lng);
+       geocoder.geocode({ 'location': latlng }, function (results, status) {
+         console.log("map results");
+         console.log(results);
+       });
+     });
+
+  }
 
   constructor(
     private swPush: SwPush,
@@ -43,9 +57,10 @@ export class MainaccessComponent {
     this.mapsAPILoader.load().then(() => {
       var geocoder = new google.maps.Geocoder;
       var latlng = new google.maps.LatLng(this.lat, this.lng);
-      /*geocoder.geocode({ 'location': latlng }, function (results, status) {
+      geocoder.geocode({ 'location': latlng }, function (results, status) {
+        console.log("map results");
         console.log(results);
-      });*/
+      });
       var address = 'Norway, Tromsø, Luleåvegen 19'; // should get the destination from the input field "enter destination"
       geocoder.geocode({ 'address': address }, function (results, status) {
         console.log(results[0].geometry.location);
