@@ -2,7 +2,7 @@
 
 namespace NudgeApp.Data.OracleDb.Queries
 {
-    public interface IAnonymousNudgesRepository
+    public interface IAnonymousNudgeOracleRepository
     {
         void GetAllEntries();
         void Insert(AnonymousNudgeEntity entity);

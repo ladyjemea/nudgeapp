@@ -2,7 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Newtonsoft.Json;
+    using NudgeApp.Common.Dtos;
+    using NudgeApp.Common.Enums;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
     using RestSharp;
 
@@ -37,6 +40,64 @@
             var response = client.Execute(request);
 
             return JsonConvert.DeserializeObject<List<HourlyForecast>>(response.Content);
+        }
+
+        public ForecastDto GetForecast(DateTime dateTime)
+        {
+            if (DateTime.Now.AddDays(1) > dateTime)
+                throw new Exception("Date too far in the future. Forecast unreliable.");
+
+            var forecast = this.Get24HTromsWeather().First(f => f.DateTime == dateTime);
+
+            return new ForecastDto
+            {
+                CloudCoveragePercent = forecast.CloudCover,
+                Temperature = forecast.RealFeelTemperature.Value,
+                Time = dateTime,
+                Wind = forecast.Wind.Speed.Value,
+                PrecipitationProbability = forecast.PrecipitationProbability,
+                SkyCoverage = GetSkyCoverage(forecast),
+                RoadCondition = GetRoadCondition(forecast)
+            };
+        }
+
+        private SkyCoverageType GetSkyCoverage(HourlyForecast forecast)
+        {
+            SkyCoverageType coverage = forecast.CloudCover <= 15 ? SkyCoverageType.Clear : SkyCoverageType.PartlyCloudy;
+
+            if (forecast.CloudCover > 75) coverage = SkyCoverageType.Cloudy;
+
+            return coverage;
+        }
+
+        private RoadCondition GetRoadCondition(HourlyForecast forecast)
+        {
+            RoadCondition roadCondition;
+
+            if (forecast.Temperature.Value <= 3)
+            {
+                if (forecast.SnowProbability < 20)
+                {
+                    roadCondition = RoadCondition.Ice;
+                }
+                else
+                {
+                    roadCondition = RoadCondition.Snow;
+                }
+            }
+            else
+            {
+                if (forecast.RainProbability > 20)
+                {
+                    roadCondition = RoadCondition.Wet;
+                }
+                else
+                {
+                    roadCondition = RoadCondition.Dry;
+                }
+            }
+
+            return roadCondition;
         }
     }
 }

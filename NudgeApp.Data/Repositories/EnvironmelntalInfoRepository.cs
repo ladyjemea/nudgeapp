@@ -6,37 +6,34 @@
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
-    public class EnvironmelntalInfoRepository : IEnvironmelntalInfoRepository
+    public class EnvironmelntalInfoRepository : Repository<EnvironmentalInfoEntity>, IEnvironmelntalInfoRepository
     {
-        private readonly INudgeDbContext Db;
-        public EnvironmelntalInfoRepository(INudgeDbContext db)
-        {
-            this.Db = db;
-        }
+        public EnvironmelntalInfoRepository(INudgeDbContext context) : base(context) { }
 
-        public Guid Create(EnvironmelntalInfoDto info)
+        public Guid CreateInfo(ForecastDto forecast)
         {
             var entity = new EnvironmentalInfoEntity
             {
-                CloudCoveragePercent = info.CloudCoveragePercent,
-                RoadCondition = info.RoadCondition,
-                Temperature = info.Temperature,
-                Time = info.Time,
-                Wind = info.Wind
+                CloudCoveragePercent = forecast.CloudCoveragePercent,
+                RoadCondition = forecast.RoadCondition,
+                Temperature = forecast.Temperature,
+                Time = forecast.Time,
+                Wind = forecast.Wind
             };
 
-            var result = this.Db.EnvironmentalInfoEntity.Add(entity);
-            return result.Entity.Id;
+            this.Insert(entity);
+
+            return entity.Id;
         }
 
-        public EnvironmelntalInfoDto Get(Guid id)
+        public ForecastDto GetForecast(Guid id)
         {
-            var entity = this.Db.GetAll<EnvironmentalInfoEntity>().Where(e => e.Id == id).FirstOrDefault();
+            var entity = this.Get(id);
 
-            EnvironmelntalInfoDto result = null;
+            ForecastDto result = null;
             if (entity != null)
             {
-                result = new EnvironmelntalInfoDto
+                result = new ForecastDto
                 {
                     CloudCoveragePercent = entity.CloudCoveragePercent,
                     RoadCondition = entity.RoadCondition,

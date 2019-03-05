@@ -8,7 +8,7 @@
     using Microsoft.EntityFrameworkCore;
     using NudgeApp.Data.Entities;
 
-    public class AnonymousNudgesRepository : IAnonymousNudgesRepository
+    public class AnonymousNudgeOracleRepository : IAnonymousNudgeOracleRepository
     {
         private readonly INudgeOracleConnection NudgeOracleConnection;
 
@@ -16,7 +16,7 @@
         private const string insert = "INSERT INTO Nudges";
         private const string approx_count = "APPROX_COUNT_DISTINCT From Nudges";
 
-        public AnonymousNudgesRepository(INudgeOracleConnection nudgeOracleConnection)
+        public AnonymousNudgeOracleRepository(INudgeOracleConnection nudgeOracleConnection)
         {
             this.NudgeOracleConnection = nudgeOracleConnection;
         }
