@@ -1,0 +1,22 @@
+<h2 class="center"> Travel choice</h2>
+
+<br />
+
+<p class="center"> Temperature : <br />
+    Walking : <br />
+    Biking : <br />
+    Bus : </p>
+
+<br /> <br />
+
+<form #travelType="ngForm" (ngSubmit)="pickTravelMode(travelType)">
+  <div id="submit">
+    <input type="button" name="submit" value="I'll walk" />
+    <input type="button" name="submit" value="I'll take the bike" />
+    <input type="button" name="submit" value="I'll take the bus" />
+    <input type="button" name="submit" value="I'll pass" />
+  </div>
+
+</form>
+
+<!--should get temperature, distance for all travel types and display the on the screen-->

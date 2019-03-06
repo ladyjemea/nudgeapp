@@ -20,6 +20,7 @@ import { SignupComponent } from './components/signup/signup';
 import { TravelComponent } from './components/travelnow/travelnow';
 import { MainaccessComponent } from './components/mainaccess/mainaccess';
 import { CalendarComponent } from './components/calendar/calendar';
+import { MainDisplayComponent } from './components/maindisplay/maindisplay';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { JwtInterceptor } from './services/JwtInterceptor';
@@ -34,7 +35,8 @@ import { JwtInterceptor } from './services/JwtInterceptor';
     SignupComponent,
     TravelComponent,
     MainaccessComponent,
-    CalendarComponent
+    CalendarComponent,
+    MainDisplayComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,7 +53,8 @@ import { JwtInterceptor } from './services/JwtInterceptor';
       { path: 'signup', component: SignupComponent },
       { path: 'travelnow', component: TravelComponent },
       { path: 'mainaccess', component: MainaccessComponent },
-      { path: 'calendar', component: CalendarComponent }
+      { path: 'calendar', component: CalendarComponent },
+      { path: 'maindisplay', component: MainDisplayComponent }
      
     ]),
     AgmCoreModule.forRoot({

@@ -1,11 +1,6 @@
 <h2 class="center"> Travel Now </h2>
 
 <form #travelForm="ngForm" (ngSubmit)="userLocation(travelForm)">
-  <!--<div class="map">
-    <agm-map style="height:300px; width:300px" [latitude]="lat" [longitude]="lng">
-      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-    </agm-map>
-  </div>-->
 
   <div>
     <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="onChooseLocation($event)"> 

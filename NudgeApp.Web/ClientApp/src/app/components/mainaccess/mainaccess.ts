@@ -8,6 +8,7 @@ import { subscriptionservice } from '../../services/SubscriptionService'
 import { Subscription } from '../../types/Subscription'
 import { MapsAPILoader } from '@agm/core';
 import { userservice } from '../../services/userservice';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -39,6 +40,8 @@ export class MainaccessComponent {
   }
 
   constructor(
+    private router: Router,
+    private _activatedRoute: ActivatedRoute,
     private swPush: SwPush,
     private userService: userservice,
     private subscriptionservice: subscriptionservice, private mapsAPILoader: MapsAPILoader) {
@@ -51,8 +54,10 @@ export class MainaccessComponent {
 
 
     })
+    
   }
   test() {
+   
     //gets the current location of the user
     this.mapsAPILoader.load().then(() => {
       var geocoder = new google.maps.Geocoder;
@@ -73,12 +78,6 @@ export class MainaccessComponent {
      
         };
 
-        /*var directionsService = new google.maps.DirectionsService();
-        directionsService.route(request, (result, status) => {
-          console.log('Travel: ');
-          console.log(result);
-        });*/
-
         var distanceMatrixService = new google.maps.DistanceMatrixService();
         distanceMatrixService.getDistanceMatrix({
           origins: [latlng],
@@ -87,8 +86,8 @@ export class MainaccessComponent {
         }, (result, status) => { console.log(result.rows[0].elements[0].duration); });
       });
     });
+    
   }
-
 
 
   public userLocation(form: NgForm) {
@@ -130,7 +129,9 @@ export class MainaccessComponent {
         }, (result, status) => { console.log('bus: '); console.log(result); });
       });
     });
+    this.router.navigateByUrl('/maindisplay');
   }
+  
   private subscribeToNotifications() {
 
     this.swPush.requestSubscription({

@@ -1,0 +1,23 @@
+body {
+  align-content: center;
+}
+.center{
+  text-align: center;
+  color: #00b300;
+}
+p{
+  font-size: 22px;
+  color: #00b300;
+}
+
+input[type=button]{
+  display: inline-block;
+  align-items: center;
+  width: 25%;
+  background-color: #00b300;
+  color: white;
+  padding: 12px 18px;
+  margin: 8px 0;
+  border: 4px solid white;
+  border-radius: 10px;
+}
