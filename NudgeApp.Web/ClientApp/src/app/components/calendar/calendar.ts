@@ -15,7 +15,6 @@ const colors: any = {
 @Component({
   selector: 'mwl-demo-component',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./calendar.css'],
   templateUrl: './calendar.html'
 })
 export class CalendarComponent {

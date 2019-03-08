@@ -9,6 +9,7 @@ import { Subscription } from '../../types/Subscription'
 import { MapsAPILoader } from '@agm/core';
 import { userservice } from '../../services/userservice';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TravelVariant } from '../../types/TravelVariant';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class MainaccessComponent {
     private swPush: SwPush,
     private userService: userservice,
     private subscriptionservice: subscriptionservice, private mapsAPILoader: MapsAPILoader) {
+
     this.subscribeToNotifications();
 
     navigator.geolocation.getCurrentPosition((position) => {
@@ -55,11 +57,8 @@ export class MainaccessComponent {
     });
   }
 
-    })
-    
-  }
-  test() {
    
+  test() {
     //gets the current location of the user
     this.mapsAPILoader.load().then(() => {
       var geocoder = new google.maps.Geocoder;
