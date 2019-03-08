@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   templateUrl: './mainaccess.html',
   styleUrls: ['./mainaccess.css'],
-  providers: [userservice, SwPush, subscriptionservice],
+  providers: [SwPush, subscriptionservice],
 })
 
 export class MainaccessComponent {
@@ -23,6 +23,8 @@ export class MainaccessComponent {
 
   lat: number;
   lng: number;
+
+  travelVariants: TravelVariant[];
   
    onChooseLocation($event) {
     console.log($event.coords.lat);
@@ -48,10 +50,10 @@ export class MainaccessComponent {
     this.subscribeToNotifications();
 
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position);
       this.lat = position.coords.latitude;
       this.lng = position.coords.longitude;
-
+    });
+  }
 
     })
     
@@ -75,7 +77,7 @@ export class MainaccessComponent {
           origin: latlng,
           destination: results[0].geometry.location,
           travelMode: google.maps.TravelMode.WALKING
-     
+
         };
 
         var distanceMatrixService = new google.maps.DistanceMatrixService();
@@ -103,24 +105,19 @@ export class MainaccessComponent {
           travelMode: google.maps.TravelMode.WALKING
         };
 
-        /*var directionsService = new google.maps.DirectionsService();
-        directionsService.route(request, (result, status) => {
-          console.log('Travel: ');
-          console.log(result);
-        });*/
         console.log('times:')
         var distanceMatrixService = new google.maps.DistanceMatrixService();
         distanceMatrixService.getDistanceMatrix({
           origins: [latlng],
           destinations: [results[0].geometry.location],
           travelMode: google.maps.TravelMode.WALKING
-        }, (result, status) => { console.log('walk: ');console.log(result.rows[0].elements[0].duration); });
+        }, (result, status) => { console.log('walk: '); console.log(result.rows[0].elements[0].duration); });
 
         distanceMatrixService.getDistanceMatrix({
           origins: [latlng],
           destinations: [results[0].geometry.location],
           travelMode: google.maps.TravelMode.BICYCLING
-        }, (result, status) => { console.log('bike: '); console.log( result.rows[0].elements[0].duration); });
+        }, (result, status) => { console.log('bike: '); console.log(result.rows[0].elements[0].duration); });
 
         distanceMatrixService.getDistanceMatrix({
           origins: [latlng],
@@ -139,7 +136,7 @@ export class MainaccessComponent {
     })
       .then(sub => {
         var jsonSub = sub.toJSON();
-        var subscription = new Subscription();
+        var subscription = <Subscription>{};
         subscription.auth = jsonSub["keys"]["auth"];
         subscription.p256dh = jsonSub["keys"]["p256dh"];
         subscription.endpoint = sub["endpoint"];

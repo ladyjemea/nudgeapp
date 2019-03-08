@@ -3,7 +3,7 @@
     <div class="container">
       <a class="navbar-brand" [routerLink]='["/"]'>NudgeApp.Web</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded" (click)="toggle()">
+              [attr.aria-expanded]="isExpanded" (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]='{"show": isExpanded}'>
@@ -11,20 +11,20 @@
           <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
             <a class="nav-link text-dark" [routerLink]='["/"]'>Home</a>
           </li>
-          <!-- <li class="nav-item" [routerLinkActive]='["link-active"]'>
-    <a class="nav-link text-dark" [routerLink]='["/counter"]'>Counter</a>
-  </li>
-  <li class="nav-item" [routerLinkActive]='["link-active"]'>
-    <a class="nav-link text-dark" [routerLink]='["/fetch-data"]'>Fetch data</a>
-  </li>-->
-          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+          <li *ngIf="!LoggedIn" class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" [routerLink]='["/login"]'>Log in</a>
           </li>
-          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+          <li *ngIf="!LoggedIn" class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" [routerLink]='["/signup"]'>Sign Up</a>
           </li>
-          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+          <li *ngIf="LoggedIn" class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark" [routerLink]='["/mainaccess"]'>Main</a>
+          </li>
+          <li *ngIf="LoggedIn" class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" [routerLink]='["/calendar"]'>Enter Event</a>
+          </li>
+          <li *ngIf="LoggedIn" class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark" (click)='logOut()' [routerLink]='["/"]'>Log out</a>
           </li>
         </ul>
       </div>

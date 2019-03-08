@@ -6,12 +6,11 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthenticationService {
 
-  public static loggedIn: boolean;
+  public static loggedIn: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) { }
 
   checkpassword(username: string, password: string): void {
-
     var params = new HttpParams();
     params = params.append('username', username);
     params = params.append('password', password);

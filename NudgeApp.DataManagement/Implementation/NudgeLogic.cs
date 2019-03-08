@@ -5,7 +5,6 @@
     using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
-    using NudgeApp.Data.OracleDb;
     using NudgeApp.Data.OracleDb.Queries;
     using NudgeApp.Data.Repositories.Interfaces;
     using NudgeApp.DataManagement.ExternalApi.Weather;
@@ -17,19 +16,21 @@
         private readonly INudgeRepository NudgeRepository;
         private readonly IEnvironmelntalInfoRepository EnvironmelntalInfoRepository;
         private readonly IUserRepository UserRepository;
-        private readonly INudgeOracleConnection NudgeOracleConnection;
-        private readonly IAnonymousNudgesRepository AnonymousNudgesRepository;
+        private readonly IPreferencesRepository PreferencesRepository;
+        private readonly ITripRepository TripRepository;
+        private readonly IAnonymousNudgeOracleRepository AnonymousNudgeOracleRepository;
         private readonly IAnonymousNudgeRepository AnonymousNudgeRepository;
         private readonly IWeatherApi WeatherApi;
 
-        public NudgeLogic(INudgeRepository nudgeRepository, IEnvironmelntalInfoRepository environmelntalInfoRepository, IUserRepository userRepository, INudgeOracleConnection nudgeOracleConnection, IAnonymousNudgesRepository anonymousNudgesRepository,
-            IAnonymousNudgeRepository anonymousNudgeRepository, IWeatherApi weatherApi)
+        public NudgeLogic(INudgeRepository nudgeRepository, IEnvironmelntalInfoRepository environmelntalInfoRepository, IUserRepository userRepository, IPreferencesRepository preferencesRepository,
+            ITripRepository tripRepository, IAnonymousNudgeOracleRepository anonymousNudgesRepository, IAnonymousNudgeRepository anonymousNudgeRepository, IWeatherApi weatherApi)
         {
             this.NudgeRepository = nudgeRepository;
             this.EnvironmelntalInfoRepository = environmelntalInfoRepository;
             this.UserRepository = userRepository;
-            this.NudgeOracleConnection = nudgeOracleConnection;
-            this.AnonymousNudgesRepository = anonymousNudgesRepository;
+            this.PreferencesRepository = preferencesRepository;
+            this.TripRepository = tripRepository;
+            this.AnonymousNudgeOracleRepository = anonymousNudgesRepository;
             this.AnonymousNudgeRepository = anonymousNudgeRepository;
             this.WeatherApi = weatherApi;
         }
@@ -37,7 +38,7 @@
         public void ManualNudge(NudgeDto nudge)
         {
             var forecast = this.WeatherApi.Get24HTromsWeather().FirstOrDefault(f => f.DateTime.Hour == nudge.DepartureTime.Hour);
-                       
+
             var nudgeEntity = new AnonymousNudgeEntity
             {
                 ActualTransportationType = nudge.TransportationType,
@@ -49,7 +50,7 @@
                 Wind = forecast.Wind.Speed.Value
             };
 
-            this.AnonymousNudgesRepository.Insert(nudgeEntity);
+            this.AnonymousNudgeOracleRepository.Insert(nudgeEntity);
         }
 
         private SkyCoverageType GetSkyCoverage(HourlyForecast forecast)
@@ -61,17 +62,31 @@
             return coverage;
         }
 
-        public void AddNudge(NudgeDto nudge, EnvironmelntalInfoDto envInfo, string userName)
+        public void AddNudge(Guid userId, NudgeDto nudge, ForecastDto forecast, TripDto trip)
         {
-            var userId = this.UserRepository.GetUser(userName).Id;
+            var envId = this.EnvironmelntalInfoRepository.CreateInfo(forecast);
+            this.NudgeRepository.Create(nudge, userId, envId);
+            this.TripRepository.Create(trip, userId, envId);
 
-            if (userId != null)
+            try
             {
-                var envId = this.EnvironmelntalInfoRepository.Create(envInfo);
-                this.NudgeRepository.Create(nudge, userId, envId);
+                this.AnonymousNudgeOracleRepository.Insert(new AnonymousNudgeEntity
+                {
+                    ActualTransportationType = nudge.TransportationType,
+                    PrecipitationProbability = forecast.PrecipitationProbability,
+                    Result = NudgeResult.Successful,
+                    RoadCondition = forecast.RoadCondition,
+                    SkyCoverage = forecast.SkyCoverage,
+                    Temperature = forecast.Temperature,
+                    Wind = forecast.Wind,
+                    UserPreferedTransportationType = this.PreferencesRepository.GetPreferences(userId).ActualTransportationType
+            });
             }
-            else
-                Console.WriteLine("Trying to add nudge. " + userName + " does not exist!");
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error while inserting into oracle database.");
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public void Test()

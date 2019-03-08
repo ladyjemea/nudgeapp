@@ -3,7 +3,7 @@
 <form #travelForm="ngForm" (ngSubmit)="userLocation(travelForm)">
 
   <div>
-    <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="onChooseLocation($event)"> 
+    <agm-map [latitude]="lat" [longitude]="lng"> 
       <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
     </agm-map>
   </div>

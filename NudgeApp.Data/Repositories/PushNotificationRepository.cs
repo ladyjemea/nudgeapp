@@ -3,19 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.EntityFrameworkCore;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
-    public class PushNotificationRepository : IPushNotificationRepository
+    public class PushNotificationRepository : Repository<PushNotificationEntity>, IPushNotificationRepository
     {
-        private readonly INudgeDbContext Db;
-        public PushNotificationRepository(INudgeDbContext db)
-        {
-            this.Db = db;
-        }
+        public PushNotificationRepository(INudgeDbContext context) : base(context) { }
 
-        public Guid Create (Guid userId, string endpoint, string p256dh, string auth)
+        public Guid Create(Guid userId, string endpoint, string p256dh, string auth)
         {
             var entity = new PushNotificationEntity
             {
@@ -25,28 +20,14 @@
                 Auth = auth
             };
 
-            var result = this.Db.PushNotificationEntity.Add(entity);
-            this.Db.SaveChanges();
+            this.Insert(entity);
 
-            return result.Entity.Id;
-        }
-
-        public void Update(PushNotificationEntity entity)
-        {
-            this.Db.PushNotificationEntity.Update(entity);
-            this.Db.SaveChanges();
+            return entity.Id;
         }
 
         public IList<PushNotificationEntity> GetAll()
         {
-            return this.Db.GetAll<PushNotificationEntity>().ToList();
-        }
-
-        public PushNotificationEntity Get(Guid userId)
-        {
-            var entity = this.Db.GetAll<PushNotificationEntity>().Where(p => p.UserId == userId).AsNoTracking().FirstOrDefault();
-            
-            return entity;
+            return this.Context.GetAll<PushNotificationEntity>().ToList();
         }
     }
 }

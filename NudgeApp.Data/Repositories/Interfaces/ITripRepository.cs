@@ -2,9 +2,10 @@
 {
     using System;
     using NudgeApp.Common.Dtos;
-    public interface ITripRepository
+    using NudgeApp.Data.Entities;
+
+    public interface ITripRepository: IRepository<TripEntity>
     {
         Guid Create(TripDto trip, Guid userId, Guid envInfoId);
-        TripDto Get(Guid id);
     }
 }

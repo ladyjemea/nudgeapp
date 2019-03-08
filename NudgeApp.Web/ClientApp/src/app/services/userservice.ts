@@ -13,7 +13,6 @@ export class userservice {
   }
 
   createuser(username: string, password: string, name: string, email: string, address: string, selectedTravelType: TravelTypes): void {
-    console.log(name);
 
     this.http.get('http://localhost:5000/User/register?username=' + username + '&password=' + password + '&name=' + name + '&email=' + email + '&address=' + address + '&travelType=' + selectedTravelType, { responseType: 'text' }).subscribe(result => {
       console.log(result);
@@ -21,4 +20,3 @@ export class userservice {
     }, error => console.error(error));
   }
 }
-

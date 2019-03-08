@@ -22,17 +22,21 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\calendar\**" />
     <Compile Remove="ClientApp\src\app\login\**" />
     <Compile Remove="ClientApp\src\app\preferredtravel\**" />
     <Compile Remove="ClientApp\src\mainaccess\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\calendar\**" />
     <Content Remove="ClientApp\src\app\login\**" />
     <Content Remove="ClientApp\src\app\preferredtravel\**" />
     <Content Remove="ClientApp\src\mainaccess\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\calendar\**" />
     <EmbeddedResource Remove="ClientApp\src\app\login\**" />
     <EmbeddedResource Remove="ClientApp\src\app\preferredtravel\**" />
     <EmbeddedResource Remove="ClientApp\src\mainaccess\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\calendar\**" />
     <None Remove="ClientApp\src\app\login\**" />
     <None Remove="ClientApp\src\app\preferredtravel\**" />
     <None Remove="ClientApp\src\mainaccess\**" />
@@ -57,6 +61,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\components\signup\signup.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\travelservice.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\userservice.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\types\TravelVariant.ts" />
   </ItemGroup>
 
   <ItemGroup>

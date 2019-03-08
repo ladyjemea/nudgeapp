@@ -6,13 +6,9 @@
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
-    public class PreferencesRepository : IPreferencesRepository
+    public class PreferencesRepository : Repository<PreferencesEntity>, IPreferencesRepository
     {
-        private readonly INudgeDbContext Db;
-        public PreferencesRepository(INudgeDbContext db)
-        {
-            this.Db = db;
-        }
+        public PreferencesRepository(INudgeDbContext context) : base(context) { }
 
         public PreferencesEntity AddPreferences(Guid userId)
         {
@@ -24,21 +20,14 @@
                 UserId = userId
             };
 
-            var result = this.Db.PreferencesEntity.Add(preferences);
-            this.Db.SaveChanges();
+            this.Insert(preferences);
 
-            return result.Entity;
-        }
-
-        public void UpdatePreferences(PreferencesEntity preferences)
-        {
-            this.Db.PreferencesEntity.Update(preferences);
-            this.Db.SaveChanges();
+            return preferences;
         }
 
         public PreferencesEntity GetPreferences(Guid userId)
         {
-            return this.Db.GetAll<PreferencesEntity>().Where(p => p.UserId == userId).FirstOrDefault();
+            return this.Context.GetAll<PreferencesEntity>().Where(p => p.UserId == userId).FirstOrDefault();
         }
     }
 }

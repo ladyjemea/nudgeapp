@@ -2,6 +2,7 @@
 {
     using NudgeApp.Common.Dtos;
     using NudgeApp.Data.Repositories.Interfaces;
+    using System;
 
     public class TripLogic
     {
@@ -23,10 +24,12 @@
         {
             var userId = this.UserRepository.GetUser(userName).Id;
 
+            throw new NotImplementedException();
+
             if (userId != null)
             {
-                var envInfoId = this.EnvironmelntalInfoRepository.Create(envInfo);
-                this.TripRepository.Create(trip, userId, envInfoId);
+               // var envInfoId = this.EnvironmelntalInfoRepository.CreateInfo(envInfo);
+                //this.TripRepository.Create(trip, userId, envInfoId);
             }
         }
     }

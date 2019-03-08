@@ -2,10 +2,11 @@
 {
     using System;
     using NudgeApp.Common.Dtos;
+    using NudgeApp.Data.Entities;
 
-    public interface IEnvironmelntalInfoRepository
+    public interface IEnvironmelntalInfoRepository : IRepository<EnvironmentalInfoEntity>
     {
-        Guid Create(EnvironmelntalInfoDto info);
-        EnvironmelntalInfoDto Get(Guid id);
+        Guid CreateInfo(ForecastDto info);
+        ForecastDto GetForecast(Guid id);
     }
 }
