@@ -2,7 +2,10 @@
 {
     using System;
     using System.IO;
+    using System.Threading.Tasks;
     using System.Xml.Serialization;
+    using NudgeApp.Common.Dtos;
+    using NudgeApp.DataManagement.ExternalApi.Bus.BusStop;
     using RestSharp;
 
     class TripSearch : ITripSearch
@@ -39,6 +42,41 @@
             }
 
             return result;
+        }
+
+        public Task<Stages> NearestStops(Coordinates coord)
+        {
+            var client = new RestClient("http://rp.tromskortet.no");
+            var request = new RestRequest("scripts/TravelMagic/TravelMagicWE.dll/v1NearestStopsXML", Method.GET);
+            request.AddParameter("x", coord.Longitude);
+            request.AddParameter("y", coord.Latitude);
+            request.OnBeforeDeserialization = resp => { resp.ContentType = "application/xml"; resp.ContentEncoding = "UTF-8"; };
+
+            var taskCompletionSource = new TaskCompletionSource<Stages>();
+            client.ExecuteAsync<Stages>(request, response => taskCompletionSource.SetResult(response.Data));
+
+            /* Stages result = null;
+
+             var serializer = new XmlSerializer(typeof(Stages));
+             using (TextReader reader = new StringReader(response.Content))
+             {
+                 result = (Stages)serializer.Deserialize(reader);
+             }
+
+             Console.WriteLine(result);
+             */
+            return taskCompletionSource.Task;
+        }
+
+        public async void FindBusTrip(Coordinates from, Coordinates to)
+        {
+            var nearestStops = await this.NearestStops(from);
+            var destinationStop = await this.NearestStops(to);
+        }
+
+        public Stages NearestStops(double longitude, double latitude)
+        {
+            throw new NotImplementedException();
         }
     }
 }

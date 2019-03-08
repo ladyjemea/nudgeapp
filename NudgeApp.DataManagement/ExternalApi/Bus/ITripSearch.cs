@@ -1,5 +1,6 @@
 ﻿namespace NudgeApp.DataManagement.ExternalApi.Bus
 {
+    using NudgeApp.DataManagement.ExternalApi.Bus.BusStop;
     using System;
 
     public interface ITripSearch
@@ -13,5 +14,6 @@
         /// <param name="tripSchedule"> Sets if the dateTime set is for arrival or departure. Departure is default value if not set. </param>
         /// <returns> A list of all trips and details about each one. </returns>
         TripObject SearchTrip(string from, string to, DateTime? dateTime = null, TripSchedule? tripSchedule = TripSchedule.Departure);
+        Stages NearestStops(double longitude, double latitude);
     }
 }

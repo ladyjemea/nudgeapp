@@ -15,7 +15,7 @@
             services.AddSingleton<ITripSearch, TripSearch>();
             services.AddSingleton<IUserLogic, UserLogic>();
             services.AddSingleton<INudgeLogic, NudgeLogic>();
-            services.AddSingleton<IPushNotificationLogic, PushNotificationLogic>();
+            services.AddSingleton<IPushNotificationLogic, PushNotificationLogic>();                        
         }
     }
 }

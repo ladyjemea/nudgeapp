@@ -3,8 +3,9 @@
     using System;
     using Microsoft.AspNetCore.Mvc;
     using NudgeApp.DataManagement.ExternalApi.Bus;
+    using NudgeApp.DataManagement.ExternalApi.Bus.BusStop;
 
-    [Route("externalAPI/Bus")]
+    [Route("[controller]/[action]")]
     public class BusController : Controller
     {
         private ITripSearch TripSearch { get; set; }
@@ -15,10 +16,16 @@
         }
 
         [HttpGet]
-        [Route("getBusTrip")]
         public ActionResult<TripObject> GetBusTrip(string from, string to, DateTime? dateTime, TripSchedule? tripSchedule)
         {
             var result = this.TripSearch.SearchTrip(from, to, dateTime, tripSchedule);
+            return this.Ok(result);
+        }
+
+        [HttpGet]
+        public ActionResult<Stages> GetNearestStop()
+        {
+            var result = this.TripSearch.NearestStops(0, 0);
             return this.Ok(result);
         }
     }
