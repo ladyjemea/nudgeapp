@@ -2,15 +2,17 @@
 {
     using System;
     using Microsoft.AspNetCore.Mvc;
+    using NudgeApp.Common.Dtos;
     using NudgeApp.DataManagement.ExternalApi.Bus;
-    using NudgeApp.DataManagement.ExternalApi.Bus.BusStop;
+    using NudgeApp.DataManagement.ExternalApi.Bus.HelperObjects;
+    using NudgeApp.DataManagement.ExternalApi.Bus.HelperObjects.BusStop;
 
     [Route("[controller]/[action]")]
     public class BusController : Controller
     {
-        private ITripSearch TripSearch { get; set; }
+        private IBusService TripSearch { get; set; }
 
-        public BusController(ITripSearch tripSearch)
+        public BusController(IBusService tripSearch)
         {
             this.TripSearch = tripSearch;
         }
@@ -25,7 +27,7 @@
         [HttpGet]
         public ActionResult<Stages> GetNearestStop()
         {
-            var result = this.TripSearch.NearestStops(0, 0);
+            var result = this.TripSearch.NearestStops(new Coordinates() {Latitude = 0, Longitude = 0});
             return this.Ok(result);
         }
     }

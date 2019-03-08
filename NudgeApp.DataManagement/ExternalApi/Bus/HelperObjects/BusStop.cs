@@ -1,4 +1,4 @@
-﻿namespace NudgeApp.DataManagement.ExternalApi.Bus.BusStop
+﻿namespace NudgeApp.DataManagement.ExternalApi.Bus.HelperObjects.BusStop
 {
     using System.Collections.Generic;
     using System.Xml.Serialization;

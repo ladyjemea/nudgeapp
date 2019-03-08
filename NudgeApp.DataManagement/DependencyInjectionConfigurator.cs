@@ -12,7 +12,7 @@
         public static void Configure(IServiceCollection services)
         {
             services.AddSingleton<IWeatherApi, WeatherApi>();
-            services.AddSingleton<ITripSearch, TripSearch>();
+            services.AddSingleton<IBusService, BusService>();
             services.AddSingleton<IUserLogic, UserLogic>();
             services.AddSingleton<INudgeLogic, NudgeLogic>();
             services.AddSingleton<IPushNotificationLogic, PushNotificationLogic>();                        
