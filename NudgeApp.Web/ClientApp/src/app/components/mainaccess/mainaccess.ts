@@ -10,6 +10,7 @@ import { MapsAPILoader } from '@agm/core';
 import { userservice } from '../../services/userservice';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TravelVariant } from '../../types/TravelVariant';
+import { travelservice } from '../../services/travelservice';
 
 
 @Component({
@@ -26,26 +27,24 @@ export class MainaccessComponent {
   lng: number;
 
   travelVariants: TravelVariant[];
-  
-   onChooseLocation($event) {
-    console.log($event.coords.lat);
-     console.log($event.coords.lng);
 
-     this.mapsAPILoader.load().then(() => {
-       var geocoder = new google.maps.Geocoder;
-       var latlng = new google.maps.LatLng($event.coords.lat, $event.coords.lng);
-       geocoder.geocode({ 'location': latlng }, function (results, status) {
-         console.log("map results");
-         console.log(results);
-       });
-     });
+  onChooseLocation($event) {
+    console.log($event.coords.lat);
+    console.log($event.coords.lng);
+
+    this.mapsAPILoader.load().then(() => {
+      var geocoder = new google.maps.Geocoder;
+      var latlng = new google.maps.LatLng($event.coords.lat, $event.coords.lng);
+      geocoder.geocode({ 'location': latlng }, function (results, status) {
+        console.log("map results");
+        console.log(results);
+      });
+    });
 
   }
 
   constructor(
-    private router: Router,
-    private _activatedRoute: ActivatedRoute,
-    private swPush: SwPush,
+    private router: Router, private swPush: SwPush,
     private subscriptionservice: subscriptionservice, private mapsAPILoader: MapsAPILoader) {
 
     this.subscribeToNotifications();
@@ -56,77 +55,44 @@ export class MainaccessComponent {
     });
   }
 
-   
-  test() {
-    //gets the current location of the user
-    this.mapsAPILoader.load().then(() => {
-      var geocoder = new google.maps.Geocoder;
-      var latlng = new google.maps.LatLng(this.lat, this.lng);
-      geocoder.geocode({ 'location': latlng }, function (results, status) {
-        console.log("map results");
-        console.log(results);
-      });
-      var address = 'Norway, Tromsø, Luleåvegen 19'; // should get the destination from the input field "enter destination"
-      geocoder.geocode({ 'address': address }, function (results, status) {
-        console.log(results[0].geometry.location);
-        //const distance = google.maps.geometry.spherical.computeDistanceBetween(latlng, results[0].geometry.location);
-        //console.log(distance);
-        var request = {
-          origin: latlng,
-          destination: results[0].geometry.location,
-          travelMode: google.maps.TravelMode.WALKING
 
-        };
-
-        var distanceMatrixService = new google.maps.DistanceMatrixService();
-        distanceMatrixService.getDistanceMatrix({
-          origins: [latlng],
-          destinations: [results[0].geometry.location],
-          travelMode: google.maps.TravelMode.WALKING
-        }, (result, status) => { console.log(result.rows[0].elements[0].duration); });
-      });
+  /*
+  //gets the current location of the user
+  this.mapsAPILoader.load().then(() => {
+    var geocoder = new google.maps.Geocoder;
+    var latlng = new google.maps.LatLng(this.lat, this.lng);
+    geocoder.geocode({ 'location': latlng }, function (results, status) {
+      console.log("map results");
+      console.log(results);
     });
-    
-  }
+    var address = 'Norway, Tromsø, Luleåvegen 19'; // should get the destination from the input field "enter destination"
+    geocoder.geocode({ 'address': address }, function (results, status) {
+      console.log(results[0].geometry.location);
+      //const distance = google.maps.geometry.spherical.computeDistanceBetween(latlng, results[0].geometry.location);
+      //console.log(distance);
+      var request = {
+        origin: latlng,
+        destination: results[0].geometry.location,
+        travelMode: google.maps.TravelMode.WALKING
+
+      };
+
+      var distanceMatrixService = new google.maps.DistanceMatrixService();
+      distanceMatrixService.getDistanceMatrix({
+        origins: [latlng],
+        destinations: [results[0].geometry.location],
+        travelMode: google.maps.TravelMode.WALKING
+      }, (result, status) => { console.log(result.rows[0].elements[0].duration); });
+    });
+  });
+  */
+
 
 
   public userLocation(form: NgForm) {
-    this.mapsAPILoader.load().then(() => {
-      var geocoder = new google.maps.Geocoder;
-      var latlng = new google.maps.LatLng(this.lat, this.lng);
-
-      var address = form.value.destination;
-      geocoder.geocode({ 'address': address }, function (results, status) {
-        var request = {
-          origin: latlng,
-          destination: results[0].geometry.location,
-          travelMode: google.maps.TravelMode.WALKING
-        };
-
-        console.log('times:')
-        var distanceMatrixService = new google.maps.DistanceMatrixService();
-        distanceMatrixService.getDistanceMatrix({
-          origins: [latlng],
-          destinations: [results[0].geometry.location],
-          travelMode: google.maps.TravelMode.WALKING
-        }, (result, status) => { console.log('walk: '); console.log(result.rows[0].elements[0].duration); });
-
-        distanceMatrixService.getDistanceMatrix({
-          origins: [latlng],
-          destinations: [results[0].geometry.location],
-          travelMode: google.maps.TravelMode.BICYCLING
-        }, (result, status) => { console.log('bike: '); console.log(result.rows[0].elements[0].duration); });
-
-        distanceMatrixService.getDistanceMatrix({
-          origins: [latlng],
-          destinations: [results[0].geometry.location],
-          travelMode: google.maps.TravelMode.TRANSIT
-        }, (result, status) => { console.log('bus: '); console.log(result); });
-      });
-    });
     this.router.navigateByUrl('/maindisplay');
   }
-  
+
   private subscribeToNotifications() {
 
     this.swPush.requestSubscription({

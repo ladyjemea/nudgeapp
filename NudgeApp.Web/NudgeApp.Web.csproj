@@ -51,6 +51,7 @@
     <None Remove="ClientApp\src\app\components\signup\signup.ts" />
     <None Remove="ClientApp\src\app\components\signup\userservice.ts" />
     <None Remove="ClientApp\src\app\services\travelservice.ts" />
+    <None Remove="ClientApp\src\app\types\TripDto.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,6 +63,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\travelservice.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\userservice.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\types\TravelVariant.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\types\TripDto.ts" />
   </ItemGroup>
 
   <ItemGroup>

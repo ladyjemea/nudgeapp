@@ -78,8 +78,8 @@
 
             var destinationStopCoordinates = new Coordinates
             {
-                Latitude = Convert.ToDouble(destinationStop.Group.First().Y),
-                Longitude = Convert.ToDouble(destinationStop.Group.First().X)
+                Latitude = Convert.ToDouble(destinationStop.Group.First().Y.Replace(',','.')),
+                Longitude = Convert.ToDouble(destinationStop.Group.First().X.Replace(',', '.'))
             };
 
             var walkToDestination = await this.WalkInfo(destinationStopCoordinates, to);
@@ -90,10 +90,14 @@
 
             var walkToStart = await this.WalkInfo(from, bustTrip.StartCoordinates);
 
-            bustTrip.TravelParts.Add(0, new TravelPart { Duration = new TimeSpan(walkToStart.rows.First().elements.First().duration.value), Type = TransportationType.Walk });
-            bustTrip.TravelParts.Add(bustTrip.TravelParts.Count + 1, new TravelPart { Duration = new TimeSpan(walkToDestination.rows.First().elements.First().duration.value), Type = TransportationType.Walk });
-            bustTrip.Duration += walkToStart.rows.First().elements.First().duration.value;
-            bustTrip.Duration += walkToDestination.rows.First().elements.First().duration.value;
+            bustTrip.TravelParts.Add(0, new TravelPart {DepartureName = "Current Location", ArrivalName = bustTrip.TravelParts[1].DepartureName, Duration = TimeSpan.FromSeconds(walkToStart.rows.First().elements.First().duration.value), Type = TransportationType.Walk });
+            bustTrip.TravelParts.Add(bustTrip.TravelParts.Count + 1, new TravelPart {DepartureName = bustTrip.TravelParts[bustTrip.TravelParts.Count - 1].ArrivalName, ArrivalName = "Destination", Duration = TimeSpan.FromSeconds(walkToDestination.rows.First().elements.First().duration.value), Type = TransportationType.Walk });
+
+            bustTrip.Duration = bustTrip.Duration.Add(TimeSpan.FromSeconds(walkToStart.rows.First().elements.First().duration.value));
+            bustTrip.Duration = bustTrip.Duration.Add(TimeSpan.FromSeconds(walkToDestination.rows.First().elements.First().duration.value));
+
+            bustTrip.Start = bustTrip.Start.AddSeconds(-1 * walkToStart.rows.First().elements.First().duration.value);
+            bustTrip.Stop = bustTrip.Stop.AddSeconds(walkToDestination.rows.First().elements.First().duration.value);
 
             return bustTrip;
         }
@@ -116,17 +120,17 @@
             {
                 Start = Convert.ToDateTime(trip.Start),
                 Stop = Convert.ToDateTime(trip.Stop),
-                Duration = trip.Duration,
+                Duration = TimeSpan.FromMinutes(Convert.ToInt64(trip.Duration)),
                 ChangeNb = Convert.ToInt32(trip.Changecount),
                 StartCoordinates = new Coordinates
                 {
-                    Latitude = Convert.ToInt32(stops.First().Y),
-                    Longitude = Convert.ToInt32(stops.First().X)
+                    Latitude = Convert.ToDouble(stops.First().Y.Replace(',', '.')),
+                    Longitude = Convert.ToDouble(stops.First().X.Replace(',', '.'))
                 },
                 EndCoordinates = new Coordinates
                 {
-                    Latitude = Convert.ToInt32(allStops.Last().Y),
-                    Longitude = Convert.ToInt32(allStops.Last().X)
+                    Latitude = Convert.ToDouble(allStops.Last().Y.Replace(',', '.')),
+                    Longitude = Convert.ToDouble(allStops.Last().X.Replace(',', '.'))
                 }
             };
 
@@ -135,8 +139,8 @@
             {
                 busTripDto.TravelParts.Add(counter, new TravelPart
                 {
-                    ArrivalName = stop.N,
-                    DepartureName = stop.N2,
+                    ArrivalName = stop.N2,
+                    DepartureName = stop.N,
                     Type = stop.Tn == "Buss" ? TransportationType.Bus : TransportationType.Walk,
                     Duration = Convert.ToDateTime(stop.A) - Convert.ToDateTime(stop.D)
                 });
@@ -146,13 +150,13 @@
             return busTripDto;
         }
 
-        private Task<RootObject> WalkInfo(Coordinates from, Coordinates to)
+        private async Task<RootObject> WalkInfo(Coordinates from, Coordinates to)
         {
             var client = new RestClient("https://maps.googleapis.com");
             var request = new RestRequest("maps/api/distancematrix/json", Method.GET);
             request.AddParameter("units", "metric");
-            request.AddParameter("origins", from.Latitude + ',' + from.Longitude);
-            request.AddParameter("destinations", to.Latitude + ',' + to.Longitude);
+            request.AddParameter("origins", from.Latitude.ToString() + ',' + from.Longitude.ToString());
+            request.AddParameter("destinations", to.Latitude.ToString() + ',' + to.Longitude.ToString());
             request.AddParameter("mode", "walking");
             request.AddParameter("key", "AIzaSyCCbgVPkBgwul0cofmo-VSMOefNSzrAOEo");
             request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; resp.ContentEncoding = "UTF-8"; };
@@ -160,7 +164,7 @@
             var taskCompletionSource = new TaskCompletionSource<RootObject>();
             client.ExecuteAsync<RootObject>(request, response => taskCompletionSource.SetResult(response.Data));
 
-            return taskCompletionSource.Task;
+            return await taskCompletionSource.Task;
         }
     }
 }

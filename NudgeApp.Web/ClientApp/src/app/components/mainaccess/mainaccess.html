@@ -3,7 +3,7 @@
 <form #travelForm="ngForm" (ngSubmit)="userLocation(travelForm)">
 
   <div>
-    <agm-map [latitude]="lat" [longitude]="lng"> 
+    <agm-map [latitude]="lat" [longitude]="lng">
       <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
     </agm-map>
   </div>
@@ -13,6 +13,6 @@
 
   <input type="text" name="destination" id="destination" placeholder="Enter Destination" ngModel>
   <br /><br />
-  <input type="submit" name="submit" value="Enter" (click)="test()">
+  <input type="submit" name="submit" value="Enter">
 
 </form>
