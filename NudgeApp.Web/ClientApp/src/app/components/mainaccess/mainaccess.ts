@@ -46,7 +46,6 @@ export class MainaccessComponent {
     private router: Router,
     private _activatedRoute: ActivatedRoute,
     private swPush: SwPush,
-    private userService: userservice,
     private subscriptionservice: subscriptionservice, private mapsAPILoader: MapsAPILoader) {
 
     this.subscribeToNotifications();
