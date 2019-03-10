@@ -8,6 +8,7 @@ namespace NudgeApp.Common.Dtos
     public class BusTripDto
     {
         public TimeSpan Duration { get; set; }
+        public string DurationString { get; set; }
         public DateTime Start { get; set; }
         public DateTime Stop { get; set; }
         public int ChangeNb { get; set; }

@@ -32,23 +32,32 @@
             return this.Ok(result);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<BusTripDto>> GetTrip()
+        [HttpPost]
+        public async Task<ActionResult<BusTripDto>> GetTrip([FromBody] TravelObject travelObject)
         {
-            var from = new Coordinates
+            travelObject.From = new Coordinates
             {
                 Latitude = 69.6801,
                 Longitude = 18.97
             };
-            var to = new Coordinates
+            travelObject.To = new Coordinates
             {
                 Latitude = 69.628801,
                 Longitude = 18.915912
             };
+            //travelObject.When = new DateTime(2019, 03, 09, 21, 00, 00);
 
-            var result = await this.BusService.FindBusTrip(from, to, new DateTime(2019, 03, 09, 21, 00, 00));
+            var result = await this.BusService.FindBusTrip(travelObject.From, travelObject.To, travelObject.When, travelObject.Schedule);
 
             return this.Ok(result);
         }
+    }
+
+    public class TravelObject
+    {
+        public Coordinates From { get; set; }
+        public Coordinates To { get; set; }
+        public DateTime When { get; set; }
+        public TripSchedule Schedule { get; set; }
     }
 }

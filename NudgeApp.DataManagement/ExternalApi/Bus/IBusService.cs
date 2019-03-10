@@ -18,6 +18,6 @@
         /// <returns> A list of all trips and details about each one. </returns>
         TripObject SearchTrip(string from, string to, DateTime? dateTime = null, TripSchedule? tripSchedule = TripSchedule.Departure);
         Task<Stages> NearestStops(Coordinates coord);
-        Task<BusTripDto> FindBusTrip(Coordinates from, Coordinates to, DateTime arrivalTime);
+        Task<BusTripDto> FindBusTrip(Coordinates from, Coordinates to, DateTime arrivalTime, TripSchedule schedule);
     }
 }
