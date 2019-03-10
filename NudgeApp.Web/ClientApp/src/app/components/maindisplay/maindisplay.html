@@ -4,19 +4,20 @@
 
 <p class="center">
   Temperature : <br />
+  Distance: {{distance}} <br />
   Walking : {{walking}}<br />
-  Biking : <br />
-  Bus :
+  Biking : {{bicycling}} <br />
+  Bus : {{bus}}
 </p>
 
 <br /> <br />
 
 <form #travelType="ngForm" (ngSubmit)="pickTravelMode(travelType)">
   <div id="submit">
-    <input type="button" name="submit" value="I'll walk" />
-    <input type="button" name="submit" value="I'll take the bike" />
-    <input type="button" name="submit" value="I'll take the bus" />
-    <input type="button" name="submit" value="I'll pass" />
+    <button class="btn btn-primary">Walk/Bike</button>
+    <button class="btn btn-primary">Bus</button>
+    <button class="btn btn-primary">Default</button>
+   
   </div>
 
 </form>

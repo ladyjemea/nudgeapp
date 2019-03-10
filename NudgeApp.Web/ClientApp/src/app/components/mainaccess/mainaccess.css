@@ -17,8 +17,8 @@ input[type=text] {
   box-sizing: border-box
 }
 
-input[type=submit] {
-  background-color: #00b300;
+button.btn {
+  
   color: white;
   padding: 12px 18px;
   margin: 8px 0;

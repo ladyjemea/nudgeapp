@@ -10,11 +10,10 @@ p{
   color: #00b300;
 }
 
-input[type=button]{
+button.btn{
   display: inline-block;
   align-items: center;
-  width: 25%;
-  background-color: #00b300;
+  width: 33%;
   color: white;
   padding: 12px 18px;
   margin: 8px 0;

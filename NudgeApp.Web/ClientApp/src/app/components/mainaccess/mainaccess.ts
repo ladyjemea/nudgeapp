@@ -1,6 +1,6 @@
 /// <reference path="../../../../node_modules/@types/googlemaps/index.d.ts"/>
 
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import 'rxjs';
 import { SwPush } from '@angular/service-worker';
@@ -11,6 +11,7 @@ import { userservice } from '../../services/userservice';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TravelVariant } from '../../types/TravelVariant';
 import { travelservice } from '../../services/travelservice';
+import { query } from '@angular/animations';
 
 
 @Component({
@@ -53,6 +54,8 @@ export class MainaccessComponent {
       this.lat = position.coords.latitude;
       this.lng = position.coords.longitude;
     });
+    
+    
   }
 
 
