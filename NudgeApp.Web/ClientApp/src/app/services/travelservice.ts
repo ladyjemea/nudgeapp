@@ -17,31 +17,70 @@ export class travelservice {
   }
 
   public GetTrip(to: string, date: Date, mode: google.maps.TravelMode, callback: ICallback): void {
+
+
     this.mapsAPILoader.load().then(() => {
       navigator.geolocation.getCurrentPosition((position) => {
         var geocoder = new google.maps.Geocoder;
 
         //var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         var latlng = new google.maps.LatLng(69.68084373889975, 18.976014381857112);
-        geocoder.geocode({ 'address': to }, function (results, status) {
+        geocoder.geocode({ 'address': to }, (results, status) => {
 
-          var distanceMatrixService = new google.maps.DistanceMatrixService();
-          distanceMatrixService.getDistanceMatrix({
-            origins: [latlng],
-            destinations: [results[0].geometry.location],
-            travelMode: mode
-          }, (result, status) => {
+          if (mode !== google.maps.TravelMode.TRANSIT) {
+            var distanceMatrixService = new google.maps.DistanceMatrixService();
+            distanceMatrixService.getDistanceMatrix({
+              origins: [latlng],
+              destinations: [results[0].geometry.location],
+              travelMode: mode
+            }, (result, status) => {
 
               var res = <TripDto>{}
-              res.Duration = <Time>{};
-              res.DistanceString = result.rows[0].elements[0].distance.text;
-              res.Duration.minutes = result.rows[0].elements[0].duration.value;
+              res.duration = <Time>{};
+              res.distanceString = result.rows[0].elements[0].distance.text;
+              res.duration.minutes = result.rows[0].elements[0].duration.value;
+              res.durationString = result.rows[0].elements[0].duration.text;
               callback(res);
-          });
+            });
+
+          }
+          else {
+            var travelObject = <TravelObject>{};
+            travelObject.From = <NudgeCoordinates>{};
+            travelObject.From.Latitude = latlng.lat();
+            travelObject.From.Longitude = latlng.lng();
+
+            travelObject.To = <NudgeCoordinates>{};
+            travelObject.To.Latitude = results[0].geometry.location.lat();
+            travelObject.To.Longitude = results[0].geometry.location.lng();
+
+            travelObject.When = date;
+            travelObject.Schedule = TripSchedule.Departure;
+
+            this.http.post('http://localhost:5000/Bus/GetTrip', travelObject, { responseType: 'json' }).pipe()
+              .subscribe(result => { callback(<TripDto>result); }, error => console.error(error));
+          }
         });
       });
     });
   }
+}
+
+export interface TravelObject {
+  From: NudgeCoordinates;
+  To: NudgeCoordinates;
+  When: Date;
+  Schedule: TripSchedule;
+}
+
+export interface NudgeCoordinates {
+  Latitude: number;
+  Longitude: number;
+}
+
+export enum TripSchedule {
+  Departure = 1,
+  Arival = 2
 }
 
 export interface ICallback {

@@ -21,8 +21,7 @@ export class MainDisplayComponent {
       var date = new Date(Date.now());
       this.travelService.GetTrip('Norway, Tromsø, Luleåvegen 19', date, google.maps.TravelMode.WALKING,
         (result) => {
-          console.log(this.walking);
-          this.walking = result.DistanceString;
+          this.walking = result.durationString;
           console.log(result)
           console.log(this.walking);
 

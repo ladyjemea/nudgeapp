@@ -71,14 +71,14 @@
             return taskCompletionSource.Task;
         }
 
-        public async Task<BusTripDto> FindBusTrip(Coordinates from, Coordinates to, DateTime arrivalTime)
+        public async Task<BusTripDto> FindBusTrip(Coordinates from, Coordinates to, DateTime arrivalTime, TripSchedule schedule)
         {
             var nearestStops = await this.NearestStops(from);
             var destinationStop = await this.NearestStops(to);
 
             var destinationStopCoordinates = new Coordinates
             {
-                Latitude = Convert.ToDouble(destinationStop.Group.First().Y.Replace(',','.')),
+                Latitude = Convert.ToDouble(destinationStop.Group.First().Y.Replace(',', '.')),
                 Longitude = Convert.ToDouble(destinationStop.Group.First().X.Replace(',', '.'))
             };
 
@@ -86,31 +86,42 @@
 
             var busArrivalTime = arrivalTime.AddSeconds((-1) * walkToDestination.rows.First().elements.First().duration.value);
 
-            var bustTrip = this.GetBusTrip(nearestStops.Group.First(), destinationStop.Group.First(), busArrivalTime);
+            var busTrip = this.GetBusTrip(nearestStops.Group.First(), destinationStop.Group.First(), busArrivalTime, schedule);
 
-            var walkToStart = await this.WalkInfo(from, bustTrip.StartCoordinates);
+            var walkToStart = await this.WalkInfo(from, busTrip.StartCoordinates);
 
-            bustTrip.TravelParts.Add(0, new TravelPart {DepartureName = "Current Location", ArrivalName = bustTrip.TravelParts[1].DepartureName, Duration = TimeSpan.FromSeconds(walkToStart.rows.First().elements.First().duration.value), Type = TransportationType.Walk });
-            bustTrip.TravelParts.Add(bustTrip.TravelParts.Count + 1, new TravelPart {DepartureName = bustTrip.TravelParts[bustTrip.TravelParts.Count - 1].ArrivalName, ArrivalName = "Destination", Duration = TimeSpan.FromSeconds(walkToDestination.rows.First().elements.First().duration.value), Type = TransportationType.Walk });
+            busTrip.TravelParts.Add(0, new TravelPart { DepartureName = "Current Location", ArrivalName = busTrip.TravelParts[1].DepartureName, Duration = TimeSpan.FromSeconds(walkToStart.rows.First().elements.First().duration.value), Type = TransportationType.Walk });
+            busTrip.TravelParts.Add(busTrip.TravelParts.Count + 1, new TravelPart { DepartureName = busTrip.TravelParts[busTrip.TravelParts.Count - 1].ArrivalName, ArrivalName = "Destination", Duration = TimeSpan.FromSeconds(walkToDestination.rows.First().elements.First().duration.value), Type = TransportationType.Walk });
 
-            bustTrip.Duration = bustTrip.Duration.Add(TimeSpan.FromSeconds(walkToStart.rows.First().elements.First().duration.value));
-            bustTrip.Duration = bustTrip.Duration.Add(TimeSpan.FromSeconds(walkToDestination.rows.First().elements.First().duration.value));
+            busTrip.Duration = busTrip.Duration.Add(TimeSpan.FromSeconds(walkToStart.rows.First().elements.First().duration.value));
+            busTrip.Duration = busTrip.Duration.Add(TimeSpan.FromSeconds(walkToDestination.rows.First().elements.First().duration.value));
 
-            bustTrip.Start = bustTrip.Start.AddSeconds(-1 * walkToStart.rows.First().elements.First().duration.value);
-            bustTrip.Stop = bustTrip.Stop.AddSeconds(walkToDestination.rows.First().elements.First().duration.value);
+            busTrip.DurationString = "";
+            if (busTrip.Duration.Hours > 0)
+            {
+                busTrip.DurationString += busTrip.Duration.Hours.ToString();
+                busTrip.DurationString += busTrip.Duration.Hours == 1 ? " Hour" : " Hours";
+                busTrip.DurationString += " and ";
+            }
 
-            return bustTrip;
+            busTrip.DurationString += busTrip.Duration.Minutes.ToString();
+            busTrip.DurationString += busTrip.Duration.Minutes == 1 ? " Minute" : " Minutes";
+
+            busTrip.Start = busTrip.Start.AddSeconds(-1 * walkToStart.rows.First().elements.First().duration.value);
+            busTrip.Stop = busTrip.Stop.AddSeconds(walkToDestination.rows.First().elements.First().duration.value);
+
+            return busTrip;
         }
 
-        private BusTripDto GetBusTrip(Group from, Group to, DateTime arrivalTime)
+        private BusTripDto GetBusTrip(Group from, Group to, DateTime arrivalTime, TripSchedule schedule)
         {
-            var trip = this.SearchTrip(from.N, to.N, arrivalTime, TripSchedule.Arival).Trips.Trip.First();
+            var trip = this.SearchTrip(from.N, to.N, arrivalTime, schedule).Trips.Trip.First();
 
             var allStops = trip.I.Where(i => i.N != String.Empty && i.N != i.N2).ToList();
 
             if (allStops.First().Tn == "Gange")
             {
-                trip = this.SearchTrip(allStops.First().N2, to.N, arrivalTime, TripSchedule.Arival).Trips.Trip.First();
+                trip = this.SearchTrip(allStops.First().N2, to.N, arrivalTime, schedule).Trips.Trip.First();
                 allStops = trip.I.Where(i => i.N != String.Empty && i.N != i.N2).ToList();
             }
 
