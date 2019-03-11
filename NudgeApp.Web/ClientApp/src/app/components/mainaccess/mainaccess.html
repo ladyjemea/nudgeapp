@@ -10,9 +10,14 @@
   <!--onChooseLocation not working. used to get the location on the map if the user clicks on it.
   It should als register as the destination and the travel distance calculated for the user-->
   <br />
-
-  <input type="text" name="destination" id="destination" placeholder="Enter Destination" ngModel>
-  <br /><br />
-  <button class="btn btn-primary">Enter</button> 
-
 </form>
+
+<form #searchForm="ngForm" (ngSubmit)="submitSearch($event, searchForm)">
+  <div class="form-group">
+    <input type="text" class="form-control" name="destination" id="destination" placeholder="Enter Destination" [(ngModel)]="searchQuery">
+  </div>
+  <button type="submit" class="btn btn-primary">Enter</button>
+</form>
+   
+
+

@@ -1,8 +1,9 @@
 /// <reference path="../../../../node_modules/@types/googlemaps/index.d.ts"/>
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { SwPush } from '@angular/service-worker';
 import { subscriptionservice } from '../../services/SubscriptionService'
 import { Subscription } from '../../types/Subscription'
@@ -15,12 +16,14 @@ import { query } from '@angular/animations';
 
 
 @Component({
+  selector: 'search',
   templateUrl: './mainaccess.html',
   styleUrls: ['./mainaccess.css'],
   providers: [SwPush, subscriptionservice],
 })
 
-export class MainaccessComponent {
+export class MainaccessComponent implements OnInit {
+    [x: string]: any;
 
   public _url: string = "/assets/data/streets.json";
   readonly VAPID_PUBLIC_KEY = "BD6e5GSCe5_Y08GgTyWlpFcQIPuMkLrEYfAiNBzrc-vkxPuYN3oeJqdvR3gjIGn_VxNu1G58J9zxbsd6-6FR70Y";
@@ -54,8 +57,19 @@ export class MainaccessComponent {
     navigator.geolocation.getCurrentPosition((position) => {
       this.lat = position.coords.latitude;
       this.lng = position.coords.longitude;
-    });
-    
+    }); 
+  }
+
+  ngOnInit() { }
+  submitSearch(event, formData) {
+    console.log(event);
+    console.log(formData.value);
+    let query = formData.value["destination"];
+    if (query) {
+      this.router.navigate(['/search', { destination: query }]);
+      this.router.navigateByUrl('/maindisplay');
+    //this.http.post("/assets/data/streets.json", {})
+    }
     
   }
 
@@ -91,10 +105,11 @@ export class MainaccessComponent {
   });
   */
 
-
-
   public userLocation(form: NgForm) {
-    this.router.navigateByUrl('/maindisplay');
+   
+   // this.router.navigateByUrl('/maindisplay');
+  
+
   }
 
   private subscribeToNotifications() {

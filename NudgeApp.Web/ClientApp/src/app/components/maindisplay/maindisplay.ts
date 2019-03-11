@@ -33,7 +33,7 @@ export class MainDisplayComponent {
 
           ref.detectChanges();
         });
-      this.travelService.GetTrip(this._url, date, google.maps.TravelMode.BICYCLING,
+      this.travelService.GetTrip('Luleavegen 19', date, google.maps.TravelMode.BICYCLING,
         (result) => {
           this.bicycling = result.durationString;        
 
