@@ -20,43 +20,29 @@ export class MainDisplayComponent {
   public bus: string = "";
   public distance: string = "";
 
-  @Input() message: string;
+  public _url: string = "/assets/data/streets.json";
 
   constructor(private travelService: travelservice, private mapsAPILoader: MapsAPILoader, private ref: ChangeDetectorRef) {
     this.mapsAPILoader.load().then(() => {
 
       var date = new Date(Date.now());
-      this.travelService.GetTrip('Norway, Tromsø, Luleåvegen 19', date, google.maps.TravelMode.WALKING,
+      this.travelService.GetTrip('Luleavegen 19', date, google.maps.TravelMode.WALKING,
         (result) => {
           this.walking = result.durationString;
-          console.log(result)
-          console.log(this.walking);
+          this.distance = result.distanceString;
 
           ref.detectChanges();
         });
-      this.travelService.GetTrip('Norway, Tromsø, Luleåvegen 19', date, google.maps.TravelMode.BICYCLING,
+      this.travelService.GetTrip(this._url, date, google.maps.TravelMode.BICYCLING,
         (result) => {
-          this.bicycling = result.durationString;
-          console.log(result)
-          console.log(this.bicycling);
+          this.bicycling = result.durationString;        
 
           ref.detectChanges();
         });
 
-      this.travelService.GetTrip('Norway, Tromsø, Luleåvegen 19', date, google.maps.TravelMode.TRANSIT,
+      this.travelService.GetTrip(this._url, date, google.maps.TravelMode.TRANSIT,
         (result) => {
           this.bus = result.durationString;
-          console.log(result)
-          console.log(this.bus);
-
-          ref.detectChanges();
-        });
-
-      this.travelService.GetTrip('Norway, Tromsø, Luleåvegen 19', date, google.maps.TravelMode.DRIVING,
-        (result) => {
-          this.distance = result.distanceString;
-          console.log(result)
-          console.log(this.distance);
 
           ref.detectChanges();
         });

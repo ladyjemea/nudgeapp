@@ -22,6 +22,7 @@ import { query } from '@angular/animations';
 
 export class MainaccessComponent {
 
+  public _url: string = "/assets/data/streets.json";
   readonly VAPID_PUBLIC_KEY = "BD6e5GSCe5_Y08GgTyWlpFcQIPuMkLrEYfAiNBzrc-vkxPuYN3oeJqdvR3gjIGn_VxNu1G58J9zxbsd6-6FR70Y";
 
   lat: number;
