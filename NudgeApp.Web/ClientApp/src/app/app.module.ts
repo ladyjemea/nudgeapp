@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes, Route } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { AgmCoreModule } from '@agm/core';
@@ -20,6 +20,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { JwtInterceptor } from './services/JwtInterceptor';
 
+//const appRoutes: Routes = [
+//  {
+//    path: "search",
+//    component: MainDisplayComponent,
+//  }]
 
 @NgModule({
   declarations: [
@@ -46,6 +51,7 @@ import { JwtInterceptor } from './services/JwtInterceptor';
       { path: 'travelnow', component: TravelComponent },
       { path: 'mainaccess', component: MainaccessComponent },
       { path: 'calendar', component: CalendarComponent },
+      { path: 'search', component: MainDisplayComponent },
       { path: 'maindisplay', component: MainDisplayComponent }
      
     ]),

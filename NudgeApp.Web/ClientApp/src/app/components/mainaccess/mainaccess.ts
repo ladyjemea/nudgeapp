@@ -66,8 +66,8 @@ export class MainaccessComponent implements OnInit {
     console.log(formData.value);
     let query = formData.value["destination"];
     if (query) {
-      this.router.navigate(['/search', { destination: query }]);
-      this.router.navigateByUrl('/maindisplay');
+      this.router.navigate(['search', { destination: query }]);
+      //this.router.navigateByUrl('/maindisplay');
     //this.http.post("/assets/data/streets.json", {})
     }
     
