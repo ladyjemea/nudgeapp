@@ -24,11 +24,14 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   public query: string;
   public routeSub: any;
+ 
+  
 
   constructor(private travelService: travelservice, private mapsAPILoader: MapsAPILoader, private ref: ChangeDetectorRef, private route: ActivatedRoute) {
     this.mapsAPILoader.load().then(() => {
 
       var date = new Date(Date.now());
+      //query should take the search input (it does but gives an error in travelservice.ts (typeerror)
       this.travelService.GetTrip('query', date, google.maps.TravelMode.WALKING,
         (result) => {
           this.walking = result.durationString;
@@ -36,7 +39,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
           ref.detectChanges();
         });
-      this.travelService.GetTrip("luleåvegen 19", date, google.maps.TravelMode.BICYCLING,
+      this.travelService.GetTrip('Luleåvegen 19', date, google.maps.TravelMode.BICYCLING,
         (result) => {
           this.bicycling = result.durationString;
 
@@ -55,7 +58,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
       this.routeSub = this.route.params.subscribe(params => {
-        console.log(params)
+       // console.log(params)
         this.query = params['destination']
       })
     }

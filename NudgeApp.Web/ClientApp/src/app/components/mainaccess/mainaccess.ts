@@ -47,6 +47,7 @@ export class MainaccessComponent implements OnInit {
     });
 
   }
+  //continue from here tomorrow. continue from video
 
   constructor(
     private router: Router, private swPush: SwPush,
@@ -62,8 +63,8 @@ export class MainaccessComponent implements OnInit {
 
   ngOnInit() { }
   submitSearch(event, formData) {
-    console.log(event);
-    console.log(formData.value);
+    //console.log(event);
+    //console.log(formData.value);
     let query = formData.value["destination"];
     if (query) {
       this.router.navigate(['search', { destination: query }]);
