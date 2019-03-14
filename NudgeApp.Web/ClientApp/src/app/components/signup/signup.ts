@@ -2,19 +2,19 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs';
-import { userservice } from '../../services/userservice';
-import { TravelTypes } from '../../types/traveltypes';
+import { UserService } from '../../services/UserService';
+import { TravelTypes } from '../../types/TravelTypes';
 
 @Component({
   templateUrl: './signup.html',
   styleUrls: ['./signup.css'],
-  providers: [userservice],
+  providers: [UserService],
 })
 export class SignupComponent {
 
   private selectedTravelType: TravelTypes;
 
-  constructor(private userService: userservice) {
+  constructor(private userService: UserService) {
     this.selectedTravelType = TravelTypes.Car;
   }
 

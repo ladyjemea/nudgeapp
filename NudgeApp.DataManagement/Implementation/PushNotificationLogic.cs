@@ -2,6 +2,7 @@
 {
     using NudgeApp.Data.Repositories.Interfaces;
     using NudgeApp.DataManagement.Implementation.Interfaces;
+    using System;
 
     public class PushNotificationLogic : IPushNotificationLogic
     {
@@ -14,10 +15,8 @@
             this.UserRepository = userRepository;
         }
 
-        public void SetSubscription(string username, PushSubscription pushSubscription)
+        public void SetSubscription(Guid userId, PushSubscription pushSubscription)
         {
-            var userId = this.UserRepository.GetUser(username).Id;
-
             var notification = this.PushNotificationRepository.Get(userId);
 
             if (notification == null)

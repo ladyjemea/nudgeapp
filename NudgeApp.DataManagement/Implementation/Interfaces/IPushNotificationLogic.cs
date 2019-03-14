@@ -1,7 +1,9 @@
 ﻿namespace NudgeApp.DataManagement.Implementation.Interfaces
 {
+    using System;
+
     public interface IPushNotificationLogic
     {
-        void SetSubscription(string username, PushSubscription pushSubscription);
+        void SetSubscription(Guid userId, PushSubscription pushSubscription);
     }
 }

@@ -2,7 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using NudgeApp.Common.Dtos;
     using NudgeApp.DataManagement.ExternalApi.Weather;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
 
@@ -30,10 +32,18 @@
             return this.Ok(result);
         }
 
-        [HttpGet]
-        public ActionResult<HourlyForecast> GetForecast(DateTime dateTime)
+        [HttpPost]
+        public ActionResult<ForecastDto> GetForecast([FromBody] DateTime dateTime)
         {
             var result = this.WeatherApi.GetForecast(dateTime);
+
+            return this.Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<ForecastDto>> GetCurrentForecast()
+        {
+            var result = await this.WeatherApi.GetCurrentForecast();
 
             return this.Ok(result);
         }

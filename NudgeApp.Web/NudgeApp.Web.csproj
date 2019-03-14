@@ -52,6 +52,8 @@
     <None Remove="ClientApp\src\app\components\signup\signup.ts" />
     <None Remove="ClientApp\src\app\components\signup\userservice.ts" />
     <None Remove="ClientApp\src\app\services\travelservice.ts" />
+    <None Remove="ClientApp\src\app\services\WeatherService.ts" />
+    <None Remove="ClientApp\src\app\types\ForecastDto.ts" />
     <None Remove="ClientApp\src\app\types\TripDto.ts" />
   </ItemGroup>
 
@@ -62,8 +64,10 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\JwtInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\SubscriptionService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\signup\signup.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\services\travelservice.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\services\userservice.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\TravelService.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\UserService.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\WeatherService.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\types\ForecastDto.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\types\TravelVariant.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\types\TripDto.ts" />
   </ItemGroup>

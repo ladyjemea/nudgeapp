@@ -4,6 +4,8 @@
     using NudgeApp.DataAnalysis.Implementation;
     using NudgeApp.DataManagement.Implementation;
     using NudgeApp.DataManagement.Implementation.Interfaces;
+    using System;
+    using System.Linq;
 
     [Route("Api/PushNotification")]
     public class PushNotificationController : Controller
@@ -21,8 +23,9 @@
         [Route("Subscribe")]
         public IActionResult Subscribe([FromBody] PushSubscription pushSubscription)
         {
-            var username = "lae";
-            this.PushNotificationLogic.SetSubscription(username, pushSubscription);
+            var userId = Guid.Parse(HttpContext.User.Identities.First().Name);
+
+            this.PushNotificationLogic.SetSubscription(userId, pushSubscription);
 
             return this.Ok();
         }

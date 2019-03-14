@@ -2,22 +2,18 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import 'rxjs';
-import { Promise } from 'es6-promise';
 import { MapsAPILoader } from '@agm/core';
-import { TripDto } from '../types/TripDto';
+import { TripDto, ITripCallback, TravelObject, NudgeCoordinates, TripSchedule } from '../types/TripDto';
 import { Time } from '@angular/common';
 
 
 @Injectable()
-export class travelservice {
+export class TravelService {
 
-  constructor(private http: HttpClient, private mapsAPILoader: MapsAPILoader) {
-  }
+  constructor(private http: HttpClient, private mapsAPILoader: MapsAPILoader) {  }
 
-  public GetTrip(to: string, date: Date, mode: google.maps.TravelMode, callback: ICallback): void {
-
+  public GetTrip(to: string, date: Date, mode: google.maps.TravelMode, callback: ITripCallback): void {
 
     this.mapsAPILoader.load().then(() => {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -26,7 +22,6 @@ export class travelservice {
         //var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         var latlng = new google.maps.LatLng(69.68084373889975, 18.976014381857112);
         geocoder.geocode({ 'address': to }, (results, status) => {
-
           if (mode !== google.maps.TravelMode.TRANSIT) {
             var distanceMatrixService = new google.maps.DistanceMatrixService();
             distanceMatrixService.getDistanceMatrix({
@@ -34,7 +29,6 @@ export class travelservice {
               destinations: [results[0].geometry.location],
               travelMode: mode
             }, (result, status) => {
-
               var res = <TripDto>{}
               res.duration = <Time>{};
               res.distanceString = result.rows[0].elements[0].distance.text;
@@ -64,25 +58,4 @@ export class travelservice {
       });
     });
   }
-}
-
-export interface TravelObject {
-  From: NudgeCoordinates;
-  To: NudgeCoordinates;
-  When: Date;
-  Schedule: TripSchedule;
-}
-
-export interface NudgeCoordinates {
-  Latitude: number;
-  Longitude: number;
-}
-
-export enum TripSchedule {
-  Departure = 1,
-  Arival = 2
-}
-
-export interface ICallback {
-  (result: TripDto): void;
 }

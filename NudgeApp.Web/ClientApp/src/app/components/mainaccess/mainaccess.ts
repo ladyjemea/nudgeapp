@@ -8,10 +8,10 @@ import { SwPush } from '@angular/service-worker';
 import { subscriptionservice } from '../../services/SubscriptionService'
 import { Subscription } from '../../types/Subscription'
 import { MapsAPILoader } from '@agm/core';
-import { userservice } from '../../services/userservice';
+import { UserService } from '../../services/UserService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TravelVariant } from '../../types/TravelVariant';
-import { travelservice } from '../../services/travelservice';
+import { TravelService } from '../../services/TravelService';
 import { query } from '@angular/animations';
 
 
@@ -124,8 +124,8 @@ export class MainaccessComponent implements OnInit {
         subscription.auth = jsonSub["keys"]["auth"];
         subscription.p256dh = jsonSub["keys"]["p256dh"];
         subscription.endpoint = sub["endpoint"];
-        console.log(subscription);
-        this.subscriptionservice.addSubscription("lae", subscription);
+
+        this.subscriptionservice.addSubscription(subscription);
       })
       .catch(err => console.error("Could not subscribe to notifications", err));
   }

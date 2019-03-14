@@ -7,4 +7,9 @@ var TransporationType;
     TransporationType[TransporationType["Bike"] = 2] = "Bike";
     TransporationType[TransporationType["Walk"] = 3] = "Walk";
 })(TransporationType = exports.TransporationType || (exports.TransporationType = {}));
+var TripSchedule;
+(function (TripSchedule) {
+    TripSchedule[TripSchedule["Departure"] = 1] = "Departure";
+    TripSchedule[TripSchedule["Arival"] = 2] = "Arival";
+})(TripSchedule = exports.TripSchedule || (exports.TripSchedule = {}));
 //# sourceMappingURL=TripDto.js.map

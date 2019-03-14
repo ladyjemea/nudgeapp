@@ -1,5 +1,5 @@
 {
-  "name": "NudgeApp.Web",
+  "name": "NudgeApp",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
