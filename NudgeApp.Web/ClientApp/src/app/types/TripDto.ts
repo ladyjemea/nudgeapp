@@ -26,3 +26,24 @@ export enum TransporationType {
   Bike,
   Walk
 }
+
+export interface TravelObject {
+  From: NudgeCoordinates;
+  To: NudgeCoordinates;
+  When: Date;
+  Schedule: TripSchedule;
+}
+
+export interface NudgeCoordinates {
+  Latitude: number;
+  Longitude: number;
+}
+
+export enum TripSchedule {
+  Departure = 1,
+  Arival = 2
+}
+
+export interface ITripCallback {
+  (result: TripDto): void;
+}

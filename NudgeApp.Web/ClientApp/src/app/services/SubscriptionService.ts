@@ -10,7 +10,7 @@ export class subscriptionservice {
   constructor(private http: HttpClient) {
   }
 
-  addSubscription(username: string, subscription: Subscription): void {
+  addSubscription(subscription: Subscription): void {
 
     this.http.post('http://localhost:5000/Api/PushNotification/Subscribe', subscription , { responseType: 'text' }).pipe()
       .subscribe(result => { }, error => console.error(error));

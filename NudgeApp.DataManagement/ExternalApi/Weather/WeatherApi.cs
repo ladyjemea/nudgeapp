@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Newtonsoft.Json;
     using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
@@ -30,6 +31,8 @@
         }
         public IList<HourlyForecast> Get24HTromsWeather()
         {
+            throw new Exception("Not included in free package.");
+            /*
             var client = new RestClient(serviceString);
             var request = new RestRequest("forecasts/v1/hourly/24hour/" + Locationkey, Method.GET);
             request.AddParameter("apikey", APIkey);
@@ -39,15 +42,16 @@
 
             var response = client.Execute(request);
 
-            return JsonConvert.DeserializeObject<List<HourlyForecast>>(response.Content);
+            return JsonConvert.DeserializeObject<List<HourlyForecast>>(response.Content);*/
         }
 
         public ForecastDto GetForecast(DateTime dateTime)
         {
-            if (DateTime.Now.AddDays(1) > dateTime)
+            if (DateTime.Now.AddHours(12) < dateTime)
                 throw new Exception("Date too far in the future. Forecast unreliable.");
 
-            var forecast = this.Get24HTromsWeather().First(f => f.DateTime == dateTime);
+            var longForecast = this.Get12HTromsWeather();
+            var forecast = longForecast.First(f => f.DateTime.Hour == dateTime.Hour);
 
             return new ForecastDto
             {
@@ -56,16 +60,49 @@
                 Time = dateTime,
                 Wind = forecast.Wind.Speed.Value,
                 PrecipitationProbability = forecast.PrecipitationProbability,
-                SkyCoverage = GetSkyCoverage(forecast),
+                SkyCoverage = GetSkyCoverage(forecast.CloudCover),
                 RoadCondition = GetRoadCondition(forecast)
             };
         }
 
-        private SkyCoverageType GetSkyCoverage(HourlyForecast forecast)
+        public async Task<ForecastDto> GetCurrentForecast()
         {
-            SkyCoverageType coverage = forecast.CloudCover <= 15 ? SkyCoverageType.Clear : SkyCoverageType.PartlyCloudy;
+            var forecastList = await this.GetCurrentTromsForecast();
+            var forecast = forecastList.First();
 
-            if (forecast.CloudCover > 75) coverage = SkyCoverageType.Cloudy;
+            return new ForecastDto
+            {
+                CloudCoveragePercent = forecast.CloudCover,
+                Temperature = forecast.RealFeelTemperature.Metric.Value,
+                Time = forecast.LocalObservationDateTime,
+                Wind = forecast.Wind.Speed.Value,
+                PrecipitationProbability = forecast.HasPrecipitation ? 100 : 0,
+                SkyCoverage = GetSkyCoverage(forecast.CloudCover),
+                RoadCondition = forecast.HasPrecipitation ? RoadCondition.Wet : RoadCondition.Dry
+            };
+        }
+
+        private Task<List<CurrentForecast>> GetCurrentTromsForecast()
+        {
+            var client = new RestClient(serviceString);
+            var request = new RestRequest("currentconditions/v1/" + Locationkey, Method.GET);
+            request.AddParameter("apikey", APIkey);
+            request.AddParameter("language", "en-us");
+            request.AddParameter("details", true);
+            request.AddParameter("metric", true);
+            request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; resp.ContentEncoding = "UTF-8"; };
+
+            var taskCompletionSource = new TaskCompletionSource<List<CurrentForecast>>();
+            client.ExecuteAsync<List<CurrentForecast>>(request, response => taskCompletionSource.SetResult(response.Data););
+
+            return taskCompletionSource.Task;
+        }
+
+        private SkyCoverageType GetSkyCoverage(int cloudCoverPercentage)
+        {
+            SkyCoverageType coverage = cloudCoverPercentage <= 15 ? SkyCoverageType.Clear : SkyCoverageType.PartlyCloudy;
+
+            if (cloudCoverPercentage > 75) coverage = SkyCoverageType.Cloudy;
 
             return coverage;
         }
