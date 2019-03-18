@@ -53,15 +53,6 @@
             this.AnonymousNudgeOracleRepository.Insert(nudgeEntity);
         }
 
-        private SkyCoverageType GetSkyCoverage(HourlyForecast forecast)
-        {
-            SkyCoverageType coverage = forecast.CloudCover <= 15 ? SkyCoverageType.Clear : SkyCoverageType.PartlyCloudy;
-
-            if (forecast.CloudCover > 75) coverage = SkyCoverageType.Cloudy;
-
-            return coverage;
-        }
-
         public void AddNudge(Guid userId, NudgeDto nudge, ForecastDto forecast, TripDto trip)
         {
             var envId = this.EnvironmelntalInfoRepository.CreateInfo(forecast);
@@ -157,6 +148,15 @@
             }
 
             return roadCondition;
+        }
+
+        private SkyCoverageType GetSkyCoverage(HourlyForecast forecast)
+        {
+            SkyCoverageType coverage = forecast.CloudCover <= 15 ? SkyCoverageType.Clear : SkyCoverageType.PartlyCloudy;
+
+            if (forecast.CloudCover > 75) coverage = SkyCoverageType.Cloudy;
+
+            return coverage;
         }
     }
 }

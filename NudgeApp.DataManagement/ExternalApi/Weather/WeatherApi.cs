@@ -93,7 +93,7 @@
             request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; resp.ContentEncoding = "UTF-8"; };
 
             var taskCompletionSource = new TaskCompletionSource<List<CurrentForecast>>();
-            client.ExecuteAsync<List<CurrentForecast>>(request, response => taskCompletionSource.SetResult(response.Data););
+            client.ExecuteAsync<List<CurrentForecast>>(request, response => taskCompletionSource.SetResult(response.Data));
 
             return taskCompletionSource.Task;
         }
