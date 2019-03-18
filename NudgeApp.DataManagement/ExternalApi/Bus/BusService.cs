@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.DataManagement.ExternalApi.Bus
 {
     using System;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -78,8 +79,8 @@
 
             var destinationStopCoordinates = new Coordinates
             {
-                Latitude = Convert.ToDouble(destinationStop.Group.First().Y.Replace(',', '.')),
-                Longitude = Convert.ToDouble(destinationStop.Group.First().X.Replace(',', '.'))
+                Latitude = Convert.ToDouble(destinationStop.Group.First().Y, CultureInfo.CurrentCulture),
+                Longitude = Convert.ToDouble(destinationStop.Group.First().X, CultureInfo.CurrentCulture)
             };
 
             var walkToDestination = await this.WalkInfo(destinationStopCoordinates, to);
