@@ -84,18 +84,47 @@
             };
 
             var walkToDestination = await this.WalkInfo(destinationStopCoordinates, to);
+            var walkToDestinationtDuration = walkToDestination.rows.First()?.elements.First()?.duration.value ?? 0;
 
-            var busArrivalTime = arrivalTime.AddSeconds((-1) * walkToDestination.rows.First().elements.First().duration.value);
+            var busArrivalTime = arrivalTime.AddSeconds((-1) * walkToDestinationtDuration);
 
             var busTrip = this.GetBusTrip(nearestStops.Group.First(), destinationStop.Group.First(), busArrivalTime, schedule);
 
+            if (busTrip.TravelParts.Count == 0)
+                return busTrip;
+
             var walkToStart = await this.WalkInfo(from, busTrip.StartCoordinates);
+            var walkToStartDuration = walkToStart.rows.FirstOrDefault()?.elements.FirstOrDefault()?.duration.value ?? 0;
 
-            busTrip.TravelParts.Add(0, new TravelPart { DepartureName = "Current Location", ArrivalName = busTrip.TravelParts[1].DepartureName, Duration = TimeSpan.FromSeconds(walkToStart.rows.First().elements.First().duration.value), Type = TransportationType.Walk });
-            busTrip.TravelParts.Add(busTrip.TravelParts.Count + 1, new TravelPart { DepartureName = busTrip.TravelParts[busTrip.TravelParts.Count - 1].ArrivalName, ArrivalName = "Destination", Duration = TimeSpan.FromSeconds(walkToDestination.rows.First().elements.First().duration.value), Type = TransportationType.Walk });
+            if (walkToStartDuration > 0)
+            {
+                busTrip.TravelParts.Add(0,
+                    new TravelPart
+                    {
+                        DepartureName = "Current Location",
+                        ArrivalName = busTrip.TravelParts[1].DepartureName,
+                        Duration = TimeSpan.FromSeconds(walkToStartDuration),
+                        Type = TransportationType.Walk
+                    });
 
-            busTrip.Duration = busTrip.Duration.Add(TimeSpan.FromSeconds(walkToStart.rows.First().elements.First().duration.value));
-            busTrip.Duration = busTrip.Duration.Add(TimeSpan.FromSeconds(walkToDestination.rows.First().elements.First().duration.value));
+                busTrip.Duration = busTrip.Duration.Add(TimeSpan.FromSeconds(walkToStartDuration));
+                busTrip.Start = busTrip.Start.AddSeconds(-1 * walkToStartDuration);
+            }
+
+            if (walkToDestinationtDuration > 0)
+            {
+                busTrip.TravelParts.Add(busTrip.TravelParts.Count + 1,
+                    new TravelPart
+                    {
+                        DepartureName = busTrip.TravelParts[busTrip.TravelParts.Count - 1].ArrivalName,
+                        ArrivalName = "Destination",
+                        Duration = TimeSpan.FromSeconds(walkToDestinationtDuration),
+                        Type = TransportationType.Walk
+                    });
+
+                busTrip.Duration = busTrip.Duration.Add(TimeSpan.FromSeconds(walkToDestinationtDuration));
+                busTrip.Stop = busTrip.Stop.AddSeconds(walkToDestinationtDuration);
+            }
 
             busTrip.DurationString = "";
             if (busTrip.Duration.Hours > 0)
@@ -108,8 +137,6 @@
             busTrip.DurationString += busTrip.Duration.Minutes.ToString();
             busTrip.DurationString += busTrip.Duration.Minutes == 1 ? " Minute" : " Minutes";
 
-            busTrip.Start = busTrip.Start.AddSeconds(-1 * walkToStart.rows.First().elements.First().duration.value);
-            busTrip.Stop = busTrip.Stop.AddSeconds(walkToDestination.rows.First().elements.First().duration.value);
 
             return busTrip;
         }
