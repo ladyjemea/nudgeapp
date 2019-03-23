@@ -11,6 +11,7 @@
     {
         // to update the database run the commnand: dotnet ef database update
         public const string connectionString = @"Server=localhost; Database=NudgeAppDatabase; Trusted_Connection = True;";
+        public const string onlineConnectionString = @"Server=nudgeapp.cz12dzdjwlt5.eu-central-1.rds.amazonaws.com,1433; Database=NudgeAppDatabase; Trusted_Connection = False; uid=nudgeuser; pwd=46AEcnT5RPPe4Mcu";
 
         public DbSet<UserEntity> UserEntity { get; set; }
         public DbSet<PreferencesEntity> PreferencesEntity { get; set; }
@@ -28,7 +29,7 @@
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseSqlServer(NudgeDbContext.connectionString);
+            optionsBuilder.UseSqlServer(NudgeDbContext.onlineConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

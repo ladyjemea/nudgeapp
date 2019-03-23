@@ -15,6 +15,7 @@ namespace NudgeApp.Common.Dtos
         public Coordinates StartCoordinates { get; set; }
         public Coordinates EndCoordinates { get; set; }
         public SortedList<int, TravelPart> TravelParts { get; set; }
+        public string Link { get; set; }
 
         public BusTripDto()
         {

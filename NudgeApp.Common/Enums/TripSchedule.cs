@@ -1,4 +1,4 @@
-﻿namespace NudgeApp.DataManagement.ExternalApi.Bus
+﻿namespace NudgeApp.Common.Enums
 {
     public enum TripSchedule
     {

@@ -30,7 +30,7 @@ namespace NudgeApp.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<INudgeDbContext, NudgeDbContext>(options => options.UseSqlServer(NudgeDbContext.connectionString), ServiceLifetime.Singleton);
+            services.AddDbContext<INudgeDbContext, NudgeDbContext>(options => options.UseSqlServer(NudgeDbContext.onlineConnectionString), ServiceLifetime.Singleton);
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");

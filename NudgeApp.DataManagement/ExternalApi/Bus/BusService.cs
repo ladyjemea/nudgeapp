@@ -14,6 +14,8 @@
 
     public class BusService : IBusService
     {
+        private readonly string tromskortetLink = "https://www.tromskortet.no/reiseplanlegger/category245.html";
+
         /// <summary>
         /// Searches for trips between 2 stops.
         /// </summary>
@@ -22,7 +24,7 @@
         /// <param name="dateTime"> The time for departure/arrival. Can be left unset. If unset or null DateTime.Now will be set. </param>
         /// <param name="tripSchedule"> Sets if the dateTime set is for arrival or departure. Departure is default value if not set. </param>
         /// <returns> A list of all trips and details about each one. </returns>
-        public TripObject SearchTrip(string from, string to, DateTime? dateTime = null, TripSchedule? tripSchedule = TripSchedule.Departure)
+        public TripObject SearchTrip(string from, string to, out string link, DateTime? dateTime = null, TripSchedule? tripSchedule = TripSchedule.Departure)
         {
             var date = (dateTime ?? DateTime.Now).ToShortDateString().Replace('/', '.');
             var time = (dateTime ?? DateTime.Now).ToShortTimeString();
@@ -37,8 +39,9 @@
 
             var response = client.Execute<TripObject>(request);
 
-            TripObject result = null;
+            link = tromskortetLink + response.ResponseUri.Query;
 
+            TripObject result = null;
             var serializer = new XmlSerializer(typeof(TripObject));
             using (TextReader reader = new StringReader(response.Content))
             {
@@ -48,7 +51,7 @@
             return result;
         }
 
-        public Task<Stages> NearestStops(Coordinates coord)
+        public Stages NearestStops(Coordinates coord)
         {
             var client = new RestClient("http://rp.tromskortet.no");
             var request = new RestRequest("scripts/TravelMagic/TravelMagicWE.dll/v1NearestStopsXML", Method.GET);
@@ -56,41 +59,49 @@
             request.AddParameter("y", coord.Latitude);
             request.OnBeforeDeserialization = resp => { resp.ContentType = "application/xml"; resp.ContentEncoding = "UTF-8"; };
 
-            var taskCompletionSource = new TaskCompletionSource<Stages>();
-            client.ExecuteAsync<Stages>(request, response => taskCompletionSource.SetResult(response.Data));
+            var response = client.Execute<Stages>(request);
 
-            /* Stages result = null;
+            Stages result = null;
+            var serializer = new XmlSerializer(typeof(Stages));
+            using (TextReader reader = new StringReader(response.Content))
+            {
+                result = (Stages)serializer.Deserialize(reader);
+            }
 
-             var serializer = new XmlSerializer(typeof(Stages));
-             using (TextReader reader = new StringReader(response.Content))
-             {
-                 result = (Stages)serializer.Deserialize(reader);
-             }
-
-             Console.WriteLine(result);
-             */
-            return taskCompletionSource.Task;
+            return result;
         }
 
-        public async Task<BusTripDto> FindBusTrip(Coordinates from, Coordinates to, DateTime arrivalTime, TripSchedule schedule)
+        public async Task<BusTripDto> FindBusTrip(Coordinates from, Coordinates to, DateTime travelTime, TripSchedule schedule)
         {
-            var nearestStops = await this.NearestStops(from);
-            var destinationStop = await this.NearestStops(to);
+            var nearestStops = this.NearestStops(from);
+            var destinationStop = this.NearestStops(to);
 
             var destinationStopCoordinates = new Coordinates
             {
-                Latitude = Convert.ToDouble(destinationStop.Group.First().Y, CultureInfo.CurrentCulture),
-                Longitude = Convert.ToDouble(destinationStop.Group.First().X, CultureInfo.CurrentCulture)
+                Latitude = Convert.ToDouble(destinationStop.Group.First().Y.Replace(',', '.'), CultureInfo.InvariantCulture),
+                Longitude = Convert.ToDouble(destinationStop.Group.First().X.Replace(',', '.'), CultureInfo.InvariantCulture)
             };
 
             var walkToDestination = await this.WalkInfo(destinationStopCoordinates, to);
             var walkToDestinationtDuration = walkToDestination.rows.First()?.elements.First()?.duration.value ?? 0;
 
-            var busArrivalTime = arrivalTime.AddSeconds((-1) * walkToDestinationtDuration);
+            var busArrivalTime = travelTime.AddSeconds((-1) * walkToDestinationtDuration);
 
-            var busTrip = this.GetBusTrip(nearestStops.Group.First(), destinationStop.Group.First(), busArrivalTime, schedule);
+            BusTripDto busTrip = null;
+            foreach (var departureStop in nearestStops.Group)
+            {
+                try
+                {
+                    busTrip = this.GetBusTrip(departureStop, destinationStop.Group.First(), busArrivalTime, schedule);
+                    if (busTrip != null)
+                        break;
+                }
+                catch
+                {
+                }
+            }
 
-            if (busTrip.TravelParts.Count == 0)
+            if (busTrip == null || busTrip.TravelParts.Count == 0)
                 return busTrip;
 
             var walkToStart = await this.WalkInfo(from, busTrip.StartCoordinates);
@@ -141,17 +152,12 @@
             return busTrip;
         }
 
-        private BusTripDto GetBusTrip(Group from, Group to, DateTime arrivalTime, TripSchedule schedule)
+        private BusTripDto GetBusTrip(Group from, Group to, DateTime travelTime, TripSchedule schedule)
         {
-            var trip = this.SearchTrip(from.N, to.N, arrivalTime, schedule).Trips.Trip.First();
+            string link = string.Empty;
+            var trip = this.SearchTrip(from.N, to.N, out link, travelTime, schedule).Trips.Trip.First();
 
             var allStops = trip.I.Where(i => i.N != String.Empty && i.N != i.N2).ToList();
-
-            if (allStops.First().Tn == "Gange")
-            {
-                trip = this.SearchTrip(allStops.First().N2, to.N, arrivalTime, schedule).Trips.Trip.First();
-                allStops = trip.I.Where(i => i.N != String.Empty && i.N != i.N2).ToList();
-            }
 
             var stops = allStops.Where(i => i.N2 != String.Empty);
 
@@ -161,6 +167,7 @@
                 Stop = Convert.ToDateTime(trip.Stop),
                 Duration = TimeSpan.FromMinutes(Convert.ToInt64(trip.Duration)),
                 ChangeNb = Convert.ToInt32(trip.Changecount),
+                Link = link,
                 StartCoordinates = new Coordinates
                 {
                     Latitude = Convert.ToDouble(stops.First().Y.Replace(',', '.')),

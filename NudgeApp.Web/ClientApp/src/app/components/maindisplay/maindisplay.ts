@@ -36,7 +36,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       this.query = params['destination'];
 
       this.mapsAPILoader.load().then(() => {
-        console.log(this.query);
+
         var date = new Date(Date.now());
         this.travelService.GetTrip(this.query, date, google.maps.TravelMode.WALKING,
           (result) => {
@@ -52,7 +52,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
             this.ref.detectChanges();
           });
-
         this.travelService.GetTrip(this.query, date, google.maps.TravelMode.TRANSIT,
           (result) => {
             this.bus = result.durationString;
