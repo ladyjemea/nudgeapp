@@ -10,7 +10,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  checkpassword(username: string, password: string): void {
+  login(username: string, password: string): void {
     var params = new HttpParams();
     params = params.append('username', username);
     params = params.append('password', password);

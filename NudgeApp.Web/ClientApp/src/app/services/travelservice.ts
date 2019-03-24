@@ -29,7 +29,6 @@ export class TravelService {
               destinations: [results[0].geometry.location],
               travelMode: mode
             }, (result, status) => {
-                console.log(result);
               var res = <TripDto>{}
               res.duration = <Time>{};
               res.distanceString = result.rows[0].elements[0].distance.text;

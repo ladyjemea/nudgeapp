@@ -13,8 +13,7 @@ export class LoginComponent {
 
   constructor(private authenticationService: AuthenticationService) { }
   public loginUser(form: NgForm) {
-    //console.log(form.value);
 
-    this.authenticationService.checkpassword(form.value.username, form.value.password);
+    this.authenticationService.login(form.value.username, form.value.password);
   }
 }

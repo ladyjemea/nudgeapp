@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SwPush } from '@angular/service-worker';
-import { subscriptionservice } from '../../services/SubscriptionService'
+import { SubscriptionService } from '../../services/SubscriptionService'
 import { Subscription } from '../../types/Subscription'
 import { MapsAPILoader } from '@agm/core';
 import { UserService } from '../../services/UserService';
@@ -19,7 +19,7 @@ import { query } from '@angular/animations';
   selector: 'search',
   templateUrl: './mainaccess.html',
   styleUrls: ['./mainaccess.css'],
-  providers: [SwPush, subscriptionservice],
+  providers: [SwPush, SubscriptionService],
 })
 
 export class MainaccessComponent implements OnInit {
@@ -34,9 +34,6 @@ export class MainaccessComponent implements OnInit {
   travelVariants: TravelVariant[];
 
   onChooseLocation($event) {
-    console.log($event.coords.lat);
-    console.log($event.coords.lng);
-
     this.mapsAPILoader.load().then(() => {
       var geocoder = new google.maps.Geocoder;
       var latlng = new google.maps.LatLng($event.coords.lat, $event.coords.lng);
@@ -51,7 +48,7 @@ export class MainaccessComponent implements OnInit {
 
   constructor(
     private router: Router, private swPush: SwPush,
-    private subscriptionservice: subscriptionservice, private mapsAPILoader: MapsAPILoader) {
+    private subscriptionservice: SubscriptionService, private mapsAPILoader: MapsAPILoader) {
 
     this.subscribeToNotifications();
 
@@ -62,6 +59,7 @@ export class MainaccessComponent implements OnInit {
   }
 
   ngOnInit() { }
+
   submitSearch(event, formData) {
     //console.log(event);
     //console.log(formData.value);
@@ -71,40 +69,7 @@ export class MainaccessComponent implements OnInit {
       //this.router.navigateByUrl('/maindisplay');
     //this.http.post("/assets/data/streets.json", {})
     }
-    
   }
-
-
-  /*
-  //gets the current location of the user
-  this.mapsAPILoader.load().then(() => {
-    var geocoder = new google.maps.Geocoder;
-    var latlng = new google.maps.LatLng(this.lat, this.lng);
-    geocoder.geocode({ 'location': latlng }, function (results, status) {
-      console.log("map results");
-      console.log(results);
-    });
-    var address = 'Norway, Tromsø, Luleåvegen 19'; // should get the destination from the input field "enter destination"
-    geocoder.geocode({ 'address': address }, function (results, status) {
-      console.log(results[0].geometry.location);
-      //const distance = google.maps.geometry.spherical.computeDistanceBetween(latlng, results[0].geometry.location);
-      //console.log(distance);
-      var request = {
-        origin: latlng,
-        destination: results[0].geometry.location,
-        travelMode: google.maps.TravelMode.WALKING
-
-      };
-
-      var distanceMatrixService = new google.maps.DistanceMatrixService();
-      distanceMatrixService.getDistanceMatrix({
-        origins: [latlng],
-        destinations: [results[0].geometry.location],
-        travelMode: google.maps.TravelMode.WALKING
-      }, (result, status) => { console.log(result.rows[0].elements[0].duration); });
-    });
-  });
-  */
 
   public userLocation(form: NgForm) {
    

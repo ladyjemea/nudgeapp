@@ -5,7 +5,7 @@ import { Subscription } from '../types/Subscription';
 import { Router } from '@angular/router';
 
 @Injectable()
-export class subscriptionservice {
+export class SubscriptionService {
 
   constructor(private http: HttpClient) {
   }
