@@ -17,9 +17,9 @@
 
 <form #travelType="ngForm" (ngSubmit)="pickTravelMode(travelType)">
   <div id="submit">
-    <button class="btn btn-primary">Walk/Bike</button>
-    <button class="btn btn-primary">Bus</button>
-    <button class="btn btn-primary">Default</button>
+    <button class="btn btn-primary"(click) ="showmaps($event)">Walk/Bike</button>
+    <button class="btn btn-primary"(click) ="buscalendar($event)">Bus</button>
+    <button class="btn btn-primary"(click) ="back($previouspage)">Default</button>
    
   </div>
 

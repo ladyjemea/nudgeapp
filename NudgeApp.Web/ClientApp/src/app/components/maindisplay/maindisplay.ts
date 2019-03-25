@@ -8,7 +8,7 @@ import { WeatherService } from '../../services/WeatherService';
 import { MapsAPILoader } from '@agm/core';
 import { TripDto } from '../../types/TripDto';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { query } from '@angular/core/src/render3/query';
 
 
@@ -29,7 +29,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   public routeSub: any;
   
 
-  constructor(private travelService: TravelService, private mapsAPILoader: MapsAPILoader, private ref: ChangeDetectorRef, private route: ActivatedRoute, private weatherService: WeatherService) {
+  constructor(private router: Router, private travelService: TravelService, private mapsAPILoader: MapsAPILoader, private ref: ChangeDetectorRef, private route: ActivatedRoute, private weatherService: WeatherService) {
     this.weatherService.GetCurrentForecast().subscribe((forecast) => { this.temperature = String(forecast.temperature); });
     this.weatherService.GetCurrentForecast().subscribe((forecast) => { this.realfeelTemperature = String(forecast.realFeelTemperature); });
   }
@@ -74,6 +74,9 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   public pickTravelMode(form: NgForm) {
 
     //this.authenticationService.checkpassword(form.value.username, form.value.password);
+  }
+  showmaps(event) {
+    window.location.href ='http://www.google.com';
   }
 
 }
