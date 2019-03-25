@@ -10,11 +10,11 @@
     {
         public NudgeRepository(INudgeDbContext context) : base(context) { }
 
-        public Guid Create(TransportationType transportationType, Guid userId, Guid envInfoId)
+        public Guid Create(TransportationType transportationType, Guid userId, Guid forecastId)
         {
             var entity = new NudgeEntity
             {
-                EnvironmentalInfoId = envInfoId,
+                WeatherForecastId = forecastId,
                 UserId = userId,
                 NudgeResult = NudgeResult.Successful,
                 TransportationType = transportationType

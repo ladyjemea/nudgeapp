@@ -6,13 +6,13 @@
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
-    public class EnvironmelntalInfoRepository : Repository<EnvironmentalInfoEntity>, IEnvironmelntalInfoRepository
+    public class EnvironmelntalInfoRepository : Repository<WeatherForecastEntity>, IEnvironmelntalInfoRepository
     {
         public EnvironmelntalInfoRepository(INudgeDbContext context) : base(context) { }
 
         public Guid CreateInfo(ForecastDto forecast)
         {
-            var entity = new EnvironmentalInfoEntity
+            var entity = new WeatherForecastEntity
             {
                 CloudCoveragePercent = forecast.CloudCoveragePercent,
                 RoadCondition = forecast.RoadCondition,

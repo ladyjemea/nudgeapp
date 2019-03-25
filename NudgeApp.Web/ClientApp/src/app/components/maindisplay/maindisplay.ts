@@ -35,7 +35,11 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   get transportationTypes() { return TransporationType; }
 
   constructor(private travelService: TravelService, private mapsAPILoader: MapsAPILoader, private ref: ChangeDetectorRef, private route: ActivatedRoute, private weatherService: WeatherService, private nudgeService: NudgeService) {
-    // this.weatherService.GetCurrentForecast().subscribe((forecast) => { this.temperature = String(forecast.temperature); this.travelForecast = forecast; });
+    this.weatherService.GetCurrentForecast().subscribe((forecast) => {
+      this.temperature = String(forecast.temperature);
+      this.realfeelTemperature = String(forecast.realFeelTemperature);
+      this.travelForecast = forecast;
+    });
   }
 
   ngOnInit() {
@@ -86,7 +90,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   Nudge(travelType: TransporationType) {
 
     var trip = this.getTrip(travelType);
-    
+
     this.nudgeService.saveNudge(travelType, this.travelForecast, trip);
   }
 

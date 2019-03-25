@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NudgeApp.Data;
 
 namespace NudgeApp.Data.Migrations
 {
     [DbContext(typeof(NudgeDbContext))]
-    partial class NudgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190325154029_forecastRename")]
+    partial class forecastRename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnonymousNudges");
+                    b.ToTable("AnonymousNudgeEntity");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.NudgeEntity", b =>
@@ -72,7 +74,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasIndex("WeatherForecastId");
 
-                    b.ToTable("Nudges");
+                    b.ToTable("NudgeEntity");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.PreferencesEntity", b =>
@@ -96,7 +98,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Preferences");
+                    b.ToTable("PreferencesEntity");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.PushNotificationEntity", b =>
@@ -118,7 +120,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PushNotifications");
+                    b.ToTable("PushNotificationEntity");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.TripEntity", b =>
@@ -144,7 +146,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasIndex("WeatherForecastId");
 
-                    b.ToTable("Trips");
+                    b.ToTable("TripEntity");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.UserEntity", b =>
@@ -170,7 +172,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("UserEntity");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.WeatherForecastEntity", b =>
@@ -198,7 +200,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WeatherForecast");
+                    b.ToTable("EnvironmentalInfoEntity");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.NudgeEntity", b =>

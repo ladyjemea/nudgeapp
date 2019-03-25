@@ -6,6 +6,6 @@
 
     public interface INudgeRepository : IRepository<NudgeEntity>
     {
-        Guid Create(TransportationType transportationType, Guid userId, Guid envInfoId);
+        Guid Create(TransportationType transportationType, Guid userId, Guid forecastId);
     }
 }
