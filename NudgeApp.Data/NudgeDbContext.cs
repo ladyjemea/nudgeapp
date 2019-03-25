@@ -6,13 +6,12 @@
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Entities.Generic;
-    using NudgeApp.Data.OracleDb.Queries;
 
     public class NudgeDbContext : DbContext, INudgeDbContext
     {
         // to update the database run the commnand: dotnet ef database update
-        public const string connectionString = @"Server=localhost; Database=NudgeAppDatabase; Trusted_Connection = True;";
-        public const string onlineConnectionString = @"Server=nudgeapp.cz12dzdjwlt5.eu-central-1.rds.amazonaws.com,1433; Database=NudgeAppDatabase; Trusted_Connection = False; uid=nudgeuser; pwd=46AEcnT5RPPe4Mcu";
+        public const string onlineConnectionString = @"Server=localhost; Database=NudgeAppDatabase; Trusted_Connection = True;";
+        //public const string onlineConnectionString = @"Server=nudgeapp.cz12dzdjwlt5.eu-central-1.rds.amazonaws.com,1433; Database=NudgeAppDatabase; Trusted_Connection = False; uid=nudgeuser; pwd=46AEcnT5RPPe4Mcu";
 
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<PreferencesEntity> Preferences { get; set; }
@@ -38,7 +37,10 @@
             modelBuilder.Entity<UserEntity>();
             modelBuilder.Entity<PreferencesEntity>();
             modelBuilder.Entity<NudgeEntity>();
-            modelBuilder.Entity<WeatherForecastEntity>();
+            modelBuilder.Entity<WeatherForecastEntity>()
+                .HasOne(p => p.Nudge)
+                .WithOne(b => b.WeatherForecast)
+                .IsRequired(false);
             modelBuilder.Entity<TripEntity>();
             modelBuilder.Entity<AnonymousNudgeEntity>();
 

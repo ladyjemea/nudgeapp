@@ -13,5 +13,7 @@
         public float Wind { get; set; }
         public int PrecipitationProbability { get; set; }
         public RoadCondition RoadCondition { get; set; }
+
+        public NudgeEntity Nudge { get; set; }
     }
 }

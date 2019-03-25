@@ -53,25 +53,35 @@
             this.AnonymousNudgeOracleRepository.Insert(nudgeEntity);
         }
 
-        public void AddNudge(Guid userId, TransportationType transportationType, ForecastDto forecast, TripDto trip)
+        public void AddNudge(Guid userId, NudgeData nudgeData)
         {
-            var envId = this.EnvironmelntalInfoRepository.CreateInfo(forecast);
-            this.NudgeRepository.Create(transportationType, userId, envId);
-            this.TripRepository.Create(trip, userId, envId);
+            var weatherForecastId = Guid.Empty;
+            if (nudgeData.Forecast != null)
+                weatherForecastId = this.EnvironmelntalInfoRepository.CreateInfo(nudgeData.Forecast);
+
+            if (nudgeData.Trip != null)
+                this.TripRepository.Create(nudgeData.Trip, userId, weatherForecastId);
+
+            this.NudgeRepository.Create(nudgeData.TransportationType, userId, weatherForecastId);
 
             try
             {
-                this.AnonymousNudgeOracleRepository.Insert(new AnonymousNudgeEntity
+                var anonymousNudge = new AnonymousNudgeEntity
                 {
-                    ActualTransportationType = transportationType,
-                    PrecipitationProbability = forecast.PrecipitationProbability,
+                    ActualTransportationType = nudgeData.TransportationType,
                     Result = NudgeResult.Successful,
-                    RoadCondition = forecast.RoadCondition,
-                    SkyCoverage = forecast.SkyCoverage,
-                    Temperature = forecast.Temperature,
-                    Wind = forecast.Wind,
                     UserPreferedTransportationType = this.PreferencesRepository.GetPreferences(userId).ActualTransportationType
-            });
+                };
+
+                if (nudgeData.Forecast != null)
+                {
+                    anonymousNudge.PrecipitationProbability = nudgeData.Forecast.PrecipitationProbability;
+                    anonymousNudge.RoadCondition = nudgeData.Forecast.RoadCondition;
+                    anonymousNudge.SkyCoverage = nudgeData.Forecast.SkyCoverage;
+                    anonymousNudge.Temperature = nudgeData.Forecast.Temperature;
+                    anonymousNudge.Wind = nudgeData.Forecast.Wind;
+                }
+                this.AnonymousNudgeOracleRepository.Insert(anonymousNudge);
             }
             catch (Exception ex)
             {

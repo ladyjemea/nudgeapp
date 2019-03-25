@@ -24,7 +24,7 @@
         {
             var userId = Guid.Parse(HttpContext.User.Identities.First().Name);
 
-            this.NudgeLogic.AddNudge(userId, nudgeData.TransportationType, nudgeData.forecast, nudgeData.trip);
+            this.NudgeLogic.AddNudge(userId, nudgeData);
 
             return this.Ok();
         }
@@ -35,12 +35,5 @@
             this.NudgeLogic.Test();
             return this.Ok();
         }
-    }
-
-    public class NudgeData
-    {
-        public TransportationType TransportationType { get; set; }
-        public ForecastDto forecast { get; set; }
-        public TripDto trip { get; set; }
     }
 }

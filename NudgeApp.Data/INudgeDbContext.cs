@@ -4,7 +4,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.EntityFrameworkCore.Infrastructure;
-    using NudgeApp.Data.Entities;
     using NudgeApp.Data.Entities.Generic;
 
     public interface INudgeDbContext
