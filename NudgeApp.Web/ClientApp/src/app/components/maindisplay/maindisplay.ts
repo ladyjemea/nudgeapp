@@ -1,21 +1,20 @@
 import { Component, ChangeDetectorRef, Input, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import 'rxjs';
-import { AuthenticationService } from '../../services/AuthenticationService';
 import { TravelService } from '../../services/TravelService';
 import { WeatherService } from '../../services/WeatherService';
 import { MapsAPILoader } from '@agm/core';
-import { TripDto } from '../../types/TripDto';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { ActivatedRoute, Router } from '@angular/router';
+import { TripDto, TransporationType } from '../../types/TripDto';
+import { ActivatedRoute } from '@angular/router';
 import { query } from '@angular/core/src/render3/query';
+import { ForecastDto } from '../../types/ForecastDto';
+import { NudgeService } from '../../services/NudgeService';
 
 
 @Component({
   templateUrl: './maindisplay.html',
   styleUrls: ['./maindisplay.css'],
-  providers: [TravelService, WeatherService],
+  providers: [TravelService, WeatherService, NudgeService],
 })
 export class MainDisplayComponent implements OnInit, OnDestroy {
   public walking: string = "";
@@ -25,13 +24,18 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   public temperature: string = "";
   public realfeelTemperature: string = "";
 
+  private travelForecast: ForecastDto;
+  private walkingTrip: TripDto;
+  private bikeTrip: TripDto;
+  private busTrip: TripDto;
+
   public query: string;
   public routeSub: any;
-  
 
-  constructor(private router: Router, private travelService: TravelService, private mapsAPILoader: MapsAPILoader, private ref: ChangeDetectorRef, private route: ActivatedRoute, private weatherService: WeatherService) {
-    this.weatherService.GetCurrentForecast().subscribe((forecast) => { this.temperature = String(forecast.temperature); });
-    this.weatherService.GetCurrentForecast().subscribe((forecast) => { this.realfeelTemperature = String(forecast.realFeelTemperature); });
+  get transportationTypes() { return TransporationType; }
+
+  constructor(private travelService: TravelService, private mapsAPILoader: MapsAPILoader, private ref: ChangeDetectorRef, private route: ActivatedRoute, private weatherService: WeatherService, private nudgeService: NudgeService) {
+    // this.weatherService.GetCurrentForecast().subscribe((forecast) => { this.temperature = String(forecast.temperature); this.travelForecast = forecast; });
   }
 
   ngOnInit() {
@@ -47,6 +51,9 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
             this.distance = result.distanceString;
 
             this.ref.detectChanges();
+
+            this.walkingTrip = result;
+            this.walkingTrip.mode = TransporationType.Walk;
           });
 
         this.travelService.GetTrip(this.query, date, google.maps.TravelMode.BICYCLING,
@@ -54,12 +61,18 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
             this.bicycling = result.durationString;
 
             this.ref.detectChanges();
+
+            this.bikeTrip = result;
+            this.bikeTrip.mode = TransporationType.Walk;
           });
         this.travelService.GetTrip(this.query, date, google.maps.TravelMode.TRANSIT,
           (result) => {
             this.bus = result.durationString;
 
             this.ref.detectChanges();
+
+            this.busTrip = result;
+            this.busTrip.mode = TransporationType.Walk;
           });
 
       });
@@ -70,6 +83,25 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     this.routeSub.unsubscribe()
   }
 
+  Nudge(travelType: TransporationType) {
+
+    var trip = this.getTrip(travelType);
+    
+    this.nudgeService.saveNudge(travelType, this.travelForecast, trip);
+  }
+
+  private getTrip(travelType: TransporationType): TripDto {
+    switch (travelType) {
+      case TransporationType.Walk:
+        return this.walkingTrip;
+      case TransporationType.Bike:
+        return this.bikeTrip;
+      case TransporationType.Bus:
+        return this.busTrip;
+      case TransporationType.Car:
+        return this.walkingTrip;
+    }
+  }
 
   public pickTravelMode(form: NgForm) {
 

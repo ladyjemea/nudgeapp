@@ -17,10 +17,10 @@
 
 <form #travelType="ngForm" (ngSubmit)="pickTravelMode(travelType)">
   <div id="submit">
-    <button class="btn btn-primary"(click) ="showmaps($event)">Walk/Bike</button>
-    <button class="btn btn-primary"(click) ="buscalendar($event)">Bus</button>
-    <button class="btn btn-primary"(click) ="back($previouspage)">Default</button>
-   
+    <button (click)="Nudge(transportationTypes.Walk)" class="btn btn-primary">Walk</button>
+    <button (click)="Nudge(transportationTypes.Bike)" class="btn btn-primary">Bike</button>
+    <button (click)="Nudge(transportationTypes.Bus)" class="btn btn-primary">Bus</button>
+    <button (click)="Nudge(transportationTypes.Car)" class="btn btn-primary">Default</button>
   </div>
 
 </form>

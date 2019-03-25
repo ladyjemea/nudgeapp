@@ -53,17 +53,17 @@
             this.AnonymousNudgeOracleRepository.Insert(nudgeEntity);
         }
 
-        public void AddNudge(Guid userId, NudgeDto nudge, ForecastDto forecast, TripDto trip)
+        public void AddNudge(Guid userId, TransportationType transportationType, ForecastDto forecast, TripDto trip)
         {
             var envId = this.EnvironmelntalInfoRepository.CreateInfo(forecast);
-            this.NudgeRepository.Create(nudge, userId, envId);
+            this.NudgeRepository.Create(transportationType, userId, envId);
             this.TripRepository.Create(trip, userId, envId);
 
             try
             {
                 this.AnonymousNudgeOracleRepository.Insert(new AnonymousNudgeEntity
                 {
-                    ActualTransportationType = nudge.TransportationType,
+                    ActualTransportationType = transportationType,
                     PrecipitationProbability = forecast.PrecipitationProbability,
                     Result = NudgeResult.Successful,
                     RoadCondition = forecast.RoadCondition,

@@ -11,7 +11,7 @@ import { Time } from '@angular/common';
 @Injectable()
 export class TravelService {
 
-  constructor(private http: HttpClient, private mapsAPILoader: MapsAPILoader) {  }
+  constructor(private http: HttpClient, private mapsAPILoader: MapsAPILoader) { }
 
   public GetTrip(to: string, date: Date, mode: google.maps.TravelMode, callback: ITripCallback): void {
 
@@ -19,8 +19,8 @@ export class TravelService {
       navigator.geolocation.getCurrentPosition((position) => {
         var geocoder = new google.maps.Geocoder;
 
-        var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-       // var latlng = new google.maps.LatLng(69.68084373889975, 18.976014381857112);
+        // var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        var latlng = new google.maps.LatLng(69.68084373889975, 18.976014381857112);
         geocoder.geocode({ 'address': to }, (results, status) => {
           if (mode !== google.maps.TravelMode.TRANSIT) {
             var distanceMatrixService = new google.maps.DistanceMatrixService();
@@ -34,6 +34,7 @@ export class TravelService {
               res.distanceString = result.rows[0].elements[0].distance.text;
               res.duration.minutes = result.rows[0].elements[0].duration.value;
               res.durationString = result.rows[0].elements[0].duration.text;
+              res.link = "https://www.google.com/maps/dir/?api=1&origin=" + latlng + "&destination=" + results[0].geometry.location + "&travelmode=" + mode.toString().toLocaleLowerCase();
               callback(res);
             });
 

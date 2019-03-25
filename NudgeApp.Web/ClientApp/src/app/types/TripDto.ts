@@ -1,12 +1,14 @@
 import { Time } from "@angular/common";
 
 export interface TripDto {
+  mode: TransporationType;
   duration: Time;
   distance: number;
   durationString: string;
   distanceString: string;
   start: Time;
   stop: Time;
+  link: string;
   changeNb: number;
   startCoordinates: Coordinates;
   endCoordinates: Coordinates;
