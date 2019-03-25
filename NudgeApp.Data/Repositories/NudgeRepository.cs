@@ -2,6 +2,7 @@
 {
     using System;
     using NudgeApp.Common.Dtos;
+    using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
@@ -9,14 +10,14 @@
     {
         public NudgeRepository(INudgeDbContext context) : base(context) { }
 
-        public Guid Create(NudgeDto nudge, Guid userId, Guid envInfoId)
+        public Guid Create(TransportationType transportationType, Guid userId, Guid envInfoId)
         {
             var entity = new NudgeEntity
             {
                 EnvironmentalInfoId = envInfoId,
                 UserId = userId,
-                NudgeResult = nudge.NudgeResult,
-                TransportationType = nudge.TransportationType
+                NudgeResult = NudgeResult.Successful,
+                TransportationType = transportationType
             };
 
             this.Insert(entity);

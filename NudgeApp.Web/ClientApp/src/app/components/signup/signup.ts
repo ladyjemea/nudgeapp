@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import 'rxjs';
 import { UserService } from '../../services/UserService';
 import { AuthenticationService } from '../../services/AuthenticationService';
-import { TravelTypes } from '../../types/TravelTypes';
+import { TransporationType } from '../../types/TripDto';
 
 @Component({
   templateUrl: './signup.html',
@@ -13,10 +13,10 @@ import { TravelTypes } from '../../types/TravelTypes';
 })
 export class SignupComponent {
 
-  private selectedTravelType: TravelTypes;
+  private selectedTravelType: TransporationType;
 
   constructor(private userService: UserService, private authenticationService: AuthenticationService) {
-    this.selectedTravelType = TravelTypes.Car;
+    this.selectedTravelType = TransporationType.Car;
   }
 
   public Selected(value: any) {

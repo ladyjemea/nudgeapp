@@ -1,11 +1,12 @@
 ﻿namespace NudgeApp.DataManagement.Implementation.Interfaces
 {
     using NudgeApp.Common.Dtos;
+    using NudgeApp.Common.Enums;
     using System;
 
     public interface INudgeLogic
     {
-        void AddNudge(Guid userId, NudgeDto nudge, ForecastDto forecast, TripDto trip);
+        void AddNudge(Guid userId, TransportationType transportationType, ForecastDto forecast, TripDto trip);
         void Test();
     }
 }
