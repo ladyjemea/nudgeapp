@@ -7,5 +7,6 @@
     {
         bool CreateUser(string username, string password, string name, string email, string address, TransportationType travelType);
         UserEntity CheckPassword(string userName, string password);
+        void GetUser();
     }
 }

@@ -94,5 +94,10 @@
 
             return true;
         }
+
+        public void GetUser()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -21,7 +21,7 @@
 
         public ScheduleTask(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory) { }
 
-        protected override string Schedule => "*/1 * * * *";
+        protected override string Schedule => "*/1 * * * * *";
 
         public override Task ProcessInScope(IServiceProvider serviceProvider)
         {

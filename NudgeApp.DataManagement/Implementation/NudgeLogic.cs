@@ -64,12 +64,12 @@
                 this.AnonymousNudgeOracleRepository.Insert(new AnonymousNudgeEntity
                 {
                     ActualTransportationType = transportationType,
-                    PrecipitationProbability = forecast.PrecipitationProbability,
+                    PrecipitationProbability = forecast.RawData.PrecipitationProbability,
                     Result = NudgeResult.Successful,
                     RoadCondition = forecast.RoadCondition,
                     SkyCoverage = forecast.SkyCoverage,
-                    Temperature = forecast.Temperature,
-                    Wind = forecast.Wind,
+                    Temperature = forecast.RawData.Temperature,
+                    Wind = forecast.RawData.Wind,
                     UserPreferedTransportationType = this.PreferencesRepository.GetPreferences(userId).ActualTransportationType
             });
             }
