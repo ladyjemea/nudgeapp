@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    public interface IWeatherApi
+    public interface IWeatherService
     {
         IList<HourlyForecast> Get12HTromsWeather();
         IList<HourlyForecast> Get24HTromsWeather();

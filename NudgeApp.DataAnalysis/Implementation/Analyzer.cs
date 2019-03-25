@@ -9,15 +9,15 @@ namespace NudgeApp.DataAnalysis.API
 {
     public class Analyzer : IAnalyzer
     {
-        private readonly IWeatherApi WeatherApi;
-        public Analyzer(IWeatherApi weather)
+        private readonly IWeatherService WeatherService;
+        public Analyzer(IWeatherService weather)
         {
-            this.WeatherApi = weather;
+            this.WeatherService = weather;
         }
 
         public IList<DateInfo> AnalyseWeather()
         {
-            var results = this.WeatherApi.Get12HTromsWeather();
+            var results = this.WeatherService.Get12HTromsWeather();
             var neededResults = results.Select(r => new DateInfo
             {
                 date = r.DateTime,

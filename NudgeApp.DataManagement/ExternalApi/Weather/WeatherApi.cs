@@ -10,7 +10,7 @@
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
     using RestSharp;
 
-    public class WeatherApi : IWeatherApi
+    public class WeatherService : IWeatherService
     {
         private const string APIkey = "XysYFpuGxOXOJNf6zXLk6fAy7pnH1yCr";
         private const string Locationkey = "256116"; // Tromsø 

@@ -20,10 +20,10 @@
         private readonly ITripRepository TripRepository;
         private readonly IAnonymousNudgeOracleRepository AnonymousNudgeOracleRepository;
         private readonly IAnonymousNudgeRepository AnonymousNudgeRepository;
-        private readonly IWeatherApi WeatherApi;
+        private readonly IWeatherService WeatherService;
 
         public NudgeLogic(INudgeRepository nudgeRepository, IEnvironmelntalInfoRepository environmelntalInfoRepository, IUserRepository userRepository, IPreferencesRepository preferencesRepository,
-            ITripRepository tripRepository, IAnonymousNudgeOracleRepository anonymousNudgesRepository, IAnonymousNudgeRepository anonymousNudgeRepository, IWeatherApi weatherApi)
+            ITripRepository tripRepository, IAnonymousNudgeOracleRepository anonymousNudgesRepository, IAnonymousNudgeRepository anonymousNudgeRepository, IWeatherService weatherApi)
         {
             this.NudgeRepository = nudgeRepository;
             this.EnvironmelntalInfoRepository = environmelntalInfoRepository;
@@ -32,12 +32,12 @@
             this.TripRepository = tripRepository;
             this.AnonymousNudgeOracleRepository = anonymousNudgesRepository;
             this.AnonymousNudgeRepository = anonymousNudgeRepository;
-            this.WeatherApi = weatherApi;
+            this.WeatherService = weatherApi;
         }
 
         public void ManualNudge(NudgeDto nudge)
         {
-            var forecast = this.WeatherApi.Get24HTromsWeather().FirstOrDefault(f => f.DateTime.Hour == nudge.DepartureTime.Hour);
+            var forecast = this.WeatherService.Get24HTromsWeather().FirstOrDefault(f => f.DateTime.Hour == nudge.DepartureTime.Hour);
 
             var nudgeEntity = new AnonymousNudgeEntity
             {

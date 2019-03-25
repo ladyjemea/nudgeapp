@@ -11,31 +11,31 @@
     [Route("[controller]/[action]")]
     public class WeatherController : Controller
     {
-        private IWeatherApi WeatherApi { get; set; }
+        private IWeatherService WeatherService { get; set; }
 
-        public WeatherController(IWeatherApi weatherApi)
+        public WeatherController(IWeatherService weatherService)
         {
-            this.WeatherApi = weatherApi;
+            this.WeatherService = weatherService;
         }
 
         [HttpGet]
         public ActionResult<IList<HourlyForecast>> Get12hWeather()
         {
-            var result = this.WeatherApi.Get12HTromsWeather();
+            var result = this.WeatherService.Get12HTromsWeather();
             return this.Ok(result);
         }
 
         [HttpGet]
         public ActionResult<IList<HourlyForecast>> Get24hWeather()
         {
-            var result = this.WeatherApi.Get24HTromsWeather();
+            var result = this.WeatherService.Get24HTromsWeather();
             return this.Ok(result);
         }
 
         [HttpPost]
         public ActionResult<ForecastDto> GetForecast([FromBody] DateTime dateTime)
         {
-            var result = this.WeatherApi.GetForecast(dateTime);
+            var result = this.WeatherService.GetForecast(dateTime);
 
             return this.Ok(result);
         }
@@ -43,7 +43,7 @@
         [HttpGet]
         public async Task<ActionResult<ForecastDto>> GetCurrentForecast()
         {
-            var result = await this.WeatherApi.GetCurrentForecast();
+            var result = await this.WeatherService.GetCurrentForecast();
 
             return this.Ok(result);
         }

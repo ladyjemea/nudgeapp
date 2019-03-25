@@ -11,7 +11,7 @@
     {
         public static void Configure(IServiceCollection services)
         {
-            services.AddSingleton<IWeatherApi, WeatherApi>();
+            services.AddSingleton<IWeatherService, WeatherService>();
             services.AddSingleton<IBusService, BusService>();
             services.AddSingleton<IUserLogic, UserLogic>();
             services.AddSingleton<INudgeLogic, NudgeLogic>();
