@@ -83,7 +83,7 @@
             };
 
             var walkToDestination = await this.WalkInfo(destinationStopCoordinates, to);
-            var walkToDestinationtDuration = walkToDestination.rows.First()?.elements.First()?.duration.value ?? 0;
+            var walkToDestinationtDuration = walkToDestination.rows.First()?.elements.First()?.duration?.value ?? 0;
 
             var busArrivalTime = travelTime.AddSeconds((-1) * walkToDestinationtDuration);
 
@@ -96,8 +96,9 @@
                     if (busTrip != null)
                         break;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    throw ex;
                 }
             }
 
@@ -105,7 +106,7 @@
                 return busTrip;
 
             var walkToStart = await this.WalkInfo(from, busTrip.StartCoordinates);
-            var walkToStartDuration = walkToStart.rows.FirstOrDefault()?.elements.FirstOrDefault()?.duration.value ?? 0;
+            var walkToStartDuration = walkToStart.rows.FirstOrDefault()?.elements.FirstOrDefault()?.duration?.value ?? 0;
 
             if (walkToStartDuration > 0)
             {
@@ -155,7 +156,10 @@
         private BusTripDto GetBusTrip(Group from, Group to, DateTime travelTime, TripSchedule schedule)
         {
             string link = string.Empty;
-            var trip = this.SearchTrip(from.N, to.N, out link, travelTime, schedule).Trips.Trip.First();
+            var trip = this.SearchTrip(from.N, to.N, out link, travelTime, schedule).Trips.Trip.FirstOrDefault();
+
+            if (trip == null)
+                return null;
 
             var allStops = trip.I.Where(i => i.N != String.Empty && i.N != i.N2).ToList();
 
@@ -170,13 +174,13 @@
                 Link = link,
                 StartCoordinates = new Coordinates
                 {
-                    Latitude = Convert.ToDouble(stops.First().Y.Replace(',', '.')),
-                    Longitude = Convert.ToDouble(stops.First().X.Replace(',', '.'))
+                    Latitude = Convert.ToDouble(stops.First().Y.Replace(',', '.'), CultureInfo.InvariantCulture),
+                    Longitude = Convert.ToDouble(stops.First().X.Replace(',', '.'), CultureInfo.InvariantCulture)
                 },
                 EndCoordinates = new Coordinates
                 {
-                    Latitude = Convert.ToDouble(allStops.Last().Y.Replace(',', '.')),
-                    Longitude = Convert.ToDouble(allStops.Last().X.Replace(',', '.'))
+                    Latitude = Convert.ToDouble(allStops.Last().Y.Replace(',', '.'), CultureInfo.InvariantCulture),
+                    Longitude = Convert.ToDouble(allStops.Last().X.Replace(',', '.'), CultureInfo.InvariantCulture)
                 }
             };
 

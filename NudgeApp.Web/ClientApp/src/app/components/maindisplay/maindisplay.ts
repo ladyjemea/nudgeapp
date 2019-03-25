@@ -23,12 +23,15 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   public bus: string = "";
   public distance: string = "";
   public temperature: string = "";
+  public realfeelTemperature: string = "";
 
   public query: string;
   public routeSub: any;
+  
 
   constructor(private travelService: TravelService, private mapsAPILoader: MapsAPILoader, private ref: ChangeDetectorRef, private route: ActivatedRoute, private weatherService: WeatherService) {
     this.weatherService.GetCurrentForecast().subscribe((forecast) => { this.temperature = String(forecast.temperature); });
+    this.weatherService.GetCurrentForecast().subscribe((forecast) => { this.realfeelTemperature = String(forecast.realFeelTemperature); });
   }
 
   ngOnInit() {

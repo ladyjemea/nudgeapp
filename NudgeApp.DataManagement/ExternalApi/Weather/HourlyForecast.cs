@@ -65,6 +65,7 @@
         public string Link { get; set; }
         public bool HasPrecipitation { get; set; }
         public string PrecipitationType { get; set; }
+        public bool HasSnow { get; internal set; }
     }
 
     public class PrecipitationSummaryInfo

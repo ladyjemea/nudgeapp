@@ -1,11 +1,21 @@
 export interface ForecastDto {
+  time: Date;
+  temperature: number;
+  realFeelTeamperature: number;
+  ceiling: number;
+  rain: number;
+  rainProbability: number;
+  snow: number;
+  snowProbability: number;
+  ice: number;
+  iceProbability: number;
+  visibility: number;
+  wind: number;
+  daylight: boolean;
+  roadCondition: RoadCondition;
   skyCoverage: SkyCoverageType;
   precipitationProbability: number;
-  temperature: number;
   cloudCoveragePercent: number;
-  wind: number;
-  roadCondition: RoadCondition;
-  time: Date;
 }
 
 export enum SkyCoverageType {
