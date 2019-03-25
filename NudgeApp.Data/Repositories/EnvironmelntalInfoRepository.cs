@@ -10,15 +10,15 @@
     {
         public EnvironmelntalInfoRepository(INudgeDbContext context) : base(context) { }
 
-        public Guid CreateInfo(ForecastDto forecast)
+        public Guid CreateInfo(WeatherDto forecast)
         {
             var entity = new EnvironmentalInfoEntity
             {
-                CloudCoveragePercent = forecast.CloudCoveragePercent,
+                CloudCoveragePercent = forecast.RawData.CloudCoveragePercent,
                 RoadCondition = forecast.RoadCondition,
-                Temperature = forecast.Temperature,
-                Time = forecast.Time,
-                Wind = forecast.Wind
+                Temperature = forecast.RawData.Temperature,
+                Time = forecast.RawData.Time,
+                Wind = forecast.RawData.Wind
             };
 
             this.Insert(entity);
@@ -26,20 +26,23 @@
             return entity.Id;
         }
 
-        public ForecastDto GetForecast(Guid id)
+        public WeatherDto GetForecast(Guid id)
         {
             var entity = this.Get(id);
 
-            ForecastDto result = null;
+            WeatherDto result = null;
             if (entity != null)
             {
-                result = new ForecastDto
+                result = new WeatherDto
                 {
                     CloudCoveragePercent = entity.CloudCoveragePercent,
                     RoadCondition = entity.RoadCondition,
-                    Temperature = entity.Temperature,
-                    Time = entity.Time,
-                    Wind = entity.Wind
+                    RawData = new WeatherRawData
+                    {
+                        Temperature = entity.Temperature,
+                        Time = entity.Time,
+                        Wind = entity.Wind
+                    }
                 };
             }
 

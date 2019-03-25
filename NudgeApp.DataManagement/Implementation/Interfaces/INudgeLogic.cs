@@ -6,7 +6,7 @@
 
     public interface INudgeLogic
     {
-        void AddNudge(Guid userId, TransportationType transportationType, ForecastDto forecast, TripDto trip);
+        void AddNudge(Guid userId, TransportationType transportationType, WeatherDto forecast, TripDto trip);
         void Test();
     }
 }

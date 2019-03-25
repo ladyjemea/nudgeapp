@@ -6,7 +6,7 @@
 
     public interface IEnvironmelntalInfoRepository : IRepository<EnvironmentalInfoEntity>
     {
-        Guid CreateInfo(ForecastDto info);
-        ForecastDto GetForecast(Guid id);
+        Guid CreateInfo(WeatherDto info);
+        WeatherDto GetForecast(Guid id);
     }
 }

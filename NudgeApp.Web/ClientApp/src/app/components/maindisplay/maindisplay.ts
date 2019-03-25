@@ -88,6 +88,8 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     var trip = this.getTrip(travelType);
     
     this.nudgeService.saveNudge(travelType, this.travelForecast, trip);
+
+    window.location.href = trip.link;
   }
 
   private getTrip(travelType: TransporationType): TripDto {
@@ -108,7 +110,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     //this.authenticationService.checkpassword(form.value.username, form.value.password);
   }
   showmaps(event) {
-    window.location.href ='http://www.google.com';
+   
   }
 
 }
