@@ -170,13 +170,13 @@
                 Link = link,
                 StartCoordinates = new Coordinates
                 {
-                    Latitude = Convert.ToDouble(stops.First().Y.Replace(',', '.')),
-                    Longitude = Convert.ToDouble(stops.First().X.Replace(',', '.'))
+                    Latitude = Convert.ToDouble(stops.First().Y.Replace(',', '.'), CultureInfo.InvariantCulture),
+                    Longitude = Convert.ToDouble(stops.First().X.Replace(',', '.'), CultureInfo.InvariantCulture)
                 },
                 EndCoordinates = new Coordinates
                 {
-                    Latitude = Convert.ToDouble(allStops.Last().Y.Replace(',', '.')),
-                    Longitude = Convert.ToDouble(allStops.Last().X.Replace(',', '.'))
+                    Latitude = Convert.ToDouble(allStops.Last().Y.Replace(',', '.'), CultureInfo.InvariantCulture),
+                    Longitude = Convert.ToDouble(allStops.Last().X.Replace(',', '.'), CultureInfo.InvariantCulture)
                 }
             };
 
