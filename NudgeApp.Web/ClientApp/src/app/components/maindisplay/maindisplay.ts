@@ -22,6 +22,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   public bus: string = "";
   public distance: string = "";
   public temperature: string = "";
+  public realfeelTemperature: string = "";
 
   private travelForecast: ForecastDto;
   private walkingTrip: TripDto;

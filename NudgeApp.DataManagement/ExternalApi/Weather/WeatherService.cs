@@ -16,6 +16,8 @@
         private const string Locationkey = "256116"; // Tromsø 
         private const string serviceString = "http://dataservice.accuweather.com";
 
+
+
         public IList<HourlyForecast> Get12HTromsWeather()
         {
             var client = new RestClient(serviceString);
@@ -44,6 +46,48 @@
 
             return JsonConvert.DeserializeObject<List<HourlyForecast>>(response.Content);*/
         }
+        public IList<DateInfo> AnalyseWeather()
+        {
+            var results = this.Get12HTromsWeather();
+            var neededResults = results.Select(r => new DateInfo
+            {
+                date = r.DateTime,
+                temp = r.Temperature,
+                realfeel = r.RealFeelTemperature,
+                ceiling = r.Ceiling,
+                visibility = r.Visibility,
+                rain = r.Rain,
+                rainprobability = r.RainProbability,
+                snow = r.Snow,
+                snowprobability = r.SnowProbability,
+                ice = r.Ice,
+                iceprobability = r.IceProbability,
+                wind = r.Wind,
+                daylight = r.IsDaylight
+            }).ToList();
+
+            return neededResults;
+            //return outdoorTemperature;
+        }
+        
+        public class DateInfo
+        {
+            public DateTime date;
+            public UnitInfo temp;
+            public UnitInfo ceiling;
+            public UnitInfo realfeel;
+            public UnitInfo rain;
+            public UnitInfo visibility;
+            public UnitInfo snow;
+            public UnitInfo ice;
+            public int rainprobability;
+            public int snowprobability;
+            public int iceprobability;
+            public WindInfo wind;
+            public bool daylight;
+            public int PrecipitationProbability;
+
+        }
 
         public ForecastDto GetForecast(DateTime dateTime)
         {
@@ -55,12 +99,20 @@
 
             return new ForecastDto
             {
-                CloudCoveragePercent = forecast.CloudCover,
-                Temperature = forecast.RealFeelTemperature.Value,
+                Date = dateTime,
                 Time = dateTime,
+                Temperature = forecast.Temperature.Value,
+                RealFeelTemperature = forecast.RealFeelTemperature.Value,
+                Ceiling = forecast.Ceiling.Value,
+                Rain = forecast.Rain.Value,
+                RainProbability = forecast.RainProbability,
+                Snow = forecast.Snow.Value,
+                SnowProbability = forecast.SnowProbability,
+                Ice = forecast.Ice.Value,
+                IceProbability = forecast.IceProbability,
+                Visibility = forecast.Visibility.Value,
                 Wind = forecast.Wind.Speed.Value,
-                PrecipitationProbability = forecast.PrecipitationProbability,
-                SkyCoverage = GetSkyCoverage(forecast.CloudCover),
+                Daylight = forecast.IsDaylight,
                 RoadCondition = GetRoadCondition(forecast)
             };
         }
@@ -72,12 +124,13 @@
 
             return new ForecastDto
             {
-                CloudCoveragePercent = forecast.CloudCover,
-                Temperature = forecast.RealFeelTemperature.Metric.Value,
+                Date = forecast.LocalObservationDateTime,
                 Time = forecast.LocalObservationDateTime,
+                Temperature = forecast.Temperature.Metric.Value,
+                RealFeelTemperature = forecast.RealFeelTemperature.Metric.Value,
+                Ceiling = forecast.Ceiling.Metric.Value,
                 Wind = forecast.Wind.Speed.Value,
                 PrecipitationProbability = forecast.HasPrecipitation ? 100 : 0,
-                SkyCoverage = GetSkyCoverage(forecast.CloudCover),
                 RoadCondition = forecast.HasPrecipitation ? RoadCondition.Wet : RoadCondition.Dry
             };
         }
