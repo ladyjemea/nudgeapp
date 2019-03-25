@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using NudgeApp.Data.Entities;
+    using NudgeApp.Data.Entities.Generic;
     using NudgeApp.Data.OracleDb.Queries;
 
     public class NudgeDbContext : DbContext, INudgeDbContext
@@ -13,13 +14,13 @@
         public const string connectionString = @"Server=localhost; Database=NudgeAppDatabase; Trusted_Connection = True;";
         public const string onlineConnectionString = @"Server=nudgeapp.cz12dzdjwlt5.eu-central-1.rds.amazonaws.com,1433; Database=NudgeAppDatabase; Trusted_Connection = False; uid=nudgeuser; pwd=46AEcnT5RPPe4Mcu";
 
-        public DbSet<UserEntity> UserEntity { get; set; }
-        public DbSet<PreferencesEntity> PreferencesEntity { get; set; }
-        public DbSet<NudgeEntity> NudgeEntity { get; set; }
-        public DbSet<EnvironmentalInfoEntity> EnvironmentalInfoEntity { get; set; }
-        public DbSet<TripEntity> TripEntity { get; set; }
-        public DbSet<PushNotificationEntity> PushNotificationEntity { get; set; }
-        public DbSet<AnonymousNudgeEntity> AnonymousNudgeEntity { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<PreferencesEntity> Preferences { get; set; }
+        public DbSet<NudgeEntity> Nudges { get; set; }
+        public DbSet<WeatherForecastEntity> WeatherForecast { get; set; }
+        public DbSet<TripEntity> Trips { get; set; }
+        public DbSet<PushNotificationEntity> PushNotifications { get; set; }
+        public DbSet<AnonymousNudgeEntity> AnonymousNudges { get; set; }
 
         public NudgeDbContext() : base() { }
 
@@ -37,7 +38,7 @@
             modelBuilder.Entity<UserEntity>();
             modelBuilder.Entity<PreferencesEntity>();
             modelBuilder.Entity<NudgeEntity>();
-            modelBuilder.Entity<EnvironmentalInfoEntity>();
+            modelBuilder.Entity<WeatherForecastEntity>();
             modelBuilder.Entity<TripEntity>();
             modelBuilder.Entity<AnonymousNudgeEntity>();
 

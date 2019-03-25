@@ -9,11 +9,11 @@
     {
         public TripRepository(INudgeDbContext context) : base(context) { }
 
-        public Guid Create(TripDto trip, Guid userId, Guid envInfoId)
+        public Guid Create(TripDto trip, Guid userId, Guid forecastId)
         {
             var entity = new TripEntity
             {
-                EnvironmentalInfoId = envInfoId,
+                WeatherForecastId = forecastId,
                 UserId = userId,
                 DistanceTraveled = trip.Distance,
                 UsedTransportationType = trip.TransportationType

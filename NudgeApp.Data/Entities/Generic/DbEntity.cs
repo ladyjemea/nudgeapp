@@ -1,4 +1,4 @@
-﻿namespace NudgeApp.Data.Entities
+﻿namespace NudgeApp.Data.Entities.Generic
 {
     using System;
 

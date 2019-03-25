@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
-    using NudgeApp.Data.Entities;
+    using NudgeApp.Data.Entities.Generic;
     using NudgeApp.Data.Repositories.Interfaces;
 
     public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : DbEntity

@@ -2,6 +2,7 @@
 {
     using System;
     using NudgeApp.Common.Enums;
+    using NudgeApp.Data.Entities.Generic;
 
     public class PreferencesEntity : DbEntity
     {

@@ -2,6 +2,7 @@
 {
     using System;
     using NudgeApp.Common.Enums;
+    using NudgeApp.Data.Entities.Generic;
 
     public class TripEntity : DbEntity
     {
@@ -9,7 +10,7 @@
         public Guid UserId { get; set; }
         public TransportationType UsedTransportationType { get; set; }
         public int DistanceTraveled { get; set; }
-        public virtual EnvironmentalInfoEntity EnvironmentalInfo { get; set; }
-        public Guid EnvironmentalInfoId { get; set; }
+        public virtual WeatherForecastEntity WeatherForecast { get; set; }
+        public Guid WeatherForecastId { get; set; }
     }
 }

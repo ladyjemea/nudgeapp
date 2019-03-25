@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.Data.Entities
 {
     using NudgeApp.Common.Enums;
+    using NudgeApp.Data.Entities.Generic;
 
     public class AnonymousNudgeEntity : DbEntity
     {

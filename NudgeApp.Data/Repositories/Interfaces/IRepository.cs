@@ -1,7 +1,7 @@
 ﻿namespace NudgeApp.Data.Repositories.Interfaces
 {
     using System;
-    using NudgeApp.Data.Entities;
+    using NudgeApp.Data.Entities.Generic;
 
     public interface IRepository<TEntity> where TEntity : IDbEntity
     {

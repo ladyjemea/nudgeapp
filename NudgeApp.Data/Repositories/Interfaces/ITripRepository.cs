@@ -6,6 +6,6 @@
 
     public interface ITripRepository: IRepository<TripEntity>
     {
-        Guid Create(TripDto trip, Guid userId, Guid envInfoId);
+        Guid Create(TripDto trip, Guid userId, Guid forecastId);
     }
 }
