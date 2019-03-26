@@ -6,8 +6,7 @@
 
     public class TripEntity : DbEntity
     {
-        public virtual UserEntity User { get; set; }
-        public Guid UserId { get; set; }
+        public TripType Type { get; set; }
         public TransportationType UsedTransportationType { get; set; }
         public int DistanceTraveled { get; set; }
         public virtual WeatherForecastEntity WeatherForecast { get; set; }

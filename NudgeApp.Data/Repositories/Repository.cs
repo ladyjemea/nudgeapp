@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.Data.Repositories
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
     using NudgeApp.Data.Entities.Generic;
@@ -52,6 +53,11 @@
         public virtual TEntity Get(Guid id)
         {
             return this.DbSet.Find(id);
+        }
+
+        public virtual IEnumerable<TEntity> GetAll()
+        {
+            return this.DbSet.AsEnumerable();
         }
     }
 }

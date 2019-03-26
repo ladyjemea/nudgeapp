@@ -18,7 +18,7 @@
             var weatherService = serviceProvider.GetService<IWeatherService>();
             weatherService.GetCurrentForecast();
 
-            var userLogic = serviceProvider.GetService<IUserLogic>();
+            var userLogic = serviceProvider.GetService<IUserService>();
             userLogic.GetUser();
 
             return Task.CompletedTask;

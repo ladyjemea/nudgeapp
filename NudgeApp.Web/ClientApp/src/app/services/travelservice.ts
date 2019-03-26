@@ -19,8 +19,8 @@ export class TravelService {
       navigator.geolocation.getCurrentPosition((position) => {
         var geocoder = new google.maps.Geocoder;
 
-        // var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        var latlng = new google.maps.LatLng(69.68084373889975, 18.976014381857112);
+        var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        //var latlng = new google.maps.LatLng(69.68084373889975, 18.976014381857112);
         geocoder.geocode({ 'address': to }, (results, status) => {
           if (mode !== google.maps.TravelMode.TRANSIT) {
             var distanceMatrixService = new google.maps.DistanceMatrixService();

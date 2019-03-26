@@ -9,10 +9,10 @@
         private readonly ITripRepository TripRepository;
         private readonly IUserRepository UserRepository;
         private readonly INudgeRepository NudgeRepository;
-        private readonly IEnvironmelntalInfoRepository EnvironmelntalInfoRepository;
+        private readonly IWeatherForecastRepository EnvironmelntalInfoRepository;
 
         public TripLogic(ITripRepository tripRepository, IUserRepository userRepository,
-            INudgeRepository nudgeRepository, IEnvironmelntalInfoRepository environmelntalInfoRepository)
+            INudgeRepository nudgeRepository, IWeatherForecastRepository environmelntalInfoRepository)
         {
             this.TripRepository = tripRepository;
             this.UserRepository = userRepository;

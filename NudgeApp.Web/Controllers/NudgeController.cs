@@ -11,9 +11,9 @@
     [Route("[controller]/[action]")]
     public class NudgeController : Controller
     {
-        private readonly INudgeLogic NudgeLogic;
+        private readonly INudgeService NudgeLogic;
 
-        public NudgeController(INudgeLogic nudgeLogic)
+        public NudgeController(INudgeService nudgeLogic)
         {
             this.NudgeLogic = nudgeLogic;
         }
@@ -24,7 +24,7 @@
         {
             var userId = Guid.Parse(HttpContext.User.Identities.First().Name);
 
-            //this.NudgeLogic.AddNudge(userId, nudgeData.TransportationType, nudgeData.forecast, nudgeData.trip);
+            this.NudgeLogic.AddNudge(userId, nudgeData.TransportationType, nudgeData.forecast, nudgeData.trip);
 
             return this.Ok();
         }

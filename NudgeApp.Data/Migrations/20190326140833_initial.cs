@@ -8,7 +8,7 @@ namespace NudgeApp.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AnonymousNudgeEntity",
+                name: "AnonymousNudges",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -25,29 +25,11 @@ namespace NudgeApp.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnonymousNudgeEntity", x => x.Id);
+                    table.PrimaryKey("PK_AnonymousNudges", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "EnvironmentalInfoEntity",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false),
-                    Temperature = table.Column<int>(nullable: false),
-                    CloudCoveragePercent = table.Column<int>(nullable: false),
-                    Wind = table.Column<int>(nullable: false),
-                    RoadCondition = table.Column<int>(nullable: false),
-                    Time = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EnvironmentalInfoEntity", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PushNotificationEntity",
+                name: "PushNotifications",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -60,11 +42,27 @@ namespace NudgeApp.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PushNotificationEntity", x => x.Id);
+                    table.PrimaryKey("PK_PushNotifications", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserEntity",
+                name: "Trips",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false),
+                    Type = table.Column<int>(nullable: false),
+                    UsedTransportationType = table.Column<int>(nullable: false),
+                    DistanceTraveled = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Trips", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -79,40 +77,60 @@ namespace NudgeApp.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserEntity", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "NudgeEntity",
+                name: "WeatherForecast",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false),
+                    Time = table.Column<DateTime>(nullable: false),
+                    Temperature = table.Column<float>(nullable: false),
+                    ReafFeelTemperature = table.Column<float>(nullable: false),
+                    CloudCoveragePercent = table.Column<int>(nullable: false),
+                    Wind = table.Column<float>(nullable: false),
+                    PrecipitationProbability = table.Column<int>(nullable: false),
+                    RoadCondition = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WeatherForecast", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Nudges",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
                     Modified = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    EnvironmentalInfoId = table.Column<Guid>(nullable: false),
+                    TripId = table.Column<Guid>(nullable: false),
                     NudgeResult = table.Column<int>(nullable: false),
                     TransportationType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NudgeEntity", x => x.Id);
+                    table.PrimaryKey("PK_Nudges", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NudgeEntity_EnvironmentalInfoEntity_EnvironmentalInfoId",
-                        column: x => x.EnvironmentalInfoId,
-                        principalTable: "EnvironmentalInfoEntity",
+                        name: "FK_Nudges_Trips_TripId",
+                        column: x => x.TripId,
+                        principalTable: "Trips",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_NudgeEntity_UserEntity_UserId",
+                        name: "FK_Nudges_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "UserEntity",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PreferencesEntity",
+                name: "Preferences",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -125,92 +143,53 @@ namespace NudgeApp.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PreferencesEntity", x => x.Id);
+                    table.PrimaryKey("PK_Preferences", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PreferencesEntity_UserEntity_UserId",
+                        name: "FK_Preferences_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "UserEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TripEntity",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Created = table.Column<DateTime>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    UsedTransportationType = table.Column<int>(nullable: false),
-                    DistanceTraveled = table.Column<int>(nullable: false),
-                    EnvironmentalInfoId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TripEntity", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TripEntity_EnvironmentalInfoEntity_EnvironmentalInfoId",
-                        column: x => x.EnvironmentalInfoId,
-                        principalTable: "EnvironmentalInfoEntity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TripEntity_UserEntity_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UserEntity",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_NudgeEntity_EnvironmentalInfoId",
-                table: "NudgeEntity",
-                column: "EnvironmentalInfoId");
+                name: "IX_Nudges_TripId",
+                table: "Nudges",
+                column: "TripId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NudgeEntity_UserId",
-                table: "NudgeEntity",
+                name: "IX_Nudges_UserId",
+                table: "Nudges",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PreferencesEntity_UserId",
-                table: "PreferencesEntity",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TripEntity_EnvironmentalInfoId",
-                table: "TripEntity",
-                column: "EnvironmentalInfoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TripEntity_UserId",
-                table: "TripEntity",
+                name: "IX_Preferences_UserId",
+                table: "Preferences",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AnonymousNudgeEntity");
+                name: "AnonymousNudges");
 
             migrationBuilder.DropTable(
-                name: "NudgeEntity");
+                name: "Nudges");
 
             migrationBuilder.DropTable(
-                name: "PreferencesEntity");
+                name: "Preferences");
 
             migrationBuilder.DropTable(
-                name: "PushNotificationEntity");
+                name: "PushNotifications");
 
             migrationBuilder.DropTable(
-                name: "TripEntity");
+                name: "WeatherForecast");
 
             migrationBuilder.DropTable(
-                name: "EnvironmentalInfoEntity");
+                name: "Trips");
 
             migrationBuilder.DropTable(
-                name: "UserEntity");
+                name: "Users");
         }
     }
 }

@@ -1,4 +1,10 @@
 export interface ForecastDto {
+  roadCondition: RoadCondition;
+  skyCoverage: SkyCoverageType;
+  rawData: RawForecastData;
+}
+
+export interface RawForecastData {
   time: Date;
   temperature: number;
   realFeelTeamperature: number;
@@ -12,8 +18,6 @@ export interface ForecastDto {
   visibility: number;
   wind: number;
   daylight: boolean;
-  roadCondition: RoadCondition;
-  skyCoverage: SkyCoverageType;
   precipitationProbability: number;
   cloudCoveragePercent: number;
 }

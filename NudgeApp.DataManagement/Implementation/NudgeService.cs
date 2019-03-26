@@ -1,63 +1,44 @@
 ﻿namespace NudgeApp.DataManagement.Implementation
 {
-    using System;
-    using System.Linq;
     using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.OracleDb.Queries;
     using NudgeApp.Data.Repositories.Interfaces;
-    using NudgeApp.DataManagement.ExternalApi.Weather;
-    using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
     using NudgeApp.DataManagement.Implementation.Interfaces;
+    using System;
 
-    public class NudgeLogic : INudgeLogic
+    public class NudgeService : INudgeService
     {
         private readonly INudgeRepository NudgeRepository;
-        private readonly IEnvironmelntalInfoRepository EnvironmelntalInfoRepository;
-        private readonly IUserRepository UserRepository;
+        private readonly IWeatherForecastRepository WeatherForecastRepository;
         private readonly IPreferencesRepository PreferencesRepository;
         private readonly ITripRepository TripRepository;
         private readonly IAnonymousNudgeOracleRepository AnonymousNudgeOracleRepository;
         private readonly IAnonymousNudgeRepository AnonymousNudgeRepository;
-        private readonly IWeatherService WeatherService;
 
-        public NudgeLogic(INudgeRepository nudgeRepository, IEnvironmelntalInfoRepository environmelntalInfoRepository, IUserRepository userRepository, IPreferencesRepository preferencesRepository,
-            ITripRepository tripRepository, IAnonymousNudgeOracleRepository anonymousNudgesRepository, IAnonymousNudgeRepository anonymousNudgeRepository, IWeatherService weatherApi)
+        public NudgeService(INudgeRepository nudgeRepository, IWeatherForecastRepository weatherForecastRepository, IPreferencesRepository preferencesRepository,
+            ITripRepository tripRepository, IAnonymousNudgeOracleRepository anonymousNudgesRepository, IAnonymousNudgeRepository anonymousNudgeRepository)
         {
             this.NudgeRepository = nudgeRepository;
-            this.EnvironmelntalInfoRepository = environmelntalInfoRepository;
-            this.UserRepository = userRepository;
+            this.WeatherForecastRepository = weatherForecastRepository;
             this.PreferencesRepository = preferencesRepository;
             this.TripRepository = tripRepository;
             this.AnonymousNudgeOracleRepository = anonymousNudgesRepository;
             this.AnonymousNudgeRepository = anonymousNudgeRepository;
-            this.WeatherService = weatherApi;
-        }
-
-        public void ManualNudge(NudgeDto nudge)
-        {
-            var forecast = this.WeatherService.Get24HTromsWeather().FirstOrDefault(f => f.DateTime.Hour == nudge.DepartureTime.Hour);
-
-            var nudgeEntity = new AnonymousNudgeEntity
-            {
-                ActualTransportationType = nudge.TransportationType,
-                PrecipitationProbability = forecast.PrecipitationProbability,
-                Result = NudgeResult.Successful,
-                RoadCondition = GetRoadCondition(forecast),
-                SkyCoverage = GetSkyCoverage(forecast),
-                Temperature = forecast.RealFeelTemperature.Value,
-                Wind = forecast.Wind.Speed.Value
-            };
-
-            this.AnonymousNudgeOracleRepository.Insert(nudgeEntity);
         }
 
         public void AddNudge(Guid userId, TransportationType transportationType, WeatherDto forecast, TripDto trip)
         {
-            var envId = this.EnvironmelntalInfoRepository.CreateInfo(forecast);
-            this.NudgeRepository.Create(transportationType, userId, envId);
-            this.TripRepository.Create(trip, userId, envId);
+            var forecastId = this.WeatherForecastRepository.Insert(forecast);
+
+            Guid tripId;
+            if (trip == null)
+                tripId = this.TripRepository.Insert(userId, forecastId);
+            else
+                tripId = this.TripRepository.Insert(trip, userId, forecastId);
+
+            this.NudgeRepository.Insert(transportationType, userId, tripId);
 
             try
             {
@@ -118,45 +99,6 @@
                 this.AnonymousNudgeRepository.Insert(entity2);
             }
             // this.AnonymousNudgesRepository.SelectAll();
-        }
-
-        private RoadCondition GetRoadCondition(HourlyForecast forecast)
-        {
-            RoadCondition roadCondition;
-
-            if (forecast.Temperature.Value <= 3)
-            {
-                if (forecast.SnowProbability < 20)
-                {
-                    roadCondition = RoadCondition.Ice;
-                }
-                else
-                {
-                    roadCondition = RoadCondition.Snow;
-                }
-            }
-            else
-            {
-                if (forecast.RainProbability > 20)
-                {
-                    roadCondition = RoadCondition.Wet;
-                }
-                else
-                {
-                    roadCondition = RoadCondition.Dry;
-                }
-            }
-
-            return roadCondition;
-        }
-
-        private SkyCoverageType GetSkyCoverage(HourlyForecast forecast)
-        {
-            SkyCoverageType coverage = forecast.CloudCover <= 15 ? SkyCoverageType.Clear : SkyCoverageType.PartlyCloudy;
-
-            if (forecast.CloudCover > 75) coverage = SkyCoverageType.Cloudy;
-
-            return coverage;
         }
     }
 }

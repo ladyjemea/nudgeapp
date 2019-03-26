@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
     using NudgeApp.Data.Repositories.Interfaces;
     using WebPush;
 

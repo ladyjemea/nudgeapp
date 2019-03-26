@@ -1,6 +1,8 @@
 ﻿namespace NudgeApp.DataManagement.Implementation
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
     using NudgeApp.Common.Enums;
@@ -8,15 +10,20 @@
     using NudgeApp.Data.Repositories.Interfaces;
     using NudgeApp.DataManagement.Implementation.Interfaces;
 
-    public class UserLogic : IUserLogic
+    public class UserService : IUserService
     {
         private IUserRepository UserRepository;
         private IPreferencesRepository PreferencesRepository;
 
-        public UserLogic(IUserRepository userRepository, IPreferencesRepository preferencesRepository)
+        public UserService(IUserRepository userRepository, IPreferencesRepository preferencesRepository)
         {
             this.UserRepository = userRepository;
             this.PreferencesRepository = preferencesRepository;
+        }
+
+        public IList<Guid> GetAllUserIds()
+        {
+            return this.UserRepository.GetAllIds().ToList();
         }
 
         public bool CreateUser(string userName, string password, string name, string email, string address, TransportationType travelType)

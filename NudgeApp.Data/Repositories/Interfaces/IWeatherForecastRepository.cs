@@ -4,9 +4,9 @@
     using NudgeApp.Common.Dtos;
     using NudgeApp.Data.Entities;
 
-    public interface IEnvironmelntalInfoRepository : IRepository<WeatherForecastEntity>
+    public interface IWeatherForecastRepository : IRepository<WeatherForecastEntity>
     {
-        Guid CreateInfo(WeatherDto info);
+        Guid Insert(WeatherDto info);
         WeatherDto GetForecast(Guid id);
     }
 }

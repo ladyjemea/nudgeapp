@@ -1,16 +1,15 @@
 ﻿namespace NudgeApp.Data.Repositories
 {
     using System;
-    using System.Linq;
     using NudgeApp.Common.Dtos;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
-    public class EnvironmelntalInfoRepository : Repository<WeatherForecastEntity>, IEnvironmelntalInfoRepository
+    public class WeatherForecastRepository : Repository<WeatherForecastEntity>, IWeatherForecastRepository
     {
-        public EnvironmelntalInfoRepository(INudgeDbContext context) : base(context) { }
+        public WeatherForecastRepository(INudgeDbContext context) : base(context) { }
 
-        public Guid CreateInfo(WeatherDto forecast)
+        public Guid Insert(WeatherDto forecast)
         {
             var entity = new WeatherForecastEntity
             {

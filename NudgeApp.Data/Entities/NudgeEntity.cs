@@ -8,8 +8,8 @@
     {
         public virtual UserEntity User { get; set; }
         public Guid UserId { get; set; }
-        public virtual WeatherForecastEntity WeatherForecast { get; set; }
-        public Guid WeatherForecastId { get; set; }
+        public virtual TripEntity Trip { get; set; }
+        public Guid TripId { get; set; }
         public NudgeResult NudgeResult { get; set; }
         public TransportationType TransportationType { get; set; }
     }

@@ -15,10 +15,10 @@
     [Route("[controller]/[action]")]
     public class UserController : Controller
     {
-        private readonly IUserLogic UserLogic;
+        private readonly IUserService UserLogic;
         private readonly AppSettings AppSettings;
 
-        public UserController(IUserLogic userLogic, IOptions<AppSettings> appSettings)
+        public UserController(IUserService userLogic, IOptions<AppSettings> appSettings)
         {
             this.UserLogic = userLogic;
             this.AppSettings = appSettings.Value;

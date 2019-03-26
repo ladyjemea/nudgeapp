@@ -4,7 +4,7 @@
     using NudgeApp.Common.Enums;
     using System;
 
-    public interface INudgeLogic
+    public interface INudgeService
     {
         void AddNudge(Guid userId, TransportationType transportationType, WeatherDto forecast, TripDto trip);
         void Test();
