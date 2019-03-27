@@ -15,14 +15,13 @@
 
 <br /> <br />
 
-<form #travelType="ngForm" (ngSubmit)="pickTravelMode(travelType)">
-  <div id="submit">
-    <button (click)="Nudge(transportationTypes.Walk)" class="btn btn-primary">Walk</button>
-    <button (click)="Nudge(transportationTypes.Bike)" class="btn btn-primary">Bike</button>
-    <button (click)="Nudge(transportationTypes.Bus)" class="btn btn-primary">Bus</button>
-    <button (click)="Nudge(transportationTypes.Car)" class="btn btn-primary">Default</button>
-  </div>
-
-</form>
+       <form #travelType="ngForm" (ngSubmit)="pickTravelMode(travelType)">
+         <div id="submit">
+           <button (click)="Nudge(transportationTypes.Walk)" class="btn btn-primary">Walk</button>
+           <button (click)="Nudge(transportationTypes.Bike)" class="btn btn-primary">Bike</button>
+           <button (click)="Nudge(transportationTypes.Bus)" class="btn btn-primary">Bus</button>
+         </div>
+         <button (click)="Nudge(transportationTypes.Car)" class="loginbtn btn-primary">Default</button>
+       </form>
 
 <!--should get temperature, distance for all travel types and display the on the screen-->
