@@ -6,13 +6,12 @@ body {
       background-color: white;
       font-family: Arial, Arial, Helvetica, sans-serif;
 }
-.firstimage{
-      height: 90%;
-      width: 96%;
-      border: 1px solid #00b300;
-      border-radius: 70px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-
+.firstimage {
+  height: 70%;
+  width: 86%;
+  /*border: 1px solid #00b300;*/
+  border-radius: 70px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
