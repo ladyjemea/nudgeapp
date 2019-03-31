@@ -2,8 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.Caching.Distributed;
     using Newtonsoft.Json;
     using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
@@ -15,6 +19,13 @@
         private const string APIkey = "XysYFpuGxOXOJNf6zXLk6fAy7pnH1yCr";
         private const string Locationkey = "256116"; // Tromsø 
         private const string serviceString = "http://dataservice.accuweather.com";
+
+        private readonly IDistributedCache DistributedCache;
+
+        public WeatherService(IDistributedCache distributedCache)
+        {
+            this.DistributedCache = distributedCache;
+        }
 
         public IList<HourlyForecast> Get12HTromsWeather()
         {
@@ -126,8 +137,22 @@
 
         public async Task<WeatherDto> GetCurrentForecast()
         {
-            var forecastList = await this.GetCurrentTromsForecast();
-            var forecast = forecastList.First();
+            CurrentForecast forecast = null;
+
+            // forecast = await this.GetCurrentForecastFromRedis();
+
+            if (forecast == null)
+            {
+                // var forecastList = await this.GetCurrentTromsForecast();
+                // forecast = forecastList.First();
+
+                forecast = new CurrentForecast
+                {
+                    CloudCover = 3
+                };
+
+               // this.SaveCurrentForecastToRedis(forecast);
+            }
 
             return new WeatherDto
             {
@@ -143,6 +168,37 @@
                 },
                 RoadCondition = forecast.HasPrecipitation ? RoadCondition.Wet : RoadCondition.Dry
             };
+        }
+
+        private async void SaveCurrentForecastToRedis(CurrentForecast forecast)
+        {
+            var key = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0).ToString();
+            var token = new CancellationToken();
+
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bf.Serialize(ms, forecast);
+                await this.DistributedCache.SetAsync(key, ms.ToArray(), token);
+            }
+
+        }
+
+        private async Task<CurrentForecast> GetCurrentForecastFromRedis()
+        {
+            var token = new CancellationToken();
+            var key = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, 0, 0).ToString();
+            var data = await this.DistributedCache.GetAsync(key, token);
+
+            if (data == null)
+                return null;
+
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                object obj = bf.Deserialize(ms);
+                return (CurrentForecast)obj;
+            }
         }
 
         private Task<List<CurrentForecast>> GetCurrentTromsForecast()

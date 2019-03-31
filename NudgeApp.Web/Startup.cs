@@ -79,6 +79,16 @@ namespace NudgeApp.Web
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost";
+                options.InstanceName = "SampleInstance";
+                /*options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions()
+                {
+                    
+                }*/
+            });
+
             this.ConfigureDependencyInjection(services);
         }
 

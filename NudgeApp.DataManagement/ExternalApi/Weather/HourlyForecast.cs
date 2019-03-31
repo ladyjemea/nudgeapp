@@ -34,6 +34,7 @@
         public int PreciptationProbability { get; set; }
     }
 
+    [Serializable]
     public class CurrentForecast
     {
         public DateTime LocalObservationDateTime { get; set; }
@@ -69,6 +70,7 @@
         public bool HasSnow { get; internal set; }
     }
 
+    [Serializable]
     public class PrecipitationSummaryInfo
     {
         public UnitType PastHour { get; set; }
@@ -83,24 +85,28 @@
         public MinMax Past24HourRange { get; set; }
     }
 
+    [Serializable]
     public class MinMax
     {
         public UnitType Minimum { get; set; }
         public UnitType Maximum { get; set; }
     }
 
+    [Serializable]
     public class PressureTendencyInfo
     {
         string LocalizedText { get; set; }
         string Code { get; set; }
     }
-
+    
+    [Serializable]
     public class UnitType
     {
         public UnitInfo Metric { get; set; }
         public UnitInfo Imperial { get; set; }
     }
 
+    [Serializable]
     public class LocalSourceInfo
     {
         public int Id { get; set; }
@@ -108,12 +114,14 @@
         public string WeatherCode { get; set; }
     }
 
+    [Serializable]
     public class WindInfo
     {
         public UnitInfo Speed { get; set; }
         public Direction Direction { get; set; }
     }
 
+    [Serializable]
     public class Direction
     {
         public int Degrees { get; set; }
@@ -121,6 +129,7 @@
         public string English { get; set; }
     }
 
+    [Serializable]
     public class UnitInfo
     {
         public float Value { get; set; }
