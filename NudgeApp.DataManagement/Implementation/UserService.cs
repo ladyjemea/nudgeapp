@@ -9,6 +9,7 @@
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
     using NudgeApp.DataManagement.Implementation.Interfaces;
+    using RestSharp;
 
     public class UserService : IUserService
     {
@@ -105,6 +106,59 @@
         public void GetUser()
         {
             throw new NotImplementedException();
+        }
+
+        public Guid VerifyGoogle(string id, string tokenId)
+        {
+            var client = new RestClient("https://www.googleapis.com");
+            var request = new RestRequest("oauth2/v3/tokeninfo", Method.GET);
+            request.AddParameter("id_token", tokenId);
+
+            var response = client.Execute<TokenInfo>(request);
+
+            if (response.Data.Sub == id)
+            {
+                var userId = this.GoogleLogin(response.Data.Email, response.Data.Name);
+
+                return userId;
+            }
+
+            return Guid.Empty;
+        }
+
+        private Guid GoogleLogin(string email, string name)
+        {
+            var user = this.UserRepository.GetAll().Where(u => u.Email == email).FirstOrDefault();
+
+            Guid id;
+            if (user == null)
+            {
+                id = this.UserRepository.Insert(new UserEntity
+                {
+                    Email = email,
+                    Name = name,
+                    Google = true
+                });
+            }
+            else
+            {
+                id = user.Id;
+                if (user.Google == false)
+                {
+                    user.Google = true;
+                    this.UserRepository.Update(user);
+                }
+            }
+
+            return id;
+        }
+
+        private class TokenInfo
+        {
+            public string Sub { get; set; }
+            public string Email { get; set; }
+            public string Name { get; set; }
+            /* + other info  */
         }
     }
 }

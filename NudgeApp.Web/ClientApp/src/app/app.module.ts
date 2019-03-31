@@ -5,6 +5,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes, Route } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular-6-social-login";
+
 import { AgmCoreModule } from '@agm/core';
 
 import { AppComponent } from './app.component';
@@ -19,6 +21,16 @@ import { MainDisplayComponent } from './components/maindisplay/maindisplay';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { JwtInterceptor } from './services/JwtInterceptor';
+
+export function getAuthServiceConfigs() {
+  let config = new AuthServiceConfig(
+    [
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider("600101543512-tnhs33cfbs09rqd6no8tajg5ooccoa0q.apps.googleusercontent.com")
+      }]);
+  return config;
+}
 
 //const appRoutes: Routes = [
 //  {
@@ -53,7 +65,7 @@ import { JwtInterceptor } from './services/JwtInterceptor';
       { path: 'calendar', component: CalendarComponent },
       { path: 'search', component: MainDisplayComponent },
       { path: 'maindisplay', component: MainDisplayComponent }
-     
+
     ]),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCCbgVPkBgwul0cofmo-VSMOefNSzrAOEo',
@@ -61,7 +73,8 @@ import { JwtInterceptor } from './services/JwtInterceptor';
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs }
   ],
   bootstrap: [AppComponent]
 })

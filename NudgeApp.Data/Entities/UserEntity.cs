@@ -1,7 +1,6 @@
 ﻿namespace NudgeApp.Data.Entities
 {
     using NudgeApp.Data.Entities.Generic;
-    using System;
 
     public class UserEntity : DbEntity
     {
@@ -13,5 +12,6 @@
         public string Name { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
+        public bool Google { get; set; }
     }
 }

@@ -40,14 +40,9 @@
 
             this.NudgeRepository.Insert(transportationType, userId, tripId);
 
-            if (nudgeData.Trip != null)
-                this.TripRepository.Create(nudgeData.Trip, userId, weatherForecastId);
-
-            this.NudgeRepository.Create(nudgeData.TransportationType, userId, weatherForecastId);
-
             try
             {
-                var anonymousNudge = new AnonymousNudgeEntity
+                this.AnonymousNudgeOracleRepository.Insert(new AnonymousNudgeEntity
                 {
                     ActualTransportationType = transportationType,
                     PrecipitationProbability = forecast.RawData.PrecipitationProbability,
@@ -57,17 +52,7 @@
                     Temperature = forecast.RawData.Temperature,
                     Wind = forecast.RawData.Wind,
                     UserPreferedTransportationType = this.PreferencesRepository.GetPreferences(userId).ActualTransportationType
-                };
-
-                if (nudgeData.Forecast != null)
-                {
-                    anonymousNudge.PrecipitationProbability = nudgeData.Forecast.PrecipitationProbability;
-                    anonymousNudge.RoadCondition = nudgeData.Forecast.RoadCondition;
-                    anonymousNudge.SkyCoverage = nudgeData.Forecast.SkyCoverage;
-                    anonymousNudge.Temperature = nudgeData.Forecast.Temperature;
-                    anonymousNudge.Wind = nudgeData.Forecast.Wind;
-                }
-                this.AnonymousNudgeOracleRepository.Insert(anonymousNudge);
+                });
             }
             catch (Exception ex)
             {

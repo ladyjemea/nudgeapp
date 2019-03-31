@@ -24,7 +24,7 @@
         {
             var userId = Guid.Parse(HttpContext.User.Identities.First().Name);
 
-            this.NudgeLogic.AddNudge(userId, nudgeData);
+            //this.NudgeLogic.AddNudge(userId, nudgeData);
 
             return this.Ok();
         }

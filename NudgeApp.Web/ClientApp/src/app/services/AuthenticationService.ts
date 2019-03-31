@@ -16,12 +16,8 @@ export class AuthenticationService {
     params = params.append('password', password);
 
     this.http.get('http://localhost:5000/User/authenticate', { params: params }).pipe(map(user => {
-      if (user && user['token']) {
-        localStorage.setItem('currentUser', JSON.stringify(user))
-        AuthenticationService.loggedIn = true;
-        this.router.navigateByUrl('mainaccess');
-      }
-    })).subscribe();
+      this.saveToken(user);
+    }));
 
   }
 
@@ -30,8 +26,27 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
   }
 
+  GoogleLogin(id: string, tokenId: string, email: string) {
+    var userData = {
+      id, tokenId, email
+    };
+    return this.http.post('User/GoogleSignIn', userData)
+      .pipe(map(user => {
+        console.log('got something');
+        this.saveToken(user);
+        return user;
+      }));
+  }
+
   checkToken() {
     if (localStorage.getItem('currentUser') !== null)
       return this.http.get('User/CheckToken').subscribe(result => { AuthenticationService.loggedIn = true; }, error => { this.logout(); });
+  }
+
+  private saveToken(user) {
+    if (user && user['token']) {
+      localStorage.setItem('currentUser', JSON.stringify(user))
+      AuthenticationService.loggedIn = true;
+    }
   }
 }

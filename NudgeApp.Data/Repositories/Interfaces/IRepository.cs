@@ -7,7 +7,7 @@
     public interface IRepository<TEntity> where TEntity : IDbEntity
     {
         TEntity Get(Guid id);
-        void Insert(TEntity entity);
+        Guid Insert(TEntity entity);
         void InsertWIthNoSave(TEntity entity);
         void Update(TEntity entity);
         IEnumerable<TEntity> GetAll();

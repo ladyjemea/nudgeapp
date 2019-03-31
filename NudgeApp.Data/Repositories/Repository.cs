@@ -18,10 +18,12 @@
             this.DbSet = this.Context.Set<TEntity>();
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual Guid Insert(TEntity entity)
         {
             InsertWIthNoSave(entity);
             this.Context.SaveChanges();
+
+            return entity.Id;
         }
 
         public virtual void InsertWIthNoSave(TEntity entity)

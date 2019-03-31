@@ -46,19 +46,7 @@
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(this.AppSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
+            var tokenString = this.GenerateToken(user.Id);
 
             return Ok(new
             {
@@ -68,11 +56,57 @@
             });
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult GoogleSignIn([FromBody] GoogleUser googleUser)
+        {
+            var id = this.UserLogic.VerifyGoogle(googleUser.Id, googleUser.TokenId);
+
+            if (id != Guid.Empty)
+            {
+                var tokenString = GenerateToken(id);
+
+                return this.Ok(new
+                {
+                    Id = id,
+                    Username = googleUser.Email,
+                    Token = tokenString
+                });
+            }
+
+            return this.Unauthorized();
+        }
+
+        public class GoogleUser
+        {
+            public string Id { get; set; }
+            public string TokenId { get; set; }
+            public string Email { get; set; }
+        }
+
         [Authorize]
         [HttpGet]
         public ActionResult CheckToken()
         {
             return this.Ok();
+        }
+
+        private string GenerateToken(Guid userId)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(this.AppSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, userId.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
     }
 }
