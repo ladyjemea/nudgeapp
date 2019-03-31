@@ -10,8 +10,8 @@ using NudgeApp.Data;
 namespace NudgeApp.Data.Migrations
 {
     [DbContext(typeof(NudgeDbContext))]
-    [Migration("20190325154029_forecastRename")]
-    partial class forecastRename
+    [Migration("20190326140833_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,7 +48,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnonymousNudgeEntity");
+                    b.ToTable("AnonymousNudges");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.NudgeEntity", b =>
@@ -64,17 +64,17 @@ namespace NudgeApp.Data.Migrations
 
                     b.Property<int>("TransportationType");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<Guid>("TripId");
 
-                    b.Property<Guid>("WeatherForecastId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TripId");
+
                     b.HasIndex("UserId");
 
-                    b.HasIndex("WeatherForecastId");
-
-                    b.ToTable("NudgeEntity");
+                    b.ToTable("Nudges");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.PreferencesEntity", b =>
@@ -98,7 +98,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PreferencesEntity");
+                    b.ToTable("Preferences");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.PushNotificationEntity", b =>
@@ -120,7 +120,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PushNotificationEntity");
+                    b.ToTable("PushNotifications");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.TripEntity", b =>
@@ -134,19 +134,13 @@ namespace NudgeApp.Data.Migrations
 
                     b.Property<DateTime>("Modified");
 
+                    b.Property<int>("Type");
+
                     b.Property<int>("UsedTransportationType");
-
-                    b.Property<Guid>("UserId");
-
-                    b.Property<Guid>("WeatherForecastId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("WeatherForecastId");
-
-                    b.ToTable("TripEntity");
+                    b.ToTable("Trips");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.UserEntity", b =>
@@ -172,7 +166,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserEntity");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.WeatherForecastEntity", b =>
@@ -200,19 +194,19 @@ namespace NudgeApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EnvironmentalInfoEntity");
+                    b.ToTable("WeatherForecast");
                 });
 
             modelBuilder.Entity("NudgeApp.Data.Entities.NudgeEntity", b =>
                 {
+                    b.HasOne("NudgeApp.Data.Entities.TripEntity", "Trip")
+                        .WithMany()
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("NudgeApp.Data.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("NudgeApp.Data.Entities.WeatherForecastEntity", "WeatherForecast")
-                        .WithMany()
-                        .HasForeignKey("WeatherForecastId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -221,19 +215,6 @@ namespace NudgeApp.Data.Migrations
                     b.HasOne("NudgeApp.Data.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("NudgeApp.Data.Entities.TripEntity", b =>
-                {
-                    b.HasOne("NudgeApp.Data.Entities.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("NudgeApp.Data.Entities.WeatherForecastEntity", "WeatherForecast")
-                        .WithMany()
-                        .HasForeignKey("WeatherForecastId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

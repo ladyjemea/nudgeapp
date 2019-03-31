@@ -62,15 +62,15 @@ namespace NudgeApp.Data.Migrations
 
                     b.Property<int>("TransportationType");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<Guid>("TripId");
 
-                    b.Property<Guid>("WeatherForecastId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("TripId");
 
-                    b.HasIndex("WeatherForecastId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Nudges");
                 });
@@ -132,15 +132,13 @@ namespace NudgeApp.Data.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<int>("UsedTransportationType");
+                    b.Property<int>("Type");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<int>("UsedTransportationType");
 
                     b.Property<Guid>("WeatherForecastId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("WeatherForecastId");
 
@@ -203,14 +201,14 @@ namespace NudgeApp.Data.Migrations
 
             modelBuilder.Entity("NudgeApp.Data.Entities.NudgeEntity", b =>
                 {
+                    b.HasOne("NudgeApp.Data.Entities.TripEntity", "Trip")
+                        .WithMany()
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("NudgeApp.Data.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("NudgeApp.Data.Entities.WeatherForecastEntity", "WeatherForecast")
-                        .WithMany()
-                        .HasForeignKey("WeatherForecastId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -224,11 +222,6 @@ namespace NudgeApp.Data.Migrations
 
             modelBuilder.Entity("NudgeApp.Data.Entities.TripEntity", b =>
                 {
-                    b.HasOne("NudgeApp.Data.Entities.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("NudgeApp.Data.Entities.WeatherForecastEntity", "WeatherForecast")
                         .WithMany()
                         .HasForeignKey("WeatherForecastId")

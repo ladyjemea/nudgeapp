@@ -69,7 +69,7 @@
             return neededResults;
             //return outdoorTemperature;
         }
-        
+
         public class DateInfo
         {
             public DateTime date;
@@ -89,7 +89,7 @@
 
         }
 
-        public ForecastDto GetForecast(DateTime dateTime)
+        public WeatherDto GetForecast(DateTime dateTime)
         {
             if (DateTime.Now.AddHours(12) < dateTime)
                 throw new Exception("Date too far in the future. Forecast unreliable.");
@@ -97,40 +97,48 @@
             var longForecast = this.Get12HTromsWeather();
             var forecast = longForecast.First(f => f.DateTime.Hour == dateTime.Hour);
 
-            return new ForecastDto
+            return new WeatherDto
             {
-                Date = dateTime,
-                Time = dateTime,
-                Temperature = forecast.Temperature.Value,
-                RealFeelTemperature = forecast.RealFeelTemperature.Value,
-                Ceiling = forecast.Ceiling.Value,
-                Rain = forecast.Rain.Value,
-                RainProbability = forecast.RainProbability,
-                Snow = forecast.Snow.Value,
-                SnowProbability = forecast.SnowProbability,
-                Ice = forecast.Ice.Value,
-                IceProbability = forecast.IceProbability,
-                Visibility = forecast.Visibility.Value,
-                Wind = forecast.Wind.Speed.Value,
-                Daylight = forecast.IsDaylight,
-                RoadCondition = GetRoadCondition(forecast)
+                RawData = new WeatherRawData
+                {
+                    Date = dateTime,
+                    Time = dateTime,
+                    Temperature = forecast.Temperature.Value,
+                    RealFeelTemperature = forecast.RealFeelTemperature.Value,
+                    Ceiling = forecast.Ceiling.Value,
+                    Rain = forecast.Rain.Value,
+                    RainProbability = forecast.RainProbability,
+                    Snow = forecast.Snow.Value,
+                    SnowProbability = forecast.SnowProbability,
+                    Ice = forecast.Ice.Value,
+                    IceProbability = forecast.IceProbability,
+                    Visibility = forecast.Visibility.Value,
+                    Wind = forecast.Wind.Speed.Value,
+                    Daylight = forecast.IsDaylight
+                },
+                RoadCondition = GetRoadCondition(forecast),
+                SkyCoverage = GetSkyCoverage(forecast.CloudCover),
+
             };
         }
 
-        public async Task<ForecastDto> GetCurrentForecast()
+        public async Task<WeatherDto> GetCurrentForecast()
         {
             var forecastList = await this.GetCurrentTromsForecast();
             var forecast = forecastList.First();
 
-            return new ForecastDto
+            return new WeatherDto
             {
-                Date = forecast.LocalObservationDateTime,
-                Time = forecast.LocalObservationDateTime,
-                Temperature = forecast.Temperature.Metric.Value,
-                RealFeelTemperature = forecast.RealFeelTemperature.Metric.Value,
-                Ceiling = forecast.Ceiling.Metric.Value,
-                Wind = forecast.Wind.Speed.Value,
-                PrecipitationProbability = forecast.HasPrecipitation ? 100 : 0,
+                RawData = new WeatherRawData
+                {
+                    Date = forecast.LocalObservationDateTime,
+                    Time = forecast.LocalObservationDateTime,
+                    Temperature = forecast.Temperature.Metric.Value,
+                    RealFeelTemperature = forecast.RealFeelTemperature.Metric.Value,
+                    Ceiling = forecast.Ceiling.Metric.Value,
+                    Wind = forecast.Wind.Speed.Value,
+                    PrecipitationProbability = forecast.HasPrecipitation ? 100 : 0,
+                },
                 RoadCondition = forecast.HasPrecipitation ? RoadCondition.Wet : RoadCondition.Dry
             };
         }
@@ -189,5 +197,7 @@
 
             return roadCondition;
         }
+
+       
     }
 }

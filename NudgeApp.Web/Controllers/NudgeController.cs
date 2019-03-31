@@ -11,9 +11,9 @@
     [Route("[controller]/[action]")]
     public class NudgeController : Controller
     {
-        private readonly INudgeLogic NudgeLogic;
+        private readonly INudgeService NudgeLogic;
 
-        public NudgeController(INudgeLogic nudgeLogic)
+        public NudgeController(INudgeService nudgeLogic)
         {
             this.NudgeLogic = nudgeLogic;
         }
@@ -35,5 +35,12 @@
             this.NudgeLogic.Test();
             return this.Ok();
         }
+    }
+
+    public class NudgeData
+    {
+        public TransportationType TransportationType { get; set; }
+        public WeatherDto forecast { get; set; }
+        public TripDto trip { get; set; }
     }
 }

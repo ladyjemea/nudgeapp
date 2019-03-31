@@ -3,9 +3,9 @@
     using NudgeApp.Common.Dtos;
     using System;
 
-    public interface INudgeLogic
+    public interface INudgeService
     {
-        void AddNudge(Guid userId, NudgeData nudgeData);
+        void AddNudge(Guid userId, TransportationType transportationType, WeatherDto forecast, TripDto trip);
         void Test();
     }
 }

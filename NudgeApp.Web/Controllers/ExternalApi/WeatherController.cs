@@ -33,7 +33,7 @@
         }
 
         [HttpPost]
-        public ActionResult<ForecastDto> GetForecast([FromBody] DateTime dateTime)
+        public ActionResult<WeatherDto> GetForecast([FromBody] DateTime dateTime)
         {
             var result = this.WeatherService.GetForecast(dateTime);
 
@@ -41,7 +41,7 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult<ForecastDto>> GetCurrentForecast()
+        public async Task<ActionResult<WeatherDto>> GetCurrentForecast()
         {
             var result = await this.WeatherService.GetCurrentForecast();
 

@@ -13,8 +13,8 @@
         {
             services.AddSingleton<IWeatherService, WeatherService>();
             services.AddSingleton<IBusService, BusService>();
-            services.AddSingleton<IUserLogic, UserLogic>();
-            services.AddSingleton<INudgeLogic, NudgeLogic>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<INudgeService, NudgeService>();
             services.AddSingleton<IPushNotificationLogic, PushNotificationLogic>();                        
         }
     }

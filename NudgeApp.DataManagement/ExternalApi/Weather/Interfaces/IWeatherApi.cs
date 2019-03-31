@@ -9,7 +9,7 @@
     {
         IList<HourlyForecast> Get12HTromsWeather();
         IList<HourlyForecast> Get24HTromsWeather();
-        ForecastDto GetForecast(DateTime dateTime);
-        Task<ForecastDto> GetCurrentForecast();
+        WeatherDto GetForecast(DateTime dateTime);
+        Task<WeatherDto> GetCurrentForecast();
     }
 }

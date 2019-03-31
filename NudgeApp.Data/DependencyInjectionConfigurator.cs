@@ -12,7 +12,7 @@
         {
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IPreferencesRepository, PreferencesRepository>();
-            services.AddSingleton<IEnvironmelntalInfoRepository, EnvironmelntalInfoRepository>();
+            services.AddSingleton<IWeatherForecastRepository, WeatherForecastRepository>();
             services.AddSingleton<INudgeRepository, NudgeRepository>();
             services.AddSingleton<ITripRepository, TripRepository>();
             services.AddSingleton<INudgeOracleConnection, NudgeOracleConnection>();

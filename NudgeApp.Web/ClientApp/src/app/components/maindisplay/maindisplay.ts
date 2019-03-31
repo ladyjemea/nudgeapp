@@ -36,8 +36,8 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   constructor(private travelService: TravelService, private mapsAPILoader: MapsAPILoader, private ref: ChangeDetectorRef, private route: ActivatedRoute, private weatherService: WeatherService, private nudgeService: NudgeService) {
     this.weatherService.GetCurrentForecast().subscribe((forecast) => {
-      this.temperature = String(forecast.temperature);
-      this.realfeelTemperature = String(forecast.realFeelTemperature);
+      this.temperature = String(forecast.rawData.temperature);
+      this.realfeelTemperature = String(forecast.rawData.realFeelTemperature);
       this.travelForecast = forecast;
     });
   }
@@ -92,6 +92,8 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     var trip = this.getTrip(travelType);
 
     this.nudgeService.saveNudge(travelType, this.travelForecast, trip);
+
+   // window.location.href = trip.link;
   }
 
   private getTrip(travelType: TransporationType): TripDto {
@@ -110,6 +112,9 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   public pickTravelMode(form: NgForm) {
 
     //this.authenticationService.checkpassword(form.value.username, form.value.password);
+  }
+  showmaps(event) {
+   
   }
 
 }

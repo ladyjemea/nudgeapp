@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.Data.Repositories
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
@@ -17,6 +18,11 @@
         public UserEntity GetUser(string userName)
         {
             return this.Db.GetAll<UserEntity>().Where(u => u.UserName == userName).FirstOrDefault();
+        }
+
+        public IEnumerable<Guid> GetAllIds()
+        {
+            return this.GetAll().Select(u => u.Id);
         }
     }
 }

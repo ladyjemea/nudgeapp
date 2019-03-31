@@ -13,7 +13,7 @@
         protected abstract string Schedule { get; }
         public ScheduledProcessor(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory)
         {
-            _schedule = CrontabSchedule.Parse(Schedule);
+            _schedule = CrontabSchedule.Parse(Schedule, new CrontabSchedule.ParseOptions {IncludingSeconds = true });
             _nextRun = _schedule.GetNextOccurrence(DateTime.Now);
         }
 
