@@ -10,15 +10,15 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  login(username: string, password: string): void {
+  login(username: string, password: string) {
     var params = new HttpParams();
     params = params.append('username', username);
     params = params.append('password', password);
 
-    this.http.get('http://localhost:5000/User/authenticate', { params: params }).pipe(map(user => {
+    return this.http.get('http://localhost:5000/User/authenticate', { params: params }).pipe(map(user => {
       this.saveToken(user);
+      return user;
     }));
-
   }
 
   logout() {
