@@ -9,7 +9,13 @@
         
         public RoadCondition RoadCondition { get; set; }
         public SkyCoverageType SkyCoverage { get; set; }
+        public PrecipitationCondition Precipitation { get; set; }
         public int CloudCoveragePercent { get; set; }
+        public  WeatherCondition Windy { get; set; }
+        public PrecipitationCondition PrecipitationCondition { get; set; }
+        public WeatherCondition WeatherCondition { get; set; }
+        public Probabilities Probabilities { get; set; }
+        
     }
 
     public class WeatherRawData
@@ -30,5 +36,6 @@
         public bool Daylight { get; set; }
         public int PrecipitationProbability { get; set; }
         public int CloudCoveragePercent { get; set; }
+        public int Precipitation { get; set; }
     }
 }

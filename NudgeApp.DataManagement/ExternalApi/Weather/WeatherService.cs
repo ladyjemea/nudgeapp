@@ -16,8 +16,6 @@
         private const string Locationkey = "256116"; // Tromsø 
         private const string serviceString = "http://dataservice.accuweather.com";
 
-
-
         public IList<HourlyForecast> Get12HTromsWeather()
         {
             var client = new RestClient(serviceString);
@@ -106,6 +104,7 @@
                     Temperature = forecast.Temperature.Value,
                     RealFeelTemperature = forecast.RealFeelTemperature.Value,
                     Ceiling = forecast.Ceiling.Value,
+                    Precipitation = forecast.PrecipitationProbability,
                     Rain = forecast.Rain.Value,
                     RainProbability = forecast.RainProbability,
                     Snow = forecast.Snow.Value,
@@ -118,6 +117,9 @@
                 },
                 RoadCondition = GetRoadCondition(forecast),
                 SkyCoverage = GetSkyCoverage(forecast.CloudCover),
+                PrecipitationCondition = GetPrecipitation(forecast),
+                WeatherCondition = GetWeatherCondition(forecast),
+                Probabilities = GetProbabilities(forecast),
 
             };
         }
@@ -198,6 +200,83 @@
             return roadCondition;
         }
 
-       
+        private PrecipitationCondition GetPrecipitation(HourlyForecast forecast)
+        {
+            PrecipitationCondition precipitation;
+
+            if (forecast.PreciptationProbability > 40)
+            {
+                if (forecast.RainProbability > forecast.SnowProbability)
+                {
+                    precipitation = PrecipitationCondition.Rainy;
+                }
+                else
+                {
+                    precipitation = PrecipitationCondition.Snowy;
+                }
+
+            }
+            else
+            {
+                precipitation = PrecipitationCondition.NoPrecipitation;
+            }
+            return precipitation;
+        }
+
+        private WeatherCondition GetWeatherCondition(HourlyForecast forecast)
+        {
+            WeatherCondition windy;
+
+            if (forecast.WindGust.Speed.Value > 15 && forecast.Wind.Speed.Value > 12)
+            {
+                windy = WeatherCondition.WindyWithGust;
+            }
+            else
+            {
+                if (forecast.WindGust.Speed.Value < 5 && forecast.Wind.Speed.Value > 12)
+                {
+                    windy = WeatherCondition.Windy;
+                }
+                else
+                {
+                    windy = WeatherCondition.Gust;
+                }
+            }
+
+            if (forecast.WindGust.Speed.Value > 15 && forecast.Wind.Speed.Value < 5)
+            {
+                windy = WeatherCondition.GustWithNoWind;
+            }
+            else
+            {
+                if (forecast.WindGust.Speed.Value < 5 && forecast.Wind.Speed.Value < 5)
+                {
+                    windy = WeatherCondition.Calm;
+                }
+                else
+                {
+                    windy = WeatherCondition.CalmWinds;
+
+                }
+            }
+            return windy;
+        }
+
+
+        // Continue from here tomorrow!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //private Probabilities GetProbabilities(HourlyForecast forecast)
+        //{
+        //    Probabilities probabilities;
+
+        //    if (forecast)
+        //}
+
+        //private WeatherCondition GetWeatherCondition(CurrentForecast forecast)
+        //{
+        //    WeatherCondition weatherCondition;
+
+        //    if (forecast.Rain)
+        //}
+
     }
 }

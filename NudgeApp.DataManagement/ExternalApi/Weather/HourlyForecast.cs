@@ -31,6 +31,7 @@
         public int CloudCover { get; set; }
         public string MobileLink { get; set; }
         public string Link { get; set; }
+        public int PreciptationProbability { get; set; }
     }
 
     public class CurrentForecast

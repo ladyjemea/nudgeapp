@@ -93,7 +93,12 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
     this.nudgeService.saveNudge(travelType, this.travelForecast, trip);
 
-   // window.location.href = trip.link;
+    if (travelType === TransporationType.Car) {
+      var tripLink = trip.link.substr(0, trip.link.indexOf("&travelmode"));
+      window.location.href = tripLink;
+    }
+    else
+      window.location.href = trip.link;
   }
 
   private getTrip(travelType: TransporationType): TripDto {
@@ -114,7 +119,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     //this.authenticationService.checkpassword(form.value.username, form.value.password);
   }
   showmaps(event) {
-   
+
   }
 
 }
