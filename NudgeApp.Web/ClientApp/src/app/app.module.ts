@@ -16,7 +16,7 @@ import { LoginComponent } from './components/login/login';
 import { SignupComponent } from './components/signup/signup';
 import { TravelComponent } from './components/travelnow/travelnow';
 import { MainaccessComponent } from './components/mainaccess/mainaccess';
-import { CalendarComponent } from './components/calendar/calendar';
+//import { CalendarComponent } from './components/calendar/calendar';
 import { MainDisplayComponent } from './components/maindisplay/maindisplay';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -47,7 +47,7 @@ export function getAuthServiceConfigs() {
     SignupComponent,
     TravelComponent,
     MainaccessComponent,
-    CalendarComponent,
+    //CalendarComponent,
     MainDisplayComponent
   ],
   imports: [
@@ -62,7 +62,7 @@ export function getAuthServiceConfigs() {
       { path: 'signup', component: SignupComponent },
       { path: 'travelnow', component: TravelComponent },
       { path: 'mainaccess', component: MainaccessComponent },
-      { path: 'calendar', component: CalendarComponent },
+      //{ path: 'calendar', component: CalendarComponent },
       { path: 'search', component: MainDisplayComponent },
       { path: 'maindisplay', component: MainDisplayComponent }
 

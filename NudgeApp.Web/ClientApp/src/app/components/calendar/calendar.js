@@ -3,15 +3,12 @@
 //import { Subject } from 'rxjs';
 //import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 //import {CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
-
-
 //const colors: any = {
 //  blue: {
 //    primary: '#1e90ff',
 //    secondary: '#D1E8FF'
 //  }
 //};
-
 //@Component({
 //  selector: 'mwl-demo-component',
 //  changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,18 +16,13 @@
 //})
 //export class CalendarComponent {
 //  @ViewChild('modalContent') modalContent: TemplateRef<any>;
-
 //  view: CalendarView = CalendarView.Month;
-
 //  CalendarView = CalendarView;
-
 //  viewDate: Date = new Date();
-
 //  modalData: {
 //    action: string;
 //    event: CalendarEvent;
 //  };
-
 //  actions: CalendarEventAction[] = [
 //    //{
 //    //  label: '<i class="fa fa-fw fa-pencil"></i>',
@@ -46,9 +38,7 @@
 //    //  }
 //    //}
 //  ];
-
 //  refresh: Subject<any> = new Subject();
-
 //  events: CalendarEvent[] = [
 //    {
 //      start: subDays(startOfDay(new Date()), 1),
@@ -64,7 +54,6 @@
 //      color: colors.yellow,
 //      actions: this.actions
 //    },
-    
 //  ];
-
 //}
+//# sourceMappingURL=calendar.js.map
