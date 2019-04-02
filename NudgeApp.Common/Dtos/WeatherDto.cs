@@ -3,6 +3,7 @@
     using NudgeApp.Common.Enums;
     using System;
 
+    [Serializable]
     public class WeatherDto
     {
         public WeatherRawData RawData { get; set; }
@@ -10,7 +11,6 @@
         public RoadCondition RoadCondition { get; set; }
         public SkyCoverageType SkyCoverage { get; set; }
         public PrecipitationCondition Precipitation { get; set; }
-        public int CloudCoveragePercent { get; set; }
         public  WeatherCondition Windy { get; set; }
         public PrecipitationCondition PrecipitationCondition { get; set; }
         public WeatherCondition WeatherCondition { get; set; }
@@ -18,6 +18,7 @@
         
     }
 
+    [Serializable]
     public class WeatherRawData
     {
         public DateTime Date { get; set; }

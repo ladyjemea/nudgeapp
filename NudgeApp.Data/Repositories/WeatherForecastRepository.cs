@@ -34,13 +34,14 @@
             {
                 result = new WeatherDto
                 {
-                    CloudCoveragePercent = entity.CloudCoveragePercent,
                     RoadCondition = entity.RoadCondition,
                     RawData = new WeatherRawData
                     {
                         Temperature = entity.Temperature,
                         Time = entity.Time,
-                        Wind = entity.Wind
+                        Wind = entity.Wind,
+                        CloudCoveragePercent = entity.CloudCoveragePercent,
+
                     }
                 };
             }

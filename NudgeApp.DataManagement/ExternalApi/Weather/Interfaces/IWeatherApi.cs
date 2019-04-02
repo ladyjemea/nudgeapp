@@ -8,7 +8,6 @@
     public interface IWeatherService
     {
         IList<HourlyForecast> Get12HTromsWeather();
-        IList<HourlyForecast> Get24HTromsWeather();
         WeatherDto GetForecast(DateTime dateTime);
         Task<WeatherDto> GetCurrentForecast();
     }

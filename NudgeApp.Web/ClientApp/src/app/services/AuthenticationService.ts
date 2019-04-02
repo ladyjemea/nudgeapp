@@ -8,7 +8,7 @@ export class AuthenticationService {
 
   public static loggedIn: boolean = false;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   login(username: string, password: string) {
     var params = new HttpParams();

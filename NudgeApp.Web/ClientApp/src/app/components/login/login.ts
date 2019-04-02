@@ -3,13 +3,13 @@ import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs';
 import { AuthenticationService } from '../../services/AuthenticationService';
-import { AuthService, FacebookLoginProvider, GoogleLoginProvider } from 'angular-6-social-login';
+import { AuthService, GoogleLoginProvider } from 'angular-6-social-login';
 import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
-  providers: [AuthenticationService, AuthService],
+  providers: [AuthenticationService, AuthService]
 })
 export class LoginComponent {
 
@@ -18,6 +18,7 @@ export class LoginComponent {
   public loginUser(form: NgForm) {
     this.authenticationService.login(form.value.username, form.value.password).subscribe((result) =>
       this.router.navigateByUrl('mainaccess'));
+    
   }
   
 

@@ -16,6 +16,7 @@
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<INudgeService, NudgeService>();
             services.AddSingleton<IPushNotificationLogic, PushNotificationLogic>();                        
+            services.AddSingleton<IMemoryCacheService, MemoryCacheService>();                        
         }
     }
 }
