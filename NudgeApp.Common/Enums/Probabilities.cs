@@ -11,6 +11,7 @@
        Snow,
        Ice,
        Gust,
+       Normal,
        Slippery
     }
 }

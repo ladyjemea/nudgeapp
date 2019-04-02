@@ -319,13 +319,35 @@
         }
 
 
-        // Continue from here tomorrow!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //private Probabilities GetProbabilities(HourlyForecast forecast)
-        //{
-        //    Probabilities probabilities;
+        private Probabilities GetProbabilities(HourlyForecast forecast)
+        {
+            Probabilities probabilities ;
 
-        //    if (forecast)
-        //}
+            if (forecast.Rain.Value > 20)
+            {
+                probabilities = Probabilities.Rain;
+            }
+            if (forecast.Snow.Value > 20)
+            {
+                probabilities = Probabilities.Snow;
+            }
+            if (forecast.Ice.Value > 20)
+            {
+                probabilities = Probabilities.Ice;
+            }
+            if (forecast.Snow.Value > 20 && 10 < forecast.Rain.Value && forecast.Rain.Value < 20)
+            {
+                probabilities = Probabilities.Slippery;
+            }
+            else
+            {
+                probabilities = Probabilities.Normal;
+            }
+            return probabilities;
+        }
+
+
+       
 
         //private WeatherCondition GetWeatherCondition(CurrentForecast forecast)
         //{
