@@ -45,7 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\app.routing.ts" />
     <None Remove="ClientApp\src\app\components\calendar\calendar.ts" />
     <None Remove="ClientApp\src\app\components\maindisplay\maindisplay.ts" />
     <None Remove="ClientApp\src\app\services\JwtInterceptor.ts" />
@@ -60,7 +59,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\app.routing.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\calendar\calendar.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\maindisplay\maindisplay.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\JwtInterceptor.ts" />

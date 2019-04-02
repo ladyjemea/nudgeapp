@@ -129,8 +129,8 @@
                 RoadCondition = GetRoadCondition(forecast),
                 SkyCoverage = GetSkyCoverage(forecast.CloudCover),
                 PrecipitationCondition = GetPrecipitation(forecast),
-                WeatherCondition = GetWeatherCondition(forecast),
-                Probabilities = GetProbabilities(forecast),
+                WeatherCondition = GetWeatherCondition(forecast)
+                //Probabilities = GetProbabilities(forecast),
 
             };
         }
