@@ -24,10 +24,5 @@
 
             return entity.Id;
         }
-
-        public IList<PushNotificationEntity> GetAll()
-        {
-            return this.Context.GetAll<PushNotificationEntity>().ToList();
-        }
     }
 }

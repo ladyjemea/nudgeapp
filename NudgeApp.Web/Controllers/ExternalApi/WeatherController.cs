@@ -25,13 +25,6 @@
             return this.Ok(result);
         }
 
-        [HttpGet]
-        public ActionResult<IList<HourlyForecast>> Get24hWeather()
-        {
-            var result = this.WeatherService.Get24HTromsWeather();
-            return this.Ok(result);
-        }
-
         [HttpPost]
         public ActionResult<WeatherDto> GetForecast([FromBody] DateTime dateTime)
         {

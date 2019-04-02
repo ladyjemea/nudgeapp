@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from '../../services/AuthenticationService';
+import { AuthService } from 'angular-6-social-login';
 
 @Component({
   selector: 'app-nav-menu',
