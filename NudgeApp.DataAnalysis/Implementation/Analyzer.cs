@@ -1,4 +1,5 @@
-﻿using NudgeApp.DataManagement.ExternalApi.Weather;
+﻿using NudgeApp.Common.Dtos;
+using NudgeApp.DataManagement.ExternalApi.Weather;
 using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,14 @@ namespace NudgeApp.DataAnalysis.API
             this.WeatherService = weather;
         }
 
-        public IList<DateInfo> AnalyseWeather()
+        public WeatherDto AnalyseWeather()
         {
-            var results = this.WeatherService.Get12HTromsWeather();
-            var neededResults = results.Select(r => new DateInfo
+            //var results = this.WeatherService.Get12HTromsWeather();
+            return this.WeatherService.GetForecast(DateTime.Now.AddHours(1));
+            /*var neededResults = results.Select(r => new DateInfo
             {
                 date = r.DateTime,
-                temp = r.Temperature,
+                temp = r.Temperature.Value,
                 realfeel = r.RealFeelTemperature,
                 ceiling = r.Ceiling,
                 visibility = r.Visibility,
@@ -32,18 +34,19 @@ namespace NudgeApp.DataAnalysis.API
                 ice = r.Ice,
                 iceprobability = r.IceProbability,
                 wind = r.Wind,
+                windgust = r.WindGust,
                 daylight = r.IsDaylight
             }).ToList();
             
 
-            return neededResults;
+            return neededResults;*/
             //return outdoorTemperature;
         }
 
         public class DateInfo
         {
             public DateTime date;
-            public UnitInfo temp;
+            public float temp;
             public UnitInfo ceiling;
             public UnitInfo realfeel;
             public UnitInfo rain;
@@ -55,7 +58,7 @@ namespace NudgeApp.DataAnalysis.API
             public int iceprobability;
             public WindInfo wind;
             public bool daylight;
-
+            internal WindInfo windgust;
         }
     }
 }

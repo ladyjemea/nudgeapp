@@ -105,12 +105,14 @@
                     IceProbability = forecast.IceProbability,
                     Visibility = forecast.Visibility.Value,
                     Wind = forecast.Wind.Speed.Value,
+                    WindGust = forecast.WindGust.Speed.Value,
                     Daylight = forecast.IsDaylight
                 },
                 RoadCondition = GetRoadCondition(forecast),
                 SkyCoverage = GetSkyCoverage(forecast.CloudCover),
                 PrecipitationCondition = GetPrecipitation(forecast),
-                WeatherCondition = GetWeatherCondition(forecast)
+                WeatherCondition = GetWeatherCondition(forecast),
+                Others = GetOthers(forecast)
                 // Probabilities = GetProbabilities(forecast),
             };
 
@@ -229,47 +231,47 @@
 
         private WeatherCondition GetWeatherCondition(HourlyForecast forecast)
         {
-            WeatherCondition windy;
+            WeatherCondition weather;
 
             if (forecast.WindGust.Speed.Value > 15 && forecast.Wind.Speed.Value > 12)
             {
-                windy = WeatherCondition.WindyWithGust;
+                weather = WeatherCondition.WindyWithGust;
             }
             else
             {
                 if (forecast.WindGust.Speed.Value < 5 && forecast.Wind.Speed.Value > 12)
                 {
-                    windy = WeatherCondition.Windy;
+                    weather = WeatherCondition.Windy;
                 }
                 else
                 {
-                    windy = WeatherCondition.Gust;
+                    weather = WeatherCondition.Gust;
                 }
             }
 
             if (forecast.WindGust.Speed.Value > 15 && forecast.Wind.Speed.Value < 5)
             {
-                windy = WeatherCondition.GustWithNoWind;
+                weather = WeatherCondition.GustWithNoWind;
             }
             else
             {
                 if (forecast.WindGust.Speed.Value < 5 && forecast.Wind.Speed.Value < 5)
                 {
-                    windy = WeatherCondition.Calm;
+                    weather = WeatherCondition.Calm;
                 }
                 else
                 {
-                    windy = WeatherCondition.CalmWinds;
+                    weather = WeatherCondition.CalmWinds;
 
                 }
             }
-            return windy;
+            return weather;
         }
 
 
         private Probabilities GetProbabilities(HourlyForecast forecast)
         {
-            Probabilities probabilities ;
+            Probabilities probabilities;
 
             if (forecast.Rain.Value > 20)
             {
@@ -292,6 +294,50 @@
                 probabilities = Probabilities.Normal;
             }
             return probabilities;
+        }
+
+        private Others GetOthers(HourlyForecast forecast)
+        {
+            Others others;
+            
+            if (forecast.RealFeelTemperature.Value > 15 
+                && forecast.IsDaylight == true 
+                && forecast.Visibility.Value > 8 
+                && forecast.PreciptationProbability < 30 
+                && forecast.Wind.Speed.Value < 9 
+                && forecast.WindGust.Speed.Value < 9)
+            {
+                others = Others.ADayAtTheParkOrWalking;
+            }
+            else
+            {
+                others = Others.NotEvaluated;
+            }
+
+            if (forecast.Rain.Value > 10 
+                && forecast.Temperature.Value >-3 && 3 < forecast.Temperature.Value 
+                && forecast.Visibility.Value < 5)
+            {
+                others = Others.SlipperyForDriving;
+            }
+            else
+            {
+                others = Others.NotEvaluated;
+            }
+
+            if (forecast.Snow.Value > 10 
+                && forecast.Temperature.Value == 0 
+                && forecast.Wind.Speed.Value > 15 
+                && forecast.Wind.Speed.Value > 15 
+                && forecast.Visibility.Value < 5)
+            {
+                others = Others.PoorDrivingConditions;
+            }
+            else
+            {
+                others = Others.NotEvaluated;
+            }
+            return others;
         }
 
 

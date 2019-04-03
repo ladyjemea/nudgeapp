@@ -15,7 +15,7 @@
         public PrecipitationCondition PrecipitationCondition { get; set; }
         public WeatherCondition WeatherCondition { get; set; }
         public Probabilities Probabilities { get; set; }
-        
+        public Others Others { get; set; }
     }
 
     [Serializable]
@@ -38,5 +38,6 @@
         public int PrecipitationProbability { get; set; }
         public int CloudCoveragePercent { get; set; }
         public int Precipitation { get; set; }
+        public float WindGust { get; set; }
     }
 }
