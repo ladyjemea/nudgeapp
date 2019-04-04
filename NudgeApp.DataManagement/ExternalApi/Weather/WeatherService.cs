@@ -166,6 +166,7 @@
             return taskCompletionSource.Task;
         }
 
+
         private SkyCoverageType GetSkyCoverage(int cloudCoverPercentage)
         {
             SkyCoverageType coverage = cloudCoverPercentage <= 15 ? SkyCoverageType.Clear : SkyCoverageType.PartlyCloudy;
@@ -174,6 +175,7 @@
 
             return coverage;
         }
+
 
         private RoadCondition GetRoadCondition(HourlyForecast forecast)
         {
@@ -205,6 +207,7 @@
             return roadCondition;
         }
 
+
         private PrecipitationCondition GetPrecipitation(HourlyForecast forecast)
         {
             PrecipitationCondition precipitation;
@@ -227,6 +230,7 @@
             }
             return precipitation;
         }
+
 
         private WeatherCondition GetWeatherCondition(HourlyForecast forecast)
         {
@@ -284,10 +288,6 @@
             {
                 weather = WeatherCondition.Warm;
             }
-                //else
-                //{
-                //    weather = WeatherCondition.NotEvaluated;
-                //}
             
             return weather;
         }
@@ -319,6 +319,7 @@
             }
             return probabilities;
         }
+
 
         private Others GetOthers(HourlyForecast forecast)
         {
