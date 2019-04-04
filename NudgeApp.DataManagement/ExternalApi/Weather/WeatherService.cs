@@ -92,7 +92,6 @@
                 RawData = new WeatherRawData
                 {
                     Date = dateTime,
-                    Time = dateTime,
                     Temperature = forecast.Temperature.Value,
                     RealFeelTemperature = forecast.RealFeelTemperature.Value,
                     Ceiling = forecast.Ceiling.Value,
@@ -112,8 +111,8 @@
                 SkyCoverage = GetSkyCoverage(forecast.CloudCover),
                 PrecipitationCondition = GetPrecipitation(forecast),
                 WeatherCondition = GetWeatherCondition(forecast),
-                Others = GetOthers(forecast)
-                // Probabilities = GetProbabilities(forecast),
+                Others = GetOthers(forecast),
+                Probabilities = GetProbabilities(forecast)
             };
 
             return weatherDto;
@@ -272,21 +271,24 @@
             {
                 weather = WeatherCondition.Freezing;
             }
+            
+            if (forecast.Temperature.Value > -9 && forecast.Temperature.Value < 8)
+            {
+                weather = WeatherCondition.Cold;
+            }
+            if (forecast.Temperature.Value > 8 && forecast.Temperature.Value < 14)
+            {
+                weather = WeatherCondition.Cool;
+            }
             else
             {
-                if (forecast.Temperature.Value > -9 && 8 < forecast.Temperature.Value)
-                {
-                    weather = WeatherCondition.Cold;
-                }
-                if (forecast.Temperature.Value > 8 && 14 < forecast.Temperature.Value)
-                {
-                    weather = WeatherCondition.Cool;
-                }
-                else
-                {
-                    weather = WeatherCondition.Warm;
-                }
+                weather = WeatherCondition.Warm;
             }
+                //else
+                //{
+                //    weather = WeatherCondition.NotEvaluated;
+                //}
+            
             return weather;
         }
 
@@ -382,16 +384,6 @@
             }
             return others;
         }
-
-
-       
-
-        //private WeatherCondition GetWeatherCondition(CurrentForecast forecast)
-        //{
-        //    WeatherCondition weatherCondition;
-
-        //    if (forecast.Rain)
-        //}
 
     }
 }
