@@ -9,6 +9,16 @@
     {
         StrongWinds,
         LightWinds,
-        Calm
+        Calm,
+        Rain,
+        NoRain,
+        Snow,
+        NoSnow,
+        Freezing,
+        Cold,
+        Cool,
+        Warm,
+        NotEvaluated
+
     }
 }

@@ -249,6 +249,44 @@
                     weather = WeatherCondition.Calm;
                 }
             }
+
+            if (forecast.Rain.Value >= 20)
+            {
+                weather = WeatherCondition.Rain;
+            }
+            else
+            {
+                weather = WeatherCondition.NoRain;
+            }
+
+            if (forecast.Snow.Value >= 20)
+            {
+                weather = WeatherCondition.Snow;
+            }
+            else
+            {
+                weather = WeatherCondition.NoSnow;
+            }
+
+            if (forecast.Temperature.Value < -10)
+            {
+                weather = WeatherCondition.Freezing;
+            }
+            else
+            {
+                if (forecast.Temperature.Value > -9 && 8 < forecast.Temperature.Value)
+                {
+                    weather = WeatherCondition.Cold;
+                }
+                if (forecast.Temperature.Value > 8 && 14 < forecast.Temperature.Value)
+                {
+                    weather = WeatherCondition.Cool;
+                }
+                else
+                {
+                    weather = WeatherCondition.Warm;
+                }
+            }
             return weather;
         }
 
@@ -284,7 +322,7 @@
         {
             Others others;
             
-            if (forecast.RealFeelTemperature.Value > 15 
+            if (forecast.RealFeelTemperature.Value >= 15 
                 && forecast.IsDaylight == true 
                 && forecast.Visibility.Value > 8 
                 && forecast.PreciptationProbability < 30 
