@@ -7,12 +7,8 @@
 
     public enum WeatherCondition
     {
-        WindyWithGust,
-        WindyWithNoGust,
-        GustWithNoWind,
-        CalmWinds,
-        Windy,
-        Gust,
+        StrongWinds,
+        LightWinds,
         Calm
     }
 }

@@ -233,36 +233,20 @@
         {
             WeatherCondition weather;
 
-            if (forecast.WindGust.Speed.Value > 15 && forecast.Wind.Speed.Value > 12)
+            if (forecast.WindGust.Speed.Value >= 25 && forecast.Wind.Speed.Value >= 20)
             {
-                weather = WeatherCondition.WindyWithGust;
+                weather = WeatherCondition.StrongWinds;
             }
             else
             {
-                if (forecast.WindGust.Speed.Value < 5 && forecast.Wind.Speed.Value > 12)
+                if (forecast.WindGust.Speed.Value >= 10 && 24 <= forecast.WindGust.Speed.Value
+                    && forecast.Wind.Speed.Value >= 10 && 24 <= forecast.Wind.Speed.Value)
                 {
-                    weather = WeatherCondition.Windy;
+                    weather = WeatherCondition.LightWinds;
                 }
                 else
-                {
-                    weather = WeatherCondition.Gust;
-                }
-            }
-
-            if (forecast.WindGust.Speed.Value > 15 && forecast.Wind.Speed.Value < 5)
-            {
-                weather = WeatherCondition.GustWithNoWind;
-            }
-            else
-            {
-                if (forecast.WindGust.Speed.Value < 5 && forecast.Wind.Speed.Value < 5)
                 {
                     weather = WeatherCondition.Calm;
-                }
-                else
-                {
-                    weather = WeatherCondition.CalmWinds;
-
                 }
             }
             return weather;
@@ -273,25 +257,25 @@
         {
             Probabilities probabilities;
 
-            if (forecast.Rain.Value > 20)
+            if (forecast.RainProbability> 40)
             {
                 probabilities = Probabilities.Rain;
             }
-            if (forecast.Snow.Value > 20)
+            if (forecast.SnowProbability > 40)
             {
                 probabilities = Probabilities.Snow;
             }
-            if (forecast.Ice.Value > 20)
+            if (forecast.IceProbability > 40)
             {
                 probabilities = Probabilities.Ice;
             }
-            if (forecast.Snow.Value > 20 && 10 < forecast.Rain.Value && forecast.Rain.Value < 20)
+            if (forecast.RainProbability> 40 && 10 < forecast.RainProbability && forecast.Temperature.Value > -3 && 3 < forecast.Temperature.Value)
             {
                 probabilities = Probabilities.Slippery;
             }
             else
             {
-                probabilities = Probabilities.Normal;
+                probabilities = Probabilities.NotEvaluated;
             }
             return probabilities;
         }
@@ -332,6 +316,27 @@
                 && forecast.Visibility.Value < 5)
             {
                 others = Others.PoorDrivingConditions;
+            }
+            else
+            {
+                others = Others.NotEvaluated;
+            }
+
+            if (forecast.Temperature.Value < -10
+                || forecast.Snow.Value > 10
+                && forecast.Temperature.Value < -10)
+            {
+                others = Others.PreferableToDrive;
+            }
+            else
+            {
+                others = Others.NotEvaluated;
+            }
+
+            if (forecast.Temperature.Value > -6 && -1 < forecast.Temperature.Value
+                && forecast.Snow.Value > 1 && 6 < forecast.Snow.Value)
+            {
+                others = Others.GoodForSki;
             }
             else
             {

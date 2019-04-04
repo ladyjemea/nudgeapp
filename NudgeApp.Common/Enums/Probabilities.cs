@@ -12,6 +12,7 @@
        Ice,
        Gust,
        Normal,
-       Slippery
+       Slippery,
+       NotEvaluated
     }
 }

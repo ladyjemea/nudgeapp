@@ -12,9 +12,6 @@
         PoorDrivingConditions,
         PreferableToDrive,
         GoodForSki,
-        TooMuchSnow,
-        PerfectForHikes,
-        BadWeatherConditions,
         NotEvaluated
        
     }
