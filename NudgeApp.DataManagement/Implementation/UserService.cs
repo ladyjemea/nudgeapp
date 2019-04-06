@@ -103,11 +103,6 @@
             return true;
         }
 
-        public void GetUser()
-        {
-            throw new NotImplementedException();
-        }
-
         public Guid VerifyGoogle(string id, string tokenId)
         {
             var client = new RestClient("https://www.googleapis.com");
