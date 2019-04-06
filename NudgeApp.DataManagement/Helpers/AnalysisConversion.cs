@@ -130,6 +130,65 @@ namespace NudgeApp.DataManagement.Helpers
             return weather;
         }
 
+        public WeatherCondition GetWeatherCondition(CurrentForecast forecast)
+        {
+            WeatherCondition weather;
+
+            if (forecast.Wind.Speed.Value >= 20)
+            {
+                weather = WeatherCondition.StrongWinds;
+            }
+            else
+            {
+                if (forecast.Wind.Speed.Value >= 10 && 24 >= forecast.Wind.Speed.Value)
+                {
+                    weather = WeatherCondition.LightWinds;
+                }
+                else
+                {
+                    weather = WeatherCondition.Calm;
+                }
+            }
+
+            if (forecast.HasPrecipitation)
+            {
+                weather = WeatherCondition.Rain;
+            }
+            else
+            {
+                weather = WeatherCondition.NoRain;
+            }
+
+            if (forecast.HasSnow)
+            {
+                weather = WeatherCondition.Snow;
+            }
+            else
+            {
+                weather = WeatherCondition.NoSnow;
+            }
+
+            if (forecast.Temperature.Metric.Value < -10)
+            {
+                weather = WeatherCondition.Freezing;
+            }
+
+            if (forecast.Temperature.Metric.Value >= -10 && 8 >= forecast.Temperature.Metric.Value)
+            {
+                weather = WeatherCondition.Cold;
+            }
+            else if (forecast.Temperature.Metric.Value > 8 && 14 > forecast.Temperature.Metric.Value)
+            {
+                weather = WeatherCondition.Cool;
+            }
+            else
+            {
+                weather = WeatherCondition.Warm;
+            }
+
+            return weather;
+        }
+
         public Probabilities GetProbabilities(HourlyForecast forecast)
         {
             Probabilities probabilities;
@@ -149,6 +208,21 @@ namespace NudgeApp.DataManagement.Helpers
             if (forecast.RainProbability > 40 && 10 < forecast.RainProbability && forecast.Temperature.Value > -3 && 3 < forecast.Temperature.Value)
             {
                 probabilities = Probabilities.Slippery;
+            }
+            else
+            {
+                probabilities = Probabilities.NotEvaluated;
+            }
+            return probabilities;
+        }
+
+        public Probabilities GetProbabilities(CurrentForecast forecast)
+        {
+            Probabilities probabilities;
+
+            if (forecast.HasPrecipitation)
+            {
+                probabilities = Probabilities.Rain;
             }
             else
             {

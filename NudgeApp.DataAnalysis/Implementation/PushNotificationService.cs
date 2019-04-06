@@ -67,7 +67,7 @@
                             new NotificationActions
                             {
                                 action = "explore",
-                                title = "Go to the site"
+                                title = "Accept Nudege"
                             }
                         }.ToArray()
                 }
