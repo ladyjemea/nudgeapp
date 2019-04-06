@@ -2,7 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Newtonsoft.Json;
+    using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
     using WebPush;
 
@@ -18,33 +20,49 @@
             this.PushNotificationRepository = pushNotificationRepository;
         }
 
+        public void PushToUser(Guid userId, string title, string message)
+        {
+            var userSubscriptions = this.PushNotificationRepository.GetAll().Where(p=> p.UserId == userId).ToList();
+
+            foreach (var subscription in userSubscriptions)
+            {
+                this.SendNotification(subscription, title, message);
+            }
+        }
+
         public void PushAll()
         {
             var subscriptions = this.PushNotificationRepository.GetAll();
 
             foreach (var sub in subscriptions)
             {
-                var pushEndpoint = sub.Endpoint;
-                var p256dh = sub.P256DH;
-                var auth = sub.Auth;
+                this.SendNotification(sub, "NudgeApp News", "It is a good day to have some fun in the sun!");               
+            }
+        }
 
-                var subject = "mailto:ccr008@uit.no";
+        private void SendNotification(PushNotificationEntity pushNotificationEntity, string title, string message)
+        {
+            var pushEndpoint = pushNotificationEntity.Endpoint;
+            var p256dh = pushNotificationEntity.P256DH;
+            var auth = pushNotificationEntity.Auth;
 
-                var subscription = new PushSubscription(pushEndpoint, p256dh, auth);
-                var vapidDetails = new VapidDetails(subject, PushNotificationService.publicKey, PushNotificationService.privateKey);
-                //var gcmAPIKey = @"[your key here]";
-                var notificationPayload = new NotificationPayload
+            var subject = "mailto:ccr008@uit.no";
+
+            var subscription = new PushSubscription(pushEndpoint, p256dh, auth);
+            var vapidDetails = new VapidDetails(subject, PushNotificationService.publicKey, PushNotificationService.privateKey);
+            //var gcmAPIKey = @"[your key here]";
+            var notificationPayload = new NotificationPayload
+            {
+                notification = new Notification
                 {
-                    notification = new Notification
+                    title = title,
+                    body = message,
+                    data = new NotificationData
                     {
-                        title = "NudgeApp News",
-                        body = "It is a good day to have some fun in the sun!",
-                        data = new NotificationData
-                        {
-                            dateOfArrival = DateTime.Now,
-                            PrimaryKey = 1
-                        },
-                        actions = new List<NotificationActions>
+                        dateOfArrival = DateTime.Now,
+                        PrimaryKey = 1
+                    },
+                    actions = new List<NotificationActions>
                         {
                             new NotificationActions
                             {
@@ -52,22 +70,21 @@
                                 title = "Go to the site"
                             }
                         }.ToArray()
-                    }
-                };
-
-
-                string json = JsonConvert.SerializeObject(notificationPayload);
-
-                var webPushClient = new WebPushClient();
-                try
-                {
-                    webPushClient.SendNotification(subscription, json, vapidDetails);
-                    //webPushClient.SendNotification(subscription, "payload", gcmAPIKey);
                 }
-                catch (WebPushException exception)
-                {
-                    Console.WriteLine("Http STATUS code" + exception.StatusCode);
-                }
+            };
+
+
+            string json = JsonConvert.SerializeObject(notificationPayload);
+
+            var webPushClient = new WebPushClient();
+            try
+            {
+                webPushClient.SendNotification(subscription, json, vapidDetails);
+                //webPushClient.SendNotification(subscription, "payload", gcmAPIKey);
+            }
+            catch (WebPushException exception)
+            {
+                Console.WriteLine("Http STATUS code" + exception.StatusCode);
             }
         }
 
@@ -93,7 +110,7 @@
 
         private class NotificationPayload
         {
-            public Notification notification { get; set; }   
+            public Notification notification { get; set; }
         }
     }
 }

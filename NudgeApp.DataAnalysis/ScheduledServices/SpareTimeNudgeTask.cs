@@ -1,6 +1,8 @@
 ﻿namespace NudgeApp.DataAnalysis.ScheduledServices
 {
     using Microsoft.Extensions.DependencyInjection;
+    using NudgeApp.Common.Enums;
+    using NudgeApp.DataAnalysis.Implementation;
     using NudgeApp.DataAnalysis.ScheduledServices.TaskScheduler;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
     using NudgeApp.DataManagement.Implementation.Interfaces;
@@ -13,18 +15,23 @@
 
         protected override string Schedule => "*/1 * * * * *";
 
-        public override Task ProcessInScope(IServiceProvider serviceProvider)
+        public override async Task ProcessInScope(IServiceProvider serviceProvider)
         {
             var weatherService = serviceProvider.GetService<IWeatherService>();
-            weatherService.GetCurrentForecast();
+            var forecast = await weatherService.GetCurrentForecast();
 
-            var userLogic = serviceProvider.GetService<IUserService>();
-            userLogic.GetUser();
+            if (forecast.WeatherCondition == WeatherCondition.StrongWinds)
+            {
+                var userLogic = serviceProvider.GetService<IUserService>();
+                var pushNotificationService = serviceProvider.GetService<IPushNotificationService>();
 
-            return Task.CompletedTask;
+                var userIds = userLogic.GetAllUserIds();
 
-
-
+                foreach (var userId in userIds)
+                {
+                    pushNotificationService.PushToUser(userId, "blah blah", "Go out!");
+                }
+            }
         }
     }
 }
