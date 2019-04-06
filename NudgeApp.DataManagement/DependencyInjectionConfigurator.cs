@@ -4,6 +4,7 @@
     using NudgeApp.DataManagement.ExternalApi.Bus;
     using NudgeApp.DataManagement.ExternalApi.Weather;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
+    using NudgeApp.DataManagement.Helpers;
     using NudgeApp.DataManagement.Implementation;
     using NudgeApp.DataManagement.Implementation.Interfaces;
 
@@ -17,6 +18,7 @@
             services.AddSingleton<INudgeService, NudgeService>();
             services.AddSingleton<IPushNotificationLogic, PushNotificationLogic>();                        
             services.AddSingleton<IMemoryCacheService, MemoryCacheService>();                        
+            services.AddSingleton<IAnalysisConversion, AnalysisConversion>();                        
         }
     }
 }

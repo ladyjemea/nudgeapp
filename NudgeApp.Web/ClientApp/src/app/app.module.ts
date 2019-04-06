@@ -19,7 +19,6 @@ import { MainaccessComponent } from './components/mainaccess/mainaccess';
 //import { CalendarComponent } from './components/calendar/calendar';
 import { MainDisplayComponent } from './components/maindisplay/maindisplay';
 import { ServiceWorkerModule } from '@angular/service-worker';
-
 import { JwtInterceptor } from './services/JwtInterceptor';
 
 export function getAuthServiceConfigs() {
