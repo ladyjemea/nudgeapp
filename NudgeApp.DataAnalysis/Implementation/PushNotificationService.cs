@@ -22,11 +22,11 @@
 
         public void PushToUser(Guid userId, string title, string message)
         {
-            var userSubscriptions = this.PushNotificationRepository.GetAll().Where(p=> p.UserId == userId).ToList();
+            var userSubscriptions = this.PushNotificationRepository.GetAll().Where(p => p.UserId == userId).ToList();
 
             foreach (var subscription in userSubscriptions)
             {
-                this.SendNotification(subscription, title, message);
+               // this.SendNotification(subscription, title, message);
             }
         }
 
@@ -36,11 +36,11 @@
 
             foreach (var sub in subscriptions)
             {
-                this.SendNotification(sub, "NudgeApp News", "It is a good day to have some fun in the sun!");               
+               //s this.SendNotification(sub, "NudgeApp News", "It is a good day to have some fun in the sun!");
             }
         }
 
-        private void SendNotification(PushNotificationEntity pushNotificationEntity, string title, string message)
+        private void SendNotification(PushNotificationEntity pushNotificationEntity, string title, string message, string link)
         {
             var pushEndpoint = pushNotificationEntity.Endpoint;
             var p256dh = pushNotificationEntity.P256DH;
@@ -66,8 +66,8 @@
                         {
                             new NotificationActions
                             {
-                                action = "explore",
-                                title = "Accept Nudege"
+                                action = link,
+                                title = "Accept Nudege",
                             }
                         }.ToArray()
                 }
@@ -92,6 +92,7 @@
         {
             public string action { get; set; }
             public string title { get; set; }
+            
         }
 
         private class NotificationData

@@ -231,6 +231,15 @@ namespace NudgeApp.DataManagement.Helpers
             return probabilities;
         }
 
+        //public Others GetOthers(CurrentForecast forecast)
+        //{
+        //    Others others;
+        //    if (forecast.RealFeelTemperature.Metric.Value >= 15
+        //        && forecast.IsDayTime == true
+        //        && forecast.HasPrecipitation
+        //        && forecast.Wind.Equals)
+        //}
+
         public Others GetOthers(HourlyForecast forecast)
         {
             Others others;
@@ -242,7 +251,7 @@ namespace NudgeApp.DataManagement.Helpers
                 && forecast.Wind.Speed.Value < 9
                 && forecast.WindGust.Speed.Value < 9)
             {
-                others = Others.ADayAtTheParkOrWalking;
+                others = Others.ADayAtThePark;
             }
             else
             {
@@ -284,7 +293,7 @@ namespace NudgeApp.DataManagement.Helpers
                 others = Others.NotEvaluated;
             }
 
-            if (forecast.Temperature.Value > -6 && -1 < forecast.Temperature.Value
+            if (forecast.Temperature.Value > -6 && -1 > forecast.Temperature.Value // check if the preceipitation is snow and if the snow level is betweem 1 and 6
                 && forecast.Snow.Value > 1 && 6 < forecast.Snow.Value)
             {
                 others = Others.GoodForSki;

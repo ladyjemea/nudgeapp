@@ -7,11 +7,13 @@
     
     public enum Others
     {
-        ADayAtTheParkOrWalking,
+        ADayAtThePark,
+        GoodForWalking,
         SlipperyForDriving,
         PoorDrivingConditions,
         PreferableToDrive,
         GoodForSki,
+        IgnoreThis,
         NotEvaluated
        
     }
