@@ -48,6 +48,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\components\calendar\calendar.ts" />
     <None Remove="ClientApp\src\app\components\maindisplay\maindisplay.ts" />
+    <None Remove="ClientApp\src\app\services\CalendarService.ts" />
     <None Remove="ClientApp\src\app\services\JwtInterceptor.ts" />
     <None Remove="ClientApp\src\app\services\NudgeService.ts" />
     <None Remove="ClientApp\src\app\services\SubscriptionService.ts" />
@@ -62,6 +63,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\components\calendar\calendar.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\maindisplay\maindisplay.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\CalendarService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\JwtInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\NudgeService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\SubscriptionService.ts" />

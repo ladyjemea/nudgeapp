@@ -12,7 +12,7 @@ export class SubscriptionService {
 
   addSubscription(subscription: Subscription): void {
 
-    this.http.post('http://localhost:5000/Api/PushNotification/Subscribe', subscription , { responseType: 'text' }).pipe()
+    this.http.post('Api/PushNotification/Subscribe', subscription , { responseType: 'text' }).pipe()
       .subscribe(result => { }, error => console.error(error));
 
   }

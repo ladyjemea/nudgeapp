@@ -5,9 +5,16 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes, Route } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { SocialLoginModule, AuthServiceConfig, GoogleLoginProvider } from "angular-6-social-login";
-
 import { AgmCoreModule } from '@agm/core';
+
+import {
+  GoogleApiModule,
+  GoogleApiService,
+  GoogleAuthService,
+  NgGapiClientConfig,
+  NG_GAPI_CONFIG,
+  GoogleApiConfig
+} from "ng-gapi";
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -21,15 +28,13 @@ import { MainDisplayComponent } from './components/maindisplay/maindisplay';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { JwtInterceptor } from './services/JwtInterceptor';
 
-export function getAuthServiceConfigs() {
-  let config = new AuthServiceConfig(
-    [
-      {
-        id: GoogleLoginProvider.PROVIDER_ID,
-        provider: new GoogleLoginProvider("600101543512-tnhs33cfbs09rqd6no8tajg5ooccoa0q.apps.googleusercontent.com")
-      }]);
-  return config;
-}
+let gapiClientConfig: NgGapiClientConfig = {
+  client_id: "600101543512-tnhs33cfbs09rqd6no8tajg5ooccoa0q.apps.googleusercontent.com",
+  discoveryDocs: ["https://analyticsreporting.googleapis.com/$discovery/rest?version=v4"],
+  scope: [
+    "https://www.googleapis.com/auth/calendar.readonly"
+  ].join(" ")
+};
 
 //const appRoutes: Routes = [
 //  {
@@ -51,6 +56,10 @@ export function getAuthServiceConfigs() {
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    GoogleApiModule.forRoot({
+      provide: NG_GAPI_CONFIG,
+      useValue: gapiClientConfig
+    }),
     HttpClientModule,
     FormsModule,
     CommonModule,
@@ -73,7 +82,6 @@ export function getAuthServiceConfigs() {
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: AuthServiceConfig, useFactory: getAuthServiceConfigs }
   ],
   bootstrap: [AppComponent]
 })

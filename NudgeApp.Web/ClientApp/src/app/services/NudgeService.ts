@@ -16,7 +16,7 @@ export class NudgeService {
     nudgeData.transportationType = type;
     nudgeData.forecast = forecast;
     nudgeData.trip = trip;
-    this.http.post('http://localhost:5000/Nudge/AddNudge', nudgeData, { responseType: 'text' }).subscribe(result => { });
+    this.http.post('Nudge/AddNudge', nudgeData, { responseType: 'text' }).subscribe(result => { });
   }
 }
 

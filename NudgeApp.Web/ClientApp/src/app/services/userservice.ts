@@ -14,6 +14,6 @@ export class UserService {
   }
 
   createuser(username: string, password: string, name: string, email: string, address: string, selectedTransporationType: TransporationType): Observable<string> {
-    return this.http.get('http://localhost:5000/User/register?username=' + username + '&password=' + password + '&name=' + name + '&email=' + email + '&address=' + address + '&travelType=' + selectedTransporationType, { responseType: 'text' });
+    return this.http.get('User/register?username=' + username + '&password=' + password + '&name=' + name + '&email=' + email + '&address=' + address + '&travelType=' + selectedTransporationType, { responseType: 'text' });
   }
 }
