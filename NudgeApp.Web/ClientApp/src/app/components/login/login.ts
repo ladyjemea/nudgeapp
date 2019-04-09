@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs';
 import { AuthenticationService } from '../../services/AuthenticationService';
-import { AuthService, GoogleLoginProvider } from 'angular-6-social-login';
 import { Router } from '@angular/router';
 import { CalendarService } from '../../services/CalendarService';
 
