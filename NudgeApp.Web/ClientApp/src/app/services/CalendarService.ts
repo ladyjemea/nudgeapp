@@ -16,12 +16,12 @@ export class CalendarService {
           gapi.client.calendar.events.list({ 'calendarId': 'primary' })
             .execute((resp) => {
               var events: Array<Event> = [];
-
               resp.result.items.forEach((event) => {
                 var ev = <Event>{};
                 ev.Start = event.start;
                 ev.End = event.end;
                 ev.Location = event.location;
+                ev.Name = event.summary;
                 events.push(ev);
               });
 
@@ -36,7 +36,8 @@ export class CalendarService {
 export interface Event {
   Location: string,
   Start: Date,
-  End: Date
+  End: Date,
+  Name: string
 }
 
 

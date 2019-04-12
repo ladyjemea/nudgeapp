@@ -4,17 +4,15 @@ import { HttpClient } from '@angular/common/http';
 import 'rxjs';
 import { AuthenticationService } from '../../services/AuthenticationService';
 import { Router } from '@angular/router';
-import { CalendarService } from '../../services/CalendarService';
 
 @Component({
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
-  providers: [AuthenticationService, CalendarService]
+  providers: [AuthenticationService]
 })
 export class LoginComponent {
 
-  constructor(private authenticationService: AuthenticationService, private calendarService: CalendarService,
-    private router: Router, private ngZone: NgZone) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router, private ngZone: NgZone) { }
 
   public loginUser(form: NgForm) {
     this.authenticationService.login(form.value.username, form.value.password).subscribe((result) =>
