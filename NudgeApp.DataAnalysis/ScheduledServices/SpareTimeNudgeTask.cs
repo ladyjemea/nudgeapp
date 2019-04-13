@@ -13,7 +13,7 @@
     {
         public SpareTimeNudgeTask(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory) { }
 
-        protected override string Schedule => " * */1 * * * *";
+        protected override string Schedule => " * * * * */1 *";
 
         public override async Task ProcessInScope(IServiceProvider serviceProvider)
         {
@@ -44,6 +44,19 @@
                 {
                     pushNotificationService.PushToUser(userId, "Nudge of the day", "It's Rainy");
                 }
+            }
+            else
+            {
+                var userLogic = serviceProvider.GetService<IUserService>();
+                var pushNotificationService = serviceProvider.GetService<IPushNotificationService>();
+
+                var userIds = userLogic.GetAllUserIds();
+
+                foreach (var userId in userIds)
+                {
+                    pushNotificationService.PushToUser(userId, "Nudge of the day", "Hello");
+                }
+                
             }
         }
     }

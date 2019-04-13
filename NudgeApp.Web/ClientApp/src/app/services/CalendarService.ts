@@ -5,42 +5,42 @@ import { Router } from '@angular/router';
 import {  GoogleApiService } from 'ng-gapi';
 import { Request } from '@angular/http';
 
-@Injectable()
-export class CalendarService {
-  constructor(private gapiService: GoogleApiService) { }
+//@Injectable()
+//export class CalendarService {
+//  constructor(private gapiService: GoogleApiService) { }
 
-  public GetEvents(callback: IEventsCallback) {
-    this.gapiService.onLoad().subscribe(() => {
-      gapi.load('client', () => {
-        gapi.client.load('calendar', "v3", () => {
-          gapi.client.calendar.events.list({ 'calendarId': 'primary' })
-            .execute((resp) => {
-              var events: Array<Event> = [];
-              resp.result.items.forEach((event) => {
-                var ev = <Event>{};
-                ev.Start = event.start;
-                ev.End = event.end;
-                ev.Location = event.location;
-                ev.Name = event.summary;
-                events.push(ev);
-              });
+//  public GetEvents(callback: IEventsCallback) {
+//    this.gapiService.onLoad().subscribe(() => {
+//      gapi.load('client', () => {
+//        gapi.client.load('calendar', "v3", () => {
+//          gapi.client.calendar.events.list({ 'calendarId': 'primary' })
+//            .execute((resp) => {
+//              var events: Array<Event> = [];
+//              resp.result.items.forEach((event) => {
+//                var ev = <Event>{};
+//                ev.Start = event.start;
+//                ev.End = event.end;
+//                ev.Location = event.location;
+//                ev.Name = event.summary;
+//                events.push(ev);
+//              });
 
-              callback(events);
-            });
-        });
-      });
-    });
-  }
-}
+//              callback(events);
+//            });
+//        });
+//      });
+//    });
+//  }
+//}
 
-export interface Event {
-  Location: string,
-  Start: Date,
-  End: Date,
-  Name: string
-}
+//export interface Event {
+//  Location: string,
+//  Start: Date,
+//  End: Date,
+//  Name: string
+//}
 
 
-export interface IEventsCallback {
-  (results: Array<Event>): void;
-}
+//export interface IEventsCallback {
+//  (results: Array<Event>): void;
+//}
