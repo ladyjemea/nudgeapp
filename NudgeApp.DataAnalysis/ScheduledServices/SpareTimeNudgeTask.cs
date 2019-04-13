@@ -17,7 +17,7 @@
 
         public override async Task ProcessInScope(IServiceProvider serviceProvider)
         {
-            /*var weatherService = serviceProvider.GetService<IWeatherService>();
+            var weatherService = serviceProvider.GetService<IWeatherService>();
             var forecast = await weatherService.GetCurrentForecast();
 
             if (forecast.WeatherCondition == WeatherCondition.StrongWinds)
@@ -44,7 +44,7 @@
                 {
                     pushNotificationService.PushToUser(userId, "Nudge of the day", "It's Rainy");
                 }
-            }*/
+            }
         }
     }
 }

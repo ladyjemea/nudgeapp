@@ -14,6 +14,7 @@
         PreferableToDrive,
         GoodForSki,
         IgnoreThis,
+        PoorWeatherConditions,
         NotEvaluated
        
     }

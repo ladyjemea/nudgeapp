@@ -216,29 +216,6 @@ namespace NudgeApp.DataManagement.Helpers
             return probabilities;
         }
 
-        public Probabilities GetProbabilities(CurrentForecast forecast)
-        {
-            Probabilities probabilities;
-
-            if (forecast.HasPrecipitation)
-            {
-                probabilities = Probabilities.Rain;
-            }
-            else
-            {
-                probabilities = Probabilities.NotEvaluated;
-            }
-            return probabilities;
-        }
-
-        //public Others GetOthers(CurrentForecast forecast)
-        //{
-        //    Others others;
-        //    if (forecast.RealFeelTemperature.Metric.Value >= 15
-        //        && forecast.IsDayTime == true
-        //        && forecast.HasPrecipitation
-        //        && forecast.Wind.Equals)
-        //}
 
         public Others GetOthers(HourlyForecast forecast)
         {
@@ -305,6 +282,76 @@ namespace NudgeApp.DataManagement.Helpers
             return others;
         }
 
+        public Probabilities GetProbabilities(CurrentForecast forecast)
+        {
+            Probabilities probabilities;
+
+            if (forecast.HasPrecipitation)
+            {
+                probabilities = Probabilities.Rain;
+            }
+            else
+            {
+                probabilities = Probabilities.NotEvaluated;
+            }
+            return probabilities;
+        }
+
+        public Others GetOthers(CurrentForecast forecast)
+        {
+            Others others;
+            if (forecast.RealFeelTemperature.Metric.Value >= 15
+                && forecast.HasPrecipitation == false
+                && forecast.HasSnow == false
+                && forecast.Wind.Speed.Value <= 10
+                && forecast.IsDayTime == true)
+            {
+                others = Others.ADayAtThePark;
+            }
+            else if (forecast.RealFeelTemperature.Metric.Value >= 10
+                && forecast.HasPrecipitation == false
+                && forecast.Visibility.Metric.Value > 40
+                && forecast.Wind.Speed.Value <= 20)
+            {
+                others = Others.GoodForWalking;
+            }
+            else if (forecast.Temperature.Metric.Value >= -3 && 3 <= forecast.Temperature.Metric.Value
+                && forecast.Wind.Speed.Value >= 20
+                && forecast.HasPrecipitation == true
+                && forecast.Visibility.Metric.Value < 30)
+            {
+                others = Others.PoorDrivingConditions;
+            }
+            else if (forecast.Temperature.Metric.Value <= -10
+                || forecast.HasPrecipitation == true)
+            {
+                others = Others.PreferableToDrive;
+            }
+            else if (forecast.Temperature.Metric.Value >= -6 && 6 <= forecast.Temperature.Metric.Value
+                && forecast.HasSnow == true)
+            {
+                others = Others.GoodForSki;
+            }
+            else if (forecast.Temperature.Metric.Value >= -3 && 3 <= forecast.Temperature.Metric.Value
+                || forecast.HasPrecipitation == true)
+            {
+                others = Others.SlipperyForDriving;
+            }
+            else if (forecast.Temperature.Metric.Value < -10
+                && forecast.HasSnow == true
+                && forecast.Visibility.Metric.Value < 20
+                && forecast.Wind.Speed.Value > 40)
+            {
+                others = Others.PoorWeatherConditions;
+            }
+            else
+            {
+                others = Others.IgnoreThis;
+            }
+            return others;
+        }
+
+        
 
     }
 }

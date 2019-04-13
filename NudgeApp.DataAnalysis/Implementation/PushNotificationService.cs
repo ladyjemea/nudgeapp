@@ -36,7 +36,7 @@
 
             foreach (var sub in subscriptions)
             {
-               //s this.SendNotification(sub, "NudgeApp News", "It is a good day to have some fun in the sun!");
+               // this.SendNotification(sub, "NudgeApp News", "It is a good day to have some fun in the sun!");
             }
         }
 
