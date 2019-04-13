@@ -44,7 +44,6 @@ export class MainaccessComponent implements OnInit {
     });
 
   }
-  //continue from here tomorrow. continue from video
 
   constructor(
     private router: Router, private swPush: SwPush,
