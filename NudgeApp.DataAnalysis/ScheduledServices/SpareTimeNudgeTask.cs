@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.DataAnalysis.ScheduledServices
 {
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using NudgeApp.Common.Enums;
     using NudgeApp.DataAnalysis.Implementation;
     using NudgeApp.DataAnalysis.ScheduledServices.TaskScheduler;
@@ -9,15 +10,24 @@
     using System;
     using System.Threading.Tasks;
 
-    public class SpareTimeNudgeTask : ScheduledProcessor
+    public class SpareTimeNudgeTask //: ScheduledProcessor
     {
-        public SpareTimeNudgeTask(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory) { }
-
-        protected override string Schedule => " * */1 * * * *";
-
-        public override async Task ProcessInScope(IServiceProvider serviceProvider)
+        private readonly ILogger<SpareTimeNudgeTask> Logger;
+        /*
+        public SpareTimeNudgeTask(IServiceScopeFactory serviceScopeFactory, ILogger<SpareTimeNudgeTask> logger) : base(serviceScopeFactory)
         {
-            /*var weatherService = serviceProvider.GetService<IWeatherService>();
+            this.Logger = logger;
+        }
+
+        protected override string Schedule => "* 1 * * * *";
+
+        public override Task ProcessInScope(IServiceProvider serviceProvider)
+        {
+            return Task.CompletedTask;
+        }
+        public async Task OldCode(IServiceProvider serviceProvider)
+        {
+            var weatherService = serviceProvider.GetService<IWeatherService>();
             var forecast = await weatherService.GetCurrentForecast();
 
             if (forecast.WeatherCondition == WeatherCondition.StrongWinds)
@@ -44,7 +54,7 @@
                 {
                     pushNotificationService.PushToUser(userId, "Nudge of the day", "It's Rainy");
                 }
-            }*/
-        }
+            }
+        }*/
     }
 }

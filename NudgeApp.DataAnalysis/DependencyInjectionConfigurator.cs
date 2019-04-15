@@ -13,7 +13,7 @@
             services.AddSingleton<IAnalyzer, Analyzer>();
             services.AddSingleton<IPushNotificationService, PushNotificationService>();
 
-            services.AddSingleton<IHostedService, SpareTimeNudgeTask>();
+            services.AddSingleton<IHostedService, ScheduleTask>();
         }
     }
 }
