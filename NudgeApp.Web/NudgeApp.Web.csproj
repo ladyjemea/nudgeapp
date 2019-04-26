@@ -48,6 +48,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\components\feedback\feedback.ts" />
     <None Remove="ClientApp\src\app\components\maindisplay\maindisplay.ts" />
+    <None Remove="ClientApp\src\app\services\EventService.ts" />
     <None Remove="ClientApp\src\app\services\FeedbackService.ts" />
     <None Remove="ClientApp\src\app\services\JwtInterceptor.ts" />
     <None Remove="ClientApp\src\app\services\NudgeService.ts" />
@@ -64,6 +65,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\components\feedback\feedback.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\components\maindisplay\maindisplay.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\EventService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\FeedbackService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\JwtInterceptor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\NudgeService.ts" />
