@@ -26,7 +26,7 @@
 
             foreach (var subscription in userSubscriptions)
             {
-               // this.SendNotification(subscription, title, message);
+               this.SendNotification(subscription, title, message, "www.google.com");
             }
         }
 
