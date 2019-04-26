@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.DataAnalysis.ScheduledServices
 {
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using NudgeApp.Common.Enums;
     using NudgeApp.DataAnalysis.Implementation;
     using NudgeApp.DataAnalysis.ScheduledServices.TaskScheduler;
@@ -11,14 +12,21 @@
 
     public class SpareTimeNudgeTask : ScheduledProcessor
     {
-        public SpareTimeNudgeTask(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory) { }
-
-        protected override string Schedule => " * * * * */1 *";
-
-        public override async Task ProcessInScope(IServiceProvider serviceProvider)
+        private readonly ILogger<SpareTimeNudgeTask> Logger;
+        
+        public SpareTimeNudgeTask(IServiceScopeFactory serviceScopeFactory, ILogger<SpareTimeNudgeTask> logger) : base(serviceScopeFactory)
         {
-           /* var weatherService = serviceProvider.GetService<IWeatherService>();
-            var forecast = await weatherService.GetCurrentForecast();
+            this.Logger = logger;
+        }
+
+        protected override string Schedule => "* * * * * 6";
+
+        public async override Task ProcessInScope(IServiceProvider serviceProvider)
+        {
+            this.Logger.LogInformation($"Spare time nudge running at {DateTime.UtcNow} UTC.");
+
+            var weatherService = serviceProvider.GetService<IWeatherService>();
+            var forecast =  await weatherService.GetCurrentForecast();
 
             if (forecast.WeatherCondition == WeatherCondition.StrongWinds)
             {
@@ -32,7 +40,6 @@
                     pushNotificationService.PushToUser(userId, "Nudge of the day", "Too Windy to go out!");
                 }
             }
-
             else if (forecast.Probabilities == Probabilities.Rain)
             {
                 var userLogic = serviceProvider.GetService<IUserService>();

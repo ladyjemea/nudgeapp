@@ -11,6 +11,7 @@
         private CrontabSchedule _schedule;
         private DateTime _nextRun;
         protected abstract string Schedule { get; }
+
         public ScheduledProcessor(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory)
         {
             _schedule = CrontabSchedule.Parse(Schedule, new CrontabSchedule.ParseOptions {IncludingSeconds = true });

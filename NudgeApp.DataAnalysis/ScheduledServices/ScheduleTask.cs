@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.DataAnalysis.ScheduledServices
 {
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using NudgeApp.DataAnalysis.ScheduledServices.TaskScheduler;
     using System;
     using System.Threading.Tasks;
@@ -18,14 +19,19 @@
      */
     public class ScheduleTask : ScheduledProcessor
     {
+        private readonly ILogger<SpareTimeNudgeTask> Logger;
 
-        public ScheduleTask(IServiceScopeFactory serviceScopeFactory) : base(serviceScopeFactory) { }
+        public ScheduleTask(IServiceScopeFactory serviceScopeFactory, ILogger<SpareTimeNudgeTask> logger) : base(serviceScopeFactory)
+        {
+            this.Logger = logger;
+        }
 
-        protected override string Schedule => "* * * * */1 *";
+        protected override string Schedule => "* */1 * * * *";
 
         public override Task ProcessInScope(IServiceProvider serviceProvider)
         {
-            Console.WriteLine("Processing starts here");
+            this.Logger.LogInformation("Running task " + DateTime.UtcNow);
+
             return Task.CompletedTask;
         }
     }
