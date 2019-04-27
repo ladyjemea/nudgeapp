@@ -7,5 +7,8 @@ namespace NudgeApp.Data.OracleDb.Queries
         void GetAllEntries();
         void Insert(AnonymousNudgeEntity entity);
         void SelectAll();
+        (int, long) Count(QueryFilter queryFilter = null);
+        (int, long) CountDistinct(QueryFilter queryFilter = null);
+        (int, long) ApproxCount(QueryFilter queryFilter = null);
     }
 }

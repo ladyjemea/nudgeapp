@@ -13,6 +13,7 @@ export class CalendarService {
     this.gapiService.onLoad().subscribe(() => {
       gapi.load('client', () => {
         gapi.client.load('calendar', "v3", () => {
+// @ts-ignore
           gapi.client.calendar.events.list({ 'calendarId': 'primary' })
             .execute((resp) => {
               var events: Array<Event> = [];

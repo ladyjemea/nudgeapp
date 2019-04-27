@@ -12,13 +12,14 @@
     {
         public static void Configure(IServiceCollection services)
         {
-            services.AddSingleton<IWeatherService, WeatherService>();
-            services.AddSingleton<IBusService, BusService>();
-            services.AddSingleton<IUserService, UserService>();
-            services.AddSingleton<INudgeService, NudgeService>();
-            services.AddSingleton<IPushNotificationLogic, PushNotificationLogic>();                        
-            services.AddSingleton<IMemoryCacheService, MemoryCacheService>();                        
-            services.AddSingleton<IAnalysisConversion, AnalysisConversion>();                        
+            services.AddTransient<IWeatherService, WeatherService>();
+            services.AddTransient<IBusService, BusService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<INudgeService, NudgeService>();
+            services.AddTransient<IPushNotificationLogic, PushNotificationLogic>();
+            services.AddTransient<IAnalysisConversion, AnalysisConversion>();
+
+            services.AddSingleton<IMemoryCacheService, MemoryCacheService>();
         }
     }
 }

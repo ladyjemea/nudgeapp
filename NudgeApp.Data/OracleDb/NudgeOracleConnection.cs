@@ -11,7 +11,7 @@
 
         public string InsertCommand(string cmd)
         {
-            using (OracleConnection con = new OracleConnection(OnlineConnectionString))
+            using (OracleConnection con = new OracleConnection(ConnectionString))
             {
                 using (OracleCommand command = con.CreateCommand())
                 {
@@ -37,7 +37,7 @@
         public IList<string> SelectCommand(string cmd)
         {
             var result = new List<string>();
-            using (OracleConnection con = new OracleConnection(OnlineConnectionString))
+            using (OracleConnection con = new OracleConnection(ConnectionString))
             {
                 con.Open();
                 using (OracleCommand command = con.CreateCommand())

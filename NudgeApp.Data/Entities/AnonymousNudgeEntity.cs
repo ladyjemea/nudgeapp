@@ -1,5 +1,6 @@
 ﻿namespace NudgeApp.Data.Entities
 {
+    using System;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities.Generic;
 
@@ -13,5 +14,6 @@
         public float Temperature { get; set; }
         public float Wind { get; set; }
         public int PrecipitationProbability { get; set; }
+        public Guid UserId { get; set; }
     }
 }

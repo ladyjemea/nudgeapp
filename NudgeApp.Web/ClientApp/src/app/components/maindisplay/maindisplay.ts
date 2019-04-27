@@ -44,7 +44,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routeSub = this.route.params.subscribe(params => {
-      this.query = params['destination'];
+      this.query = params['destination'] + " , Tromso, Norway";
 
       this.mapsAPILoader.load().then(() => {
 
