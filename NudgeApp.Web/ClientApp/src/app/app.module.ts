@@ -23,7 +23,7 @@ import { LoginComponent } from './components/login/login';
 import { SignupComponent } from './components/signup/signup';
 import { TravelComponent } from './components/travelnow/travelnow';
 import { MainaccessComponent } from './components/mainaccess/mainaccess';
-//import { CalendarComponent } from './components/calendar/calendar';
+//import { FeedbackComponent } from './components/feedback/feedback';
 import { MainDisplayComponent } from './components/maindisplay/maindisplay';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { JwtInterceptor } from './services/JwtInterceptor';
@@ -51,7 +51,7 @@ let gapiClientConfig: NgGapiClientConfig = {
     SignupComponent,
     TravelComponent,
     MainaccessComponent,
-    //CalendarComponent,
+    //FeedbackComponent,
     MainDisplayComponent
   ],
   imports: [
@@ -70,7 +70,7 @@ let gapiClientConfig: NgGapiClientConfig = {
       { path: 'signup', component: SignupComponent },
       { path: 'travelnow', component: TravelComponent },
       { path: 'mainaccess', component: MainaccessComponent },
-      //{ path: 'calendar', component: CalendarComponent },
+      //{ path: 'feedback', component: FeedbackComponent },
       { path: 'search', component: MainDisplayComponent },
       { path: 'maindisplay', component: MainDisplayComponent }
 

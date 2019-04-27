@@ -10,25 +10,23 @@
     using System;
     using System.Threading.Tasks;
 
-    public class SpareTimeNudgeTask //: ScheduledProcessor
+    public class SpareTimeNudgeTask : ScheduledProcessor
     {
         private readonly ILogger<SpareTimeNudgeTask> Logger;
-        /*
+        
         public SpareTimeNudgeTask(IServiceScopeFactory serviceScopeFactory, ILogger<SpareTimeNudgeTask> logger) : base(serviceScopeFactory)
         {
             this.Logger = logger;
         }
 
-        protected override string Schedule => "* 1 * * * *";
+        protected override string Schedule => "* * * * * 6";
 
-        public override Task ProcessInScope(IServiceProvider serviceProvider)
+        public async override Task ProcessInScope(IServiceProvider serviceProvider)
         {
-            return Task.CompletedTask;
-        }
-        public async Task OldCode(IServiceProvider serviceProvider)
-        {
+            this.Logger.LogInformation($"Spare time nudge running at {DateTime.UtcNow} UTC.");
+
             var weatherService = serviceProvider.GetService<IWeatherService>();
-            var forecast = await weatherService.GetCurrentForecast();
+            var forecast =  await weatherService.GetCurrentForecast();
 
             if (forecast.WeatherCondition == WeatherCondition.StrongWinds)
             {
@@ -42,7 +40,6 @@
                     pushNotificationService.PushToUser(userId, "Nudge of the day", "Too Windy to go out!");
                 }
             }
-
             else if (forecast.Probabilities == Probabilities.Rain)
             {
                 var userLogic = serviceProvider.GetService<IUserService>();
@@ -55,6 +52,19 @@
                     pushNotificationService.PushToUser(userId, "Nudge of the day", "It's Rainy");
                 }
             }
-        }*/
+            else
+            {
+                var userLogic = serviceProvider.GetService<IUserService>();
+                var pushNotificationService = serviceProvider.GetService<IPushNotificationService>();
+
+                var userIds = userLogic.GetAllUserIds();
+
+                foreach (var userId in userIds)
+                {
+                    pushNotificationService.PushToUser(userId, "Nudge of the day", "Hello");
+                }
+                
+            }*/
+        }
     }
 }

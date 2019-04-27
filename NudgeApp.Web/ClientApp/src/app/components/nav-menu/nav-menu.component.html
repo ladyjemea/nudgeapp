@@ -21,7 +21,7 @@
             <a class="nav-link" [routerLink]='["/mainaccess"]'>Main</a>
           </li>
           <li *ngIf="LoggedIn" class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link" [routerLink]='["/calendar"]'>Enter Event</a>
+            <a class="nav-link" [routerLink]='["/feedback"]'>Feedback</a>
           </li>
           <li *ngIf="LoggedIn" class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link" (click)='logOut()' [routerLink]='["/"]'>Log out</a>

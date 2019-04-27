@@ -1,6 +1,6 @@
 /// <reference path="../../../../node_modules/@types/googlemaps/index.d.ts"/>
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, NgZone } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -13,17 +13,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TravelVariant } from '../../types/TravelVariant';
 import { TravelService } from '../../services/TravelService';
 import { query } from '@angular/animations';
+import { CalendarService } from 'src/app/services/CalendarService';
+import { EventService } from 'src/app/services/EventService';
 
 
 @Component({
   selector: 'search',
   templateUrl: './mainaccess.html',
   styleUrls: ['./mainaccess.css'],
-  providers: [SwPush, SubscriptionService],
+  providers: [SwPush, SubscriptionService, CalendarService, EventService],
 })
 
 export class MainaccessComponent implements OnInit {
-    [x: string]: any;
+  [x: string]: any;
 
   public _url: string = "/assets/data/streets.json";
   readonly VAPID_PUBLIC_KEY = "BD6e5GSCe5_Y08GgTyWlpFcQIPuMkLrEYfAiNBzrc-vkxPuYN3oeJqdvR3gjIGn_VxNu1G58J9zxbsd6-6FR70Y";
@@ -44,11 +46,16 @@ export class MainaccessComponent implements OnInit {
     });
 
   }
-  //continue from here tomorrow. continue from video
 
   constructor(
     private router: Router, private swPush: SwPush,
-    private subscriptionservice: SubscriptionService, private mapsAPILoader: MapsAPILoader) {
+    private subscriptionservice: SubscriptionService, private mapsAPILoader: MapsAPILoader,
+    private calendarService: CalendarService, private ngZone: NgZone, private eventService: EventService) {
+
+    this.calendarService.GetEvents((events) => {
+      console.log(events);
+      this.eventService.sendEvent(events[0])
+    })
 
     this.subscribeToNotifications();
 
@@ -61,21 +68,11 @@ export class MainaccessComponent implements OnInit {
   ngOnInit() { }
 
   submitSearch(event, formData) {
-    //console.log(event);
-    //console.log(formData.value);
+   
     let query = formData.value["destination"];
     if (query) {
       this.router.navigate(['search', { destination: query }]);
-      //this.router.navigateByUrl('/maindisplay');
-    //this.http.post("/assets/data/streets.json", {})
     }
-  }
-
-  public userLocation(form: NgForm) {
-   
-   // this.router.navigateByUrl('/maindisplay');
-  
-
   }
 
   private subscribeToNotifications() {
