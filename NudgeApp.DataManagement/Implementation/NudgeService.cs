@@ -11,38 +11,26 @@
     public class NudgeService : INudgeService
     {
         private readonly INudgeRepository NudgeRepository;
-        private readonly IWeatherForecastRepository WeatherForecastRepository;
         private readonly IPreferencesRepository PreferencesRepository;
-        private readonly ITripRepository TripRepository;
-        private readonly IAnonymousNudgeOracleRepository AnonymousNudgeOracleRepository;
+        private readonly IOracleNudgeOracleRepository AnonymousNudgeOracleRepository;
         private readonly IAnonymousNudgeRepository AnonymousNudgeRepository;
 
-        public NudgeService(INudgeRepository nudgeRepository, IWeatherForecastRepository weatherForecastRepository, IPreferencesRepository preferencesRepository,
-            ITripRepository tripRepository, IAnonymousNudgeOracleRepository anonymousNudgesRepository, IAnonymousNudgeRepository anonymousNudgeRepository)
+        public NudgeService(INudgeRepository nudgeRepository, IPreferencesRepository preferencesRepository,
+            IOracleNudgeOracleRepository anonymousNudgesRepository, IAnonymousNudgeRepository anonymousNudgeRepository)
         {
             this.NudgeRepository = nudgeRepository;
-            this.WeatherForecastRepository = weatherForecastRepository;
             this.PreferencesRepository = preferencesRepository;
-            this.TripRepository = tripRepository;
             this.AnonymousNudgeOracleRepository = anonymousNudgesRepository;
             this.AnonymousNudgeRepository = anonymousNudgeRepository;
         }
 
         public void AddNudge(Guid userId, TransportationType transportationType, WeatherDto forecast, TripDto trip)
         {
-            var forecastId = this.WeatherForecastRepository.Insert(forecast);
-
-            Guid tripId;
-            if (trip == null)
-                tripId = this.TripRepository.Insert(userId, forecastId);
-            else
-                tripId = this.TripRepository.Insert(trip, userId, forecastId);
-
-            this.NudgeRepository.Insert(transportationType, userId, tripId);
+            this.NudgeRepository.Insert(NudgeResult.Successful, userId, forecast, trip);
 
             try
             {
-                this.AnonymousNudgeOracleRepository.Insert(new AnonymousNudgeEntity
+                this.AnonymousNudgeOracleRepository.Insert(new OracleNudgeEntity
                 {
                     ActualTransportationType = transportationType,
                     PrecipitationProbability = forecast.RawData.PrecipitationProbability,
@@ -69,7 +57,7 @@
             {
                 for (int i = 0; i < 1000; i++)
                 {
-                    var entity = new AnonymousNudgeEntity()
+                    var entity = new OracleNudgeEntity()
                     {
                         ActualTransportationType = (TransportationType)(random.Next() % 3),
                         PrecipitationProbability = random.Next() % 100,
@@ -84,7 +72,7 @@
                     this.AnonymousNudgeRepository.InsertWIthNoSave(entity);
                 }
 
-                var entity2 = new AnonymousNudgeEntity()
+                var entity2 = new OracleNudgeEntity()
                 {
                     ActualTransportationType = (TransportationType)(random.Next() % 3),
                     PrecipitationProbability = random.Next() % 100,

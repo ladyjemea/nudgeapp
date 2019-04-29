@@ -2,10 +2,10 @@
 
 namespace NudgeApp.Data.OracleDb.Queries
 {
-    public interface IAnonymousNudgeOracleRepository
+    public interface IOracleNudgeOracleRepository
     {
         void GetAllEntries();
-        void Insert(AnonymousNudgeEntity entity);
+        void Insert(OracleNudgeEntity entity);
         void SelectAll();
         (int, long) Count(QueryFilter queryFilter = null);
         (int, long) CountDistinct(QueryFilter queryFilter = null);

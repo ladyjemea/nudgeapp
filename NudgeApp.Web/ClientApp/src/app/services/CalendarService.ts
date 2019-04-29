@@ -27,12 +27,15 @@ export class CalendarService {
               });
 
               events = events.filter(event => {
+// @ts-ignore
                 var d = new Date(event.Start.dateTime);
-                return d > Date.now();
+                return d > new Date(Date.now());
               })
 
               events = events.sort((event1, event2) => {
+// @ts-ignore
                 var d1 = new Date(event1.Start.dateTime);
+// @ts-ignore
                 var d2 = new Date(event2.Start.dateTime);
                 if (d1 > d2)
                   return 1;

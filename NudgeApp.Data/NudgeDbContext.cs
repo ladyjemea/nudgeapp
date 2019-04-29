@@ -16,10 +16,8 @@
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<PreferencesEntity> Preferences { get; set; }
         public DbSet<NudgeEntity> Nudges { get; set; }
-        public DbSet<WeatherForecastEntity> WeatherForecast { get; set; }
-        public DbSet<TripEntity> Trips { get; set; }
         public DbSet<PushNotificationEntity> PushNotifications { get; set; }
-        public DbSet<AnonymousNudgeEntity> AnonymousNudges { get; set; }
+        public DbSet<OracleNudgeEntity> AnonymousNudges { get; set; }
 
         public NudgeDbContext() : base() { }
 
@@ -37,9 +35,7 @@
             modelBuilder.Entity<UserEntity>();
             modelBuilder.Entity<PreferencesEntity>();
             modelBuilder.Entity<NudgeEntity>();
-            modelBuilder.Entity<WeatherForecastEntity>();
-            modelBuilder.Entity<TripEntity>();
-            modelBuilder.Entity<AnonymousNudgeEntity>();
+            modelBuilder.Entity<OracleNudgeEntity>();
 
             base.OnModelCreating(modelBuilder);
         }

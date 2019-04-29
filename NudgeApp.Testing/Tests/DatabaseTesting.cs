@@ -12,10 +12,10 @@
     public class DatabaseTesting : IDatabaseTesting
     {
         private readonly ILogger<DatabaseTesting> logger;
-        private readonly IAnonymousNudgeOracleRepository anonymousNudgeOracleRepository;
+        private readonly IOracleNudgeOracleRepository anonymousNudgeOracleRepository;
 
         private readonly Random random;
-        private readonly IList<Guid> ids = new List<Guid>
+        /*private readonly IList<Guid> ids = new List<Guid>
         {
             Guid.Parse("55dc9ccc-a660-40ad-aa5c-98183b083efd"),
             Guid.Parse("219c63bc-3e0c-4111-8eeb-e8870a83fedd"),
@@ -36,10 +36,20 @@
             Guid.Parse("8449ac03-c66b-4780-ad40-bcf76f5a4921"),
             Guid.Parse("c628f6e4-ffd1-4f10-9216-d1772f51c0c9"),
             Guid.Parse("73d7cc5f-88a3-4e7e-b38b-ed767609d1c7"),
+            Guid.Parse("5ab1f384-1f56-4968-a354-e1024194eb36"),
+            Guid.Parse("fef5549d-2752-4088-b4a0-df412e6af1ba"),
+            Guid.Parse("196fdefb-e96c-4947-b9b8-56502ffdb155"),
+            Guid.Parse("6d97278d-a893-46b7-aba6-3feaa2816043"),
+            Guid.Parse("a5f5fd27-4f1f-4334-a71b-5c024b814a3f"),
+            Guid.Parse("24b48ce1-d854-41b6-8d14-29acbbec1502"),
+            Guid.Parse("7c5a12f7-1fd3-45e4-9302-f71951ca7981"),
+            Guid.Parse("c114062d-6ad3-4dab-8959-6c120b659110"),
+            Guid.Parse("4621a163-d289-40b5-a904-229bcd58b45b"),
+            Guid.Parse("050a03ee-e5fb-479b-bdeb-936c060c62d7"),
             Guid.Parse("346a733d-697c-4983-bccd-41ca8778e18f")
         };
-
-        public DatabaseTesting(ILogger<DatabaseTesting> logger, IAnonymousNudgeOracleRepository anonymousNudgeOracleRepository)
+        */
+        public DatabaseTesting(ILogger<DatabaseTesting> logger, IOracleNudgeOracleRepository anonymousNudgeOracleRepository)
         {
             this.logger = logger;
             this.anonymousNudgeOracleRepository = anonymousNudgeOracleRepository;
@@ -58,7 +68,7 @@
 
             stream.WriteLine($"Reference, duration: {count}, {sample_duration}");
             this.ShowResults("Count distinct:", durations, stream);
-            this.ShowResults("Count distinct average:", durationsAprox, stream);
+            this.ShowResults("Count distinct approx:", durationsAprox, stream);
             stream.WriteLine("------------------------------------------------------------------------------------------------------------------------------------------------------------");
             stream.WriteLine();
             stream.Close();
@@ -70,21 +80,21 @@
 
             stream.WriteLine($"Reference, duration: {count}, {sample_duration}");
             this.ShowResults("Count distinct:", durations, stream);
-            this.ShowResults("Count distinct average:", durationsAprox, stream);
+            this.ShowResults("Count distinct approx:", durationsAprox, stream);
             stream.WriteLine("------------------------------------------------------------------------------------------------------------------------------------------------------------");
             stream.WriteLine();
             stream.Close();
         }
 
-        public void InsertRows()
+        public void InsertRows(List<Guid> userIds = null)
         {
             Console.WriteLine("Inserting rows");
-            var z = 15574;
-            for (int j = 1; j < 10; j++)
+            var z = 0;
+            for ( var j = 0; j < 10; j++)
             {
                 int i;
                 for (i = z; i < 200000; i++)
-                    this.anonymousNudgeOracleRepository.Insert(new Data.Entities.AnonymousNudgeEntity
+                    this.anonymousNudgeOracleRepository.Insert(new Data.Entities.OracleNudgeEntity
                     {
                         Id = Guid.NewGuid(),
                         ActualTransportationType = (TransportationType)this.random.Next(4),
@@ -95,11 +105,13 @@
                         Temperature = (float)(this.random.Next(100) + this.random.NextDouble() - 50),
                         UserPreferedTransportationType = (TransportationType)this.random.Next(4),
                         Wind = (float)(this.random.Next(50) + this.random.NextDouble()),
-                        UserId = ids[this.random.Next(ids.Count)]
+                        UserId = userIds[this.random.Next(userIds.Count)]
                     });
+
                 z = 0;
                 Console.WriteLine($"Inserted {(j + 1) * i} rows");
             }
+
             Console.WriteLine("Insert finished");
         }
 
@@ -142,7 +154,7 @@
             var durations = new List<long>();
             var durationsAprox = new List<long>();
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var query = new QueryFilter
                 {
@@ -180,7 +192,7 @@
 
                 var (result_approx, duration_approx) = this.anonymousNudgeOracleRepository.ApproxCount(query_approx);
 
-                durationsAprox.Add(duration_approx);
+                 durationsAprox.Add(duration_approx);
             }
 
             return (durations, durationsAprox);

@@ -3,7 +3,7 @@
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
-    public class AnonymousNudgeRepository : Repository<AnonymousNudgeEntity>, IAnonymousNudgeRepository
+    public class AnonymousNudgeRepository : Repository<OracleNudgeEntity>, IAnonymousNudgeRepository
     {
         public AnonymousNudgeRepository(INudgeDbContext context) : base(context) { }
     }

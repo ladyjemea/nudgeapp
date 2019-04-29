@@ -12,11 +12,9 @@
         {
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IPreferencesRepository, PreferencesRepository>();
-            services.AddSingleton<IWeatherForecastRepository, WeatherForecastRepository>();
             services.AddSingleton<INudgeRepository, NudgeRepository>();
-            services.AddSingleton<ITripRepository, TripRepository>();
             services.AddSingleton<INudgeOracleConnection, NudgeOracleConnection>();
-            services.AddSingleton<IAnonymousNudgeOracleRepository, AnonymousNudgeOracleRepository>();
+            services.AddSingleton<IOracleNudgeOracleRepository, OracleNudgeOracleRepository>();
             services.AddSingleton<IPushNotificationRepository, PushNotificationRepository>();
             services.AddSingleton<IAnonymousNudgeRepository, AnonymousNudgeRepository>();
         }

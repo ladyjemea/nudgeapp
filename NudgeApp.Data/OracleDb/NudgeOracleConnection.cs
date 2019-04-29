@@ -7,7 +7,7 @@
     public class NudgeOracleConnection : INudgeOracleConnection
     {
         public static string ConnectionString = "User Id=nudgeAd; password=cosmin123; Data Source=localhost:1521/orcl;"; 
-        public static string OnlineConnectionString = "User Id=NudgeUser; password=SwnRv27H6WpNCAXG; Data Source=nudgeanonymousdatabase.cz12dzdjwlt5.eu-central-1.rds.amazonaws.com:1521/orcl;"; 
+       // public static string OnlineConnectionString = "User Id=NudgeUser; password=SwnRv27H6WpNCAXG; Data Source=nudgeanonymousdatabase.cz12dzdjwlt5.eu-central-1.rds.amazonaws.com:1521/orcl;"; 
 
         public string InsertCommand(string cmd)
         {

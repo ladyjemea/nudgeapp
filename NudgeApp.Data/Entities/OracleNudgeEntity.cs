@@ -4,7 +4,7 @@
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities.Generic;
 
-    public class AnonymousNudgeEntity : DbEntity
+    public class OracleNudgeEntity : DbEntity
     {
         public NudgeResult Result { get; set; }
         public TransportationType UserPreferedTransportationType { get; set; }

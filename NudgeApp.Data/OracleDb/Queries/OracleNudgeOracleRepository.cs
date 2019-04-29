@@ -7,7 +7,7 @@
     using System.Reflection;
     using NudgeApp.Data.Entities;
 
-    public class AnonymousNudgeOracleRepository : IAnonymousNudgeOracleRepository
+    public class OracleNudgeOracleRepository : IOracleNudgeOracleRepository
     {
         private readonly INudgeOracleConnection NudgeOracleConnection;
 
@@ -18,7 +18,7 @@
         private const string select = "SELECT * FROM Nudges";
         private const string insert = "INSERT INTO Nudges";
 
-        public AnonymousNudgeOracleRepository(INudgeOracleConnection nudgeOracleConnection)
+        public OracleNudgeOracleRepository(INudgeOracleConnection nudgeOracleConnection)
         {
             this.NudgeOracleConnection = nudgeOracleConnection;
         }
@@ -76,7 +76,7 @@
             this.NudgeOracleConnection.InsertCommand(select);
         }
 
-        public void Insert(AnonymousNudgeEntity entity)
+        public void Insert(OracleNudgeEntity entity)
         {
             var query = insert + " VALUES (";
 

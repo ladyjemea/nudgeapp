@@ -11,8 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NudgeApp.DataAnalysis\NudgeApp.DataAnalysis.csproj" />
-    <ProjectReference Include="..\NudgeApp.DataManagement\NudgeApp.DataManagement.csproj" />
     <ProjectReference Include="..\NudgeApp.Data\NudgeApp.Data.csproj" />
   </ItemGroup>
 

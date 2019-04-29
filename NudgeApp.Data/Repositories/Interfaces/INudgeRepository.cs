@@ -1,11 +1,12 @@
 ﻿namespace NudgeApp.Data.Repositories.Interfaces
 {
     using System;
+    using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
 
     public interface INudgeRepository : IRepository<NudgeEntity>
     {
-        Guid Insert(TransportationType transportationType, Guid userId, Guid tripId);
+        Guid Insert(NudgeResult successful, Guid userId, WeatherDto forecast, TripDto trip);
     }
 }

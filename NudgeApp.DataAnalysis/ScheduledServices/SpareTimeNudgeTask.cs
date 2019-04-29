@@ -19,7 +19,7 @@
             this.Logger = logger;
         }
 
-        protected override string Schedule => "* * * * * 6";
+        protected override string Schedule => "* * 10 * * 6";
 
         public async override Task ProcessInScope(IServiceProvider serviceProvider)
         {
@@ -64,7 +64,7 @@
                     pushNotificationService.PushToUser(userId, "Nudge of the day", "Hello");
                 }
                 
-            }*/
+            }
         }
     }
 }
