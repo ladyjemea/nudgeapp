@@ -64,7 +64,7 @@
                     pushNotificationService.PushToUser(userId, "Nudge of the day", "Hello");
                 }
                 
-            }*/
+            }
         }
     }
 }

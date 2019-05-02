@@ -28,7 +28,7 @@ export class CalendarService {
               events = events.filter(event => {
                 var d = new Date(event.Start.dateTime);
                 return d > Date.now();
-              })
+              });
 
               events = events.sort((event1, event2) => {
                 var d1 = new Date(event1.Start.dateTime);
