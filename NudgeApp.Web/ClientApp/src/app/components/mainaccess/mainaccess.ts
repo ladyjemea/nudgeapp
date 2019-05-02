@@ -53,8 +53,9 @@ export class MainaccessComponent implements OnInit {
     private calendarService: CalendarService, private ngZone: NgZone, private eventService: EventService) {
 
     this.calendarService.GetEvents((events) => {
-      console.log(events);
-      this.eventService.sendEvent(events[0])
+      events.forEach((event) => {
+        this.eventService.sendEvent(event);
+      });
     })
 
     this.subscribeToNotifications();
