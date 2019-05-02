@@ -10,16 +10,14 @@
     public class NudgeDbContext : DbContext, INudgeDbContext
     {
         // to update the database run the commnand: dotnet ef database update
-        //public const string onlineConnectionString = @"Server=localhost; Database=NudgeAppDatabase; Trusted_Connection = True;";
-        public const string onlineConnectionString = @"Server=nudgeapp.cz12dzdjwlt5.eu-central-1.rds.amazonaws.com,1433; Database=NudgeAppDatabase; Trusted_Connection = False; uid=nudgeuser; pwd=46AEcnT5RPPe4Mcu";
+        public const string onlineConnectionString = @"Server=localhost; Database=NudgeAppDatabase; Trusted_Connection = True;";
+        //public const string onlineConnectionString = @"Server=nudgeapp.cz12dzdjwlt5.eu-central-1.rds.amazonaws.com,1433; Database=NudgeAppDatabase; Trusted_Connection = False; uid=nudgeuser; pwd=46AEcnT5RPPe4Mcu";
 
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<PreferencesEntity> Preferences { get; set; }
         public DbSet<NudgeEntity> Nudges { get; set; }
-        public DbSet<WeatherForecastEntity> WeatherForecast { get; set; }
-        public DbSet<TripEntity> Trips { get; set; }
         public DbSet<PushNotificationEntity> PushNotifications { get; set; }
-        public DbSet<AnonymousNudgeEntity> AnonymousNudges { get; set; }
+        public DbSet<OracleNudgeEntity> AnonymousNudges { get; set; }
 
         public NudgeDbContext() : base() { }
 
@@ -37,9 +35,7 @@
             modelBuilder.Entity<UserEntity>();
             modelBuilder.Entity<PreferencesEntity>();
             modelBuilder.Entity<NudgeEntity>();
-            modelBuilder.Entity<WeatherForecastEntity>();
-            modelBuilder.Entity<TripEntity>();
-            modelBuilder.Entity<AnonymousNudgeEntity>();
+            modelBuilder.Entity<OracleNudgeEntity>();
 
             base.OnModelCreating(modelBuilder);
         }

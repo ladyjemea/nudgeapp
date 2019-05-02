@@ -2,7 +2,7 @@
 
 namespace NudgeApp.Data.Repositories.Interfaces
 {
-    public interface IAnonymousNudgeRepository : IRepository<AnonymousNudgeEntity>
+    public interface IAnonymousNudgeRepository : IRepository<OracleNudgeEntity>
     {
 
     }

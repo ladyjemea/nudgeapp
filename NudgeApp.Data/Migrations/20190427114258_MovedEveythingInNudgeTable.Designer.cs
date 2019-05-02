@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NudgeApp.Data;
 
 namespace NudgeApp.Data.Migrations
 {
     [DbContext(typeof(NudgeDbContext))]
-    partial class NudgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190427114258_MovedEveythingInNudgeTable")]
+    partial class MovedEveythingInNudgeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,23 +58,21 @@ namespace NudgeApp.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CloudCoveragePercent");
+
                     b.Property<DateTime>("Created");
 
-                    b.Property<int>("Distance");
-
-                    b.Property<int>("Duration");
+                    b.Property<int>("DistanceTraveled");
 
                     b.Property<DateTime>("Modified");
 
                     b.Property<int>("NudgeResult");
 
-                    b.Property<int>("Probability");
+                    b.Property<int>("PrecipitationProbability");
 
                     b.Property<float>("ReafFeelTemperature");
 
                     b.Property<int>("RoadCondition");
-
-                    b.Property<int>("SkyCoverage");
 
                     b.Property<float>("Temperature");
 
@@ -84,7 +84,7 @@ namespace NudgeApp.Data.Migrations
 
                     b.Property<Guid>("UserId");
 
-                    b.Property<int>("Wind");
+                    b.Property<float>("Wind");
 
                     b.HasKey("Id");
 

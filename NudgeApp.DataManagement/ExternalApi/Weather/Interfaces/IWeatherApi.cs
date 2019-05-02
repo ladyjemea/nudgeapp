@@ -10,5 +10,6 @@
         IList<HourlyForecast> Get12HTromsWeather();
         WeatherDto GetForecast(DateTime dateTime);
         Task<WeatherDto> GetCurrentForecast();
+        Task<WeatherDto> GetCurrentForecastRandom();
     }
 }

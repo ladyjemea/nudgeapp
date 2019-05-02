@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.Data.Repositories
 {
     using System;
+    using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
@@ -9,14 +10,22 @@
     {
         public NudgeRepository(INudgeDbContext context) : base(context) { }
 
-        public Guid Insert(TransportationType transportationType, Guid userId, Guid tripId)
+        public Guid Insert(NudgeResult result, Guid userId, WeatherDto forecast, TripDto trip)
         {
             var entity = new NudgeEntity
             {
-                TripId = tripId,
                 UserId = userId,
-                NudgeResult = NudgeResult.Successful,
-                TransportationType = transportationType
+                NudgeResult = result,
+                TransportationType = trip.TransportationType,
+                Distance = trip.Distance,
+                Duration = trip.Duration.Minutes,
+                SkyCoverage = forecast.SkyCoverage,
+                Probability = forecast.Probabilities,
+                ReafFeelTemperature = forecast.RawData.RealFeelTemperature,
+                Temperature = forecast.RawData.Temperature,
+                RoadCondition = forecast.RoadCondition,
+                Time = forecast.RawData.Time,
+                Wind = forecast.Windy
             };
 
             this.Insert(entity);

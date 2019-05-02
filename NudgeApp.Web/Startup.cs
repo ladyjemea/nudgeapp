@@ -15,6 +15,7 @@ namespace NudgeApp.Web
     using Microsoft.IdentityModel.Tokens;
     using NudgeApp.Data;
     using NudgeApp.Data.Repositories.Interfaces;
+    using NudgeApp.DataManagement.Implementation.Interfaces;
     using NudgeApp.Web.Helpers;
 
     public class Startup
@@ -82,7 +83,7 @@ namespace NudgeApp.Web
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = "localhost";
-                options.InstanceName = "SampleInstance";
+                options.InstanceName = "NudgeAppInstance";
                 /*options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions()
                 {
                     
