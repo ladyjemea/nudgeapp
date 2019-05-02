@@ -128,27 +128,50 @@
 
             if (weatherDto == null)
             {
-                var forecastList = await this.GetCurrentTromsForecast();
-                var forecast = forecastList.First();
-
-                weatherDto = new WeatherDto
-                {
-                    RawData = new WeatherRawData()
-                    {
-                        Date = forecast.LocalObservationDateTime,
-                        Time = forecast.LocalObservationDateTime,
-                        Temperature = forecast.Temperature.Metric.Value,
-                        RealFeelTemperature = forecast.RealFeelTemperature.Metric.Value,
-                        Ceiling = forecast.Ceiling.Metric.Value,
-                        Wind = forecast.Wind.Speed.Value,
-                        PrecipitationProbability = forecast.HasPrecipitation ? 100 : 0,
-                        CloudCoveragePercent = forecast.CloudCover
-                    },
-                    RoadCondition = forecast.HasPrecipitation ? RoadCondition.Wet : RoadCondition.Dry
-                };
+                weatherDto = await this.GetAndConvert();
 
                 await this.MemoryCacheService.SaveAsync(key, weatherDto);
             }
+
+            return weatherDto;
+        }
+
+
+        public async Task<WeatherDto> GetCurrentForecastRandom()
+        {
+            var key = Guid.NewGuid().ToString();
+            var weatherDto = await this.MemoryCacheService.GetAsync<WeatherDto>(key);
+
+            if (weatherDto == null)
+            {
+                weatherDto = await this.GetAndConvert();
+
+                await this.MemoryCacheService.SaveAsync(key, weatherDto);
+            }
+
+            return weatherDto;
+        }
+
+        private async Task<WeatherDto> GetAndConvert()
+        {
+            var forecastList = await this.GetCurrentTromsForecast();
+            var forecast = forecastList.First();
+
+            var weatherDto = new WeatherDto
+            {
+                RawData = new WeatherRawData()
+                {
+                    Date = forecast.LocalObservationDateTime,
+                    Time = forecast.LocalObservationDateTime,
+                    Temperature = forecast.Temperature.Metric.Value,
+                    RealFeelTemperature = forecast.RealFeelTemperature.Metric.Value,
+                    Ceiling = forecast.Ceiling.Metric.Value,
+                    Wind = forecast.Wind.Speed.Value,
+                    PrecipitationProbability = forecast.HasPrecipitation ? 100 : 0,
+                    CloudCoveragePercent = forecast.CloudCover
+                },
+                RoadCondition = forecast.HasPrecipitation ? RoadCondition.Wet : RoadCondition.Dry
+            };
 
             return weatherDto;
         }
