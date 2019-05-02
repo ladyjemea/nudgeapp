@@ -12,7 +12,7 @@
     public class DatabaseTesting : IDatabaseTesting
     {
         private readonly ILogger<DatabaseTesting> logger;
-        private readonly IOracleNudgeOracleRepository anonymousNudgeOracleRepository;
+        private readonly INudgeOracleRepository anonymousNudgeOracleRepository;
 
         private readonly Random random;
         /*private readonly IList<Guid> ids = new List<Guid>
@@ -49,7 +49,7 @@
             Guid.Parse("346a733d-697c-4983-bccd-41ca8778e18f")
         };
         */
-        public DatabaseTesting(ILogger<DatabaseTesting> logger, IOracleNudgeOracleRepository anonymousNudgeOracleRepository)
+        public DatabaseTesting(ILogger<DatabaseTesting> logger, INudgeOracleRepository anonymousNudgeOracleRepository)
         {
             this.logger = logger;
             this.anonymousNudgeOracleRepository = anonymousNudgeOracleRepository;
@@ -190,9 +190,9 @@
                     UserPreferedTransportationType = random.Next(100) % 2 == 0 ? (TransportationType?)random.Next(4) : null
                 };
 
-                var (result_approx, duration_approx) = this.anonymousNudgeOracleRepository.ApproxCount(query_approx);
+                //var (result_approx, duration_approx) = this.anonymousNudgeOracleRepository.ApproxCount(query_approx);
 
-                 durationsAprox.Add(duration_approx);
+                 //durationsAprox.Add(duration_approx);
             }
 
             return (durations, durationsAprox);

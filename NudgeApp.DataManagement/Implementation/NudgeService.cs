@@ -12,11 +12,11 @@
     {
         private readonly INudgeRepository NudgeRepository;
         private readonly IPreferencesRepository PreferencesRepository;
-        private readonly IOracleNudgeOracleRepository AnonymousNudgeOracleRepository;
+        private readonly INudgeOracleRepository AnonymousNudgeOracleRepository;
         private readonly IAnonymousNudgeRepository AnonymousNudgeRepository;
 
         public NudgeService(INudgeRepository nudgeRepository, IPreferencesRepository preferencesRepository,
-            IOracleNudgeOracleRepository anonymousNudgesRepository, IAnonymousNudgeRepository anonymousNudgeRepository)
+            INudgeOracleRepository anonymousNudgesRepository, IAnonymousNudgeRepository anonymousNudgeRepository)
         {
             this.NudgeRepository = nudgeRepository;
             this.PreferencesRepository = preferencesRepository;

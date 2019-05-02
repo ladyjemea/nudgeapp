@@ -3,6 +3,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using NudgeApp.Common.Enums;
+    using NudgeApp.Data.OracleDb.Queries;
     using NudgeApp.DataAnalysis.Implementation;
     using NudgeApp.DataAnalysis.ScheduledServices.TaskScheduler;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
@@ -26,7 +27,26 @@
             this.Logger.LogInformation($"Spare time nudge running at {DateTime.UtcNow} UTC.");
 
             var weatherService = serviceProvider.GetService<IWeatherService>();
+            var nudgeRepository = serviceProvider.GetService<INudgeOracleRepository>();
+
             var forecast =  await weatherService.GetCurrentForecast();
+
+            /* Example: 
+             * if (forecast.RawData.Temperature > 15 && fdsaknflka)
+             {
+                 var succesfullNudges = nudgeRepository.ApproxCount(new QueryFilter
+                 {
+                     Result = NudgeResult.Successful,
+                     MinTemperature = (int)(forecast.RawData.Temperature) - 5,
+                     MaxTemperature = (int)(forecast.RawData.Temperature) + 5,
+                 });
+                  var failed = nudgeRepository.ApproxCount(new QueryFilter
+                 {
+                     Result = NudgeResult.Failed,
+                     MinTemperature = (int)(forecast.RawData.Temperature) - 5,
+                     MaxTemperature = (int)(forecast.RawData.Temperature) + 5,
+                 });
+             }*/
 
             if (forecast.WeatherCondition == WeatherCondition.StrongWinds)
             {
