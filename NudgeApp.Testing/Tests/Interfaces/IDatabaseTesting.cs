@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NudgeApp.Testing.Tests.Interfaces
+﻿namespace NudgeApp.Testing.Tests.Interfaces
 {
+    using System;
+    using System.Collections.Generic;
+
     public interface IDatabaseTesting
     {
         void RunTestAnonymousDatabase();
-        void InsertRows(List<Guid> userIds = null);
+        void InsertRows(int entryCount, List<Guid> userIds = null);
     }
 }

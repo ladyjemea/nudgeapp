@@ -27,7 +27,7 @@
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseSqlServer(NudgeDbContext.onlineConnectionString);
+            // optionsBuilder.UseSqlServer(NudgeDbContext.onlineConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

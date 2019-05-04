@@ -4,7 +4,6 @@ namespace NudgeApp.Testing
     using System;
     using System.Collections.Generic;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
     using NudgeApp.Testing.Tests;
     using NudgeApp.Testing.Tests.Interfaces;
 
@@ -25,8 +24,8 @@ namespace NudgeApp.Testing
 
             var serviceProvider = services.BuildServiceProvider();
 
-            // RunDatabaseTesting(serviceProvider.GetService<IDatabaseTesting>());
-            RunInMemoryTesting(serviceProvider.GetService<IInMemoryStoreTesting>());
+            RunDatabaseTesting(serviceProvider.GetService<IDatabaseTesting>());
+            //RunInMemoryTesting(serviceProvider.GetService<IInMemoryStoreTesting>());
         }
 
         private static void RunInMemoryTesting(IInMemoryStoreTesting testService)
@@ -37,9 +36,10 @@ namespace NudgeApp.Testing
 
         private static void RunDatabaseTesting(IDatabaseTesting testService)
         {
-
             var userIds = new List<Guid>();
 
+            Console.WriteLine("huge test!!!");
+            
             for (int i = 0; i < 5; i++)
             {
                 for (var j = 0; j < 2000; j++)
@@ -49,7 +49,7 @@ namespace NudgeApp.Testing
 
                 Console.WriteLine($"Round {i + 1}");
 
-                testService.InsertRows(userIds);
+                testService.InsertRows(20000000, userIds);
 
                 Console.WriteLine("Starting test 1");
                 testService.RunTestAnonymousDatabase();

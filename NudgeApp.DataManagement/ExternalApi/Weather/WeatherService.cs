@@ -128,15 +128,14 @@
 
             if (weatherDto == null)
             {
-                weatherDto = await this.GetAndConvert();
+                weatherDto = await this.GetCurrentForecastNoMemory();
 
                 await this.MemoryCacheService.SaveAsync(key, weatherDto);
             }
 
             return weatherDto;
         }
-
-
+        
         public async Task<WeatherDto> GetCurrentForecastRandom()
         {
             var key = Guid.NewGuid().ToString();
@@ -144,7 +143,7 @@
 
             if (weatherDto == null)
             {
-                weatherDto = await this.GetAndConvert();
+                weatherDto = await this.GetCurrentForecastNoMemory();
 
                 await this.MemoryCacheService.SaveAsync(key, weatherDto);
             }
@@ -152,7 +151,7 @@
             return weatherDto;
         }
 
-        private async Task<WeatherDto> GetAndConvert()
+        public async Task<WeatherDto> GetCurrentForecastNoMemory()
         {
             var forecastList = await this.GetCurrentTromsForecast();
             var forecast = forecastList.First();
