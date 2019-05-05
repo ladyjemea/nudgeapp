@@ -4,18 +4,22 @@
     using Microsoft.AspNetCore.Mvc;
     using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
+    using NudgeApp.DataManagement.ExternalApi.Calendar;
     using NudgeApp.DataManagement.Implementation.Interfaces;
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
 
     [Route("[controller]/[action]")]
     public class NudgeController : Controller
     {
         private readonly INudgeService NudgeLogic;
+        private readonly IPublicCalendarsService CalendarService;
 
-        public NudgeController(INudgeService nudgeLogic)
+        public NudgeController(INudgeService nudgeLogic, IPublicCalendarsService calendarService)
         {
             this.NudgeLogic = nudgeLogic;
+            this.CalendarService = calendarService;
         }
 
         [HttpPost]
@@ -30,9 +34,10 @@
         }
 
         [HttpGet]
-        public IActionResult Test()
+        public async Task<IActionResult> Test()
         {
-            this.NudgeLogic.Test();
+            await this.CalendarService.GetEvents();
+
             return this.Ok();
         }
     }

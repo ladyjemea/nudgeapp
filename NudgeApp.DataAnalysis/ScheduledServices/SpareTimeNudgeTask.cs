@@ -20,7 +20,7 @@
             this.Logger = logger;
         }
 
-        protected override string Schedule => "*/20 * * * * *";
+        protected override string Schedule => "* * 10 * * 6";
 
         public override Task ScheduledTask(IServiceProvider serviceProvider)
         {
