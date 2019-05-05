@@ -12,7 +12,7 @@
         {
             var service = new CalendarService(new BaseClientService.Initializer()
             {
-                ApiKey = "AIzaSyBMwd9dDJOx6DxD9ho9OMQ-egbU74vDtBw",
+                ApiKey = "AIzaSyAPb-ZpzEgSUY29r7MXKHkvHO9aI4R9FmQ",
                 ApplicationName = "Nudge App"
             });
 
