@@ -1,8 +1,5 @@
 ﻿namespace NudgeApp.Data.OracleDb.Queries
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
     using NudgeApp.Common.Enums;
 
     public class QueryFilter

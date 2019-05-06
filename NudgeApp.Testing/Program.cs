@@ -24,7 +24,8 @@ namespace NudgeApp.Testing
 
             var serviceProvider = services.BuildServiceProvider();
 
-            RunDatabaseTesting(serviceProvider.GetService<IDatabaseTesting>());
+            serviceProvider.GetService<IDatabaseTesting>().Run();
+            //RunDatabaseTesting(serviceProvider.GetService<IDatabaseTesting>());
             //RunInMemoryTesting(serviceProvider.GetService<IInMemoryStoreTesting>());
         }
 
@@ -38,9 +39,14 @@ namespace NudgeApp.Testing
         {
             var userIds = new List<Guid>();
 
-            Console.WriteLine("huge test!!!");
-            
-            for (int i = 0; i < 5; i++)
+            Console.WriteLine("huge test 2!!!");
+
+            for (var j = 0; j < 6000; j++)
+                userIds.Add(Guid.NewGuid());
+
+            testService.InsertRows(60000000, userIds);
+
+            for (int i = 0; i < 2; i++)
             {
                 for (var j = 0; j < 2000; j++)
                     userIds.Add(Guid.NewGuid());

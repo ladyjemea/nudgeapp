@@ -10,7 +10,7 @@
     public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : DbEntity
     {
         protected readonly INudgeDbContext Context;
-        private readonly DbSet<TEntity> DbSet;
+        protected readonly DbSet<TEntity> DbSet;
 
         protected Repository(INudgeDbContext context)
         {

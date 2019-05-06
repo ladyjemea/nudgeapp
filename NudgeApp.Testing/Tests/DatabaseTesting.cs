@@ -5,23 +5,59 @@
     using System.IO;
     using System.Linq;
     using Microsoft.Extensions.Logging;
+    using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.OracleDb.Queries;
+    using NudgeApp.DataManagement.Implementation.Interfaces;
     using NudgeApp.Testing.Tests.Interfaces;
 
     public class DatabaseTesting : IDatabaseTesting
     {
         private readonly ILogger<DatabaseTesting> logger;
         private readonly INudgeOracleRepository anonymousNudgeOracleRepository;
+        private readonly INudgeService nudgeService;
+        private readonly IUserService userService;
 
         private readonly Random random;
 
-        public DatabaseTesting(ILogger<DatabaseTesting> logger, INudgeOracleRepository anonymousNudgeOracleRepository)
+        public DatabaseTesting(ILogger<DatabaseTesting> logger, INudgeOracleRepository anonymousNudgeOracleRepository, IUserService userService, INudgeService nudgeService)
         {
             this.logger = logger;
             this.anonymousNudgeOracleRepository = anonymousNudgeOracleRepository;
+            this.userService = userService;
+            this.nudgeService = nudgeService;
 
             this.random = new Random();
+        }
+
+        public void Run()
+        {
+            this.AddUsers(10);
+
+            this.AddNudges(100);
+        }
+
+        private void AddNudges(int nudgeCount)
+        {
+            var userIds = this.userService.GetAllUserIds();
+
+            for (int i = 0; i < nudgeCount; i++)
+            {
+                var forecast = new WeatherDto()
+                {
+
+                };
+
+                var trip = new TripDto();
+
+                this.nudgeService.AddNudge(userIds[random.Next(userIds.Count)], (TransportationType)(random.Next(3)), forecast, trip);
+            }
+        }
+
+        private void AddUsers(int userCount)
+        {
+            for (int i = 0; i < userCount; i++)
+                this.userService.CreateUser(random.Next().ToString(), random.Next().ToString(), random.Next().ToString(), random.Next().ToString(), random.Next().ToString(), (TransportationType)(random.Next(3)));
         }
 
         public void RunTestAnonymousDatabase()
@@ -157,9 +193,9 @@
                     UserPreferedTransportationType = random.Next(100) % 2 == 0 ? (TransportationType?)random.Next(4) : null
                 };
 
-               // var (result_approx, duration_approx) = this.anonymousNudgeOracleRepository.ApproxCount(query_approx);
+                var (result_approx, duration_approx) = this.anonymousNudgeOracleRepository.ApproxCount(query_approx);
 
-                //durationsAprox.Add(duration_approx);
+                durationsAprox.Add(duration_approx);
             }
 
             return (durations, durationsAprox);
