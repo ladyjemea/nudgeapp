@@ -17,7 +17,7 @@
      *  │ │ │ │ │                                       
      *  * * * * *
      */
-    public class ScheduleTask : ScheduledProcessor
+    public class ScheduleTask : TimeTaskScheduler
     {
         private readonly ILogger<SpareTimeNudgeTask> Logger;
 
@@ -28,7 +28,7 @@
 
         protected override string Schedule => "* */1 * * * *";
 
-        public override Task ProcessInScope(IServiceProvider serviceProvider)
+        public override Task ScheduledTask(IServiceProvider serviceProvider)
         {
             this.Logger.LogInformation("Running task " + DateTime.UtcNow);
 

@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NudgeApp.Common", "NudgeApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NudgeApp.DataAnalysis", "NudgeApp.DataAnalysis\NudgeApp.DataAnalysis.csproj", "{6B5921D3-3424-4AF2-AE28-3685FED2146A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NudgeApp.DataManagement.Test", "NudgeApp.DataManagement.Test\NudgeApp.DataManagement.Test.csproj", "{0FF570EE-AC06-458D-96D1-EC520372DDD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NudgeApp.UnitTest", "NudgeApp.DataManagement.Test\NudgeApp.UnitTest.csproj", "{0FF570EE-AC06-458D-96D1-EC520372DDD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NudgeApp.Testing", "NudgeApp.Testing\NudgeApp.Testing.csproj", "{FFE4BB08-CA5E-4CA3-93BA-1D0BD9527527}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NudgeApp.Testing", "NudgeApp.Testing\NudgeApp.Testing.csproj", "{FFE4BB08-CA5E-4CA3-93BA-1D0BD9527527}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

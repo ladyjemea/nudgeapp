@@ -15,7 +15,9 @@ export class EventService {
 
   sendEvent(event: Event) {
     var sendEvent: Event = <Event>{};
+    // @ts-ignore
     sendEvent.Start = new Date(event.Start.dateTime);
+    // @ts-ignore
     sendEvent.End = new Date(event.End.dateTime);
     sendEvent.Name = event.Name;
     sendEvent.Location = event.Location;

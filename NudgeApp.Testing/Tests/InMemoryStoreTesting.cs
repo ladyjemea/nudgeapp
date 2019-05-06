@@ -32,6 +32,7 @@
             var watchT = Stopwatch.StartNew();
             await this.WeatherService.GetCurrentForecast();
             watchT.Stop();
+
             Console.WriteLine($"Weather forecast: { watchT.ElapsedMilliseconds}");
 
             long onlineSaveTime = 0;
@@ -48,6 +49,20 @@
             Console.WriteLine($"Weather forecast online: {onlineSaveTime}");
             Console.WriteLine($"Weather forecast online average: {(double)(onlineSaveTime/10)}");
 
+            long noMemoryTime = 0;
+            for (var i = 0; i < 10; i++)
+            {
+                var watch = Stopwatch.StartNew();
+
+                await this.WeatherService.GetCurrentForecastNoMemory();
+
+                watch.Stop();
+                noMemoryTime += watch.ElapsedMilliseconds;
+            }
+
+            Console.WriteLine($"Weather forecast no memory: {noMemoryTime}");
+            Console.WriteLine($"Weather forecast no memory average: {(double)(noMemoryTime / 10)}");
+            
 
             long offlineSaveTime = 0;
             for (var i = 0; i < 10; i++)

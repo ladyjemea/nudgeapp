@@ -60,7 +60,8 @@
                     data = new NotificationData
                     {
                         dateOfArrival = DateTime.Now,
-                        PrimaryKey = 1
+                        PrimaryKey = 1,
+                        Url = link
                     },
                     actions = new List<NotificationActions>
                         {
@@ -99,6 +100,7 @@
         {
             public DateTime dateOfArrival { get; set; }
             public int PrimaryKey { get; set; }
+            public string Url { get; set; }
         }
 
         private class Notification

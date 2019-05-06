@@ -5,6 +5,7 @@ import 'rxjs';
 import { UserService } from '../../services/UserService';
 import { AuthenticationService } from '../../services/AuthenticationService';
 import { TransporationType } from '../../types/TripDto';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './signup.html',
@@ -15,19 +16,21 @@ export class SignupComponent {
 
   private selectedTravelType: TransporationType;
 
-  constructor(private userService: UserService, private authenticationService: AuthenticationService) {
+  constructor(private userService: UserService, private authenticationService: AuthenticationService, private router: Router) {
     this.selectedTravelType = TransporationType.Car;
   }
 
   public Selected(value: any) {
-    console.log(value);
     this.selectedTravelType = value;
   }
 
   public registerUser(form: NgForm) {
-    console.log(form.value);
 
     this.userService.createuser(form.value.username, form.value.password, form.value.name, form.value.email, form.value.address, this.selectedTravelType)
-      .subscribe(() => { this.authenticationService.login(form.value.username, form.value.password); });
+      .subscribe(() => {
+        this.authenticationService.login(form.value.username, form.value.password);
+        this.router.navigateByUrl('/mainaccess');
+      });
+
   }
 }
