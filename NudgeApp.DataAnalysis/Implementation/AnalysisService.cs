@@ -27,8 +27,7 @@
             var weather = await this.WeatherService.GetCurrentForecast();
             var nudgeOracle = this.nudgeOracleRepository.ApproxCount(new QueryFilter
             {
-                Result_success = Common.Enums.NudgeResult.Successful,
-                Result_fail = Common.Enums.NudgeResult.Failed,
+                Result = Common.Enums.NudgeResult.Successful,
                 MinTemperature = (int)weather.RawData.Temperature - 5,
                 MaxTemperature = (int)weather.RawData.Temperature + 5
             } );
@@ -62,8 +61,7 @@
             
             var nudgeOracle = this.nudgeOracleRepository.ApproxCount(new QueryFilter
             {
-                Result_success = Common.Enums.NudgeResult.Successful,
-                Result_fail = Common.Enums.NudgeResult.Failed,
+                Result= Common.Enums.NudgeResult.Successful,
                 ActualTransportationType = Common.Enums.TransportationType.Walk
             });
 
@@ -94,12 +92,11 @@
             var nudges = this.NudgeRepository.GetAll().Where(nudge => nudge.UserId == userId).ToList();
             var nudgeOracle = this.nudgeOracleRepository.ApproxCount(new QueryFilter
             {
-                Result_success = Common.Enums.NudgeResult.Successful,
-                Result_fail = Common.Enums.NudgeResult.Failed,
+                Result = Common.Enums.NudgeResult.Successful,
                 ActualTransportationType = Common.Enums.TransportationType.Walk
             });
 
-            var distancefilter = nudges.Where(nudge => nudge.TransportationType == Common.Enums.TransportationType.Walk && nudge.Distance > tripDistance- 10 && nudge.Distance < tripDistance + 10));
+            var distancefilter = nudges.Where(nudge => nudge.TransportationType == Common.Enums.TransportationType.Walk && nudge.Distance > tripDistance- 10 && nudge.Distance < tripDistance + 10);
 
             var success = distancefilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Successful);
             var fail = distancefilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Failed);
@@ -123,4 +120,4 @@
     }
     }
 
-}
+
