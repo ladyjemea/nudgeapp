@@ -18,7 +18,7 @@
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<INudgeService, NudgeService>();
             services.AddTransient<IPushNotificationLogic, PushNotificationLogic>();
-            services.AddTransient<IAnalysisConversion, AnalysisConversion>();
+            services.AddTransient<IDataAgregator, DataAgregator>();
             services.AddTransient<IPublicCalendarsService, PublicCalendarsService>();
 
             services.AddSingleton<IMemoryCacheService, MemoryCacheService>();

@@ -26,7 +26,8 @@
 
             this.stream = new StreamWriter("in memory tests.txt", true);
         }
-
+        public async Task TestWeatherService() { }
+        /*
         public async Task TestWeatherService()
         {
             var watchT = Stopwatch.StartNew();
@@ -79,7 +80,7 @@
             Console.WriteLine($"Weather forecast offline average: {(double)(offlineSaveTime / 10)}");
 
         }
-
+        */
         public async Task TestCachingSpeed()
         {
             var objects = new List<TestObject>();

@@ -7,11 +7,8 @@
 
     public enum WeatherCondition
     {
-        StrongWinds,
-        LightWinds,
-        Calm,
+        None,
         Rain,
-        NoRain,
         Snow,
         NoSnow,
         Freezing,
@@ -19,6 +16,5 @@
         Cool,
         Warm,
         NotEvaluated
-
     }
 }

@@ -168,7 +168,7 @@
                     MinTemperature = random.Next(100) % 2 == 0 ? (int?)(random.Next(50) - 50) : null,
                     MaxWind = random.Next(100) % 2 == 0 ? (int?)(random.Next(25) + 25) : null,
                     MinWind = random.Next(100) % 2 == 0 ? (int?)random.Next(25) : null,
-                    Result_success = random.Next(100) % 2 == 0 ? (NudgeResult?)random.Next(3) : null,
+                    Result = random.Next(100) % 2 == 0 ? (NudgeResult?)random.Next(3) : null,
                     Road = random.Next(100) % 2 == 0 ? (RoadStateType?)random.Next(4) : null,
                     SkyCoverage = random.Next(100) % 2 == 0 ? (SkyCoverageType?)random.Next(3) : null,
                     UserPreferedTransportationType = random.Next(100) % 2 == 0 ? (TransportationType?)random.Next(4) : null
@@ -187,7 +187,7 @@
                     MinTemperature = random.Next(100) % 2 == 0 ? (int?)(random.Next(50) - 50) : null,
                     MaxWind = random.Next(100) % 2 == 0 ? (int?)(random.Next(25) + 25) : null,
                     MinWind = random.Next(100) % 2 == 0 ? (int?)random.Next(25) : null,
-                    Result_success = random.Next(100) % 2 == 0 ? (NudgeResult?)random.Next(3) : null,
+                    Result = random.Next(100) % 2 == 0 ? (NudgeResult?)random.Next(3) : null,
                     Road = random.Next(100) % 2 == 0 ? (RoadStateType?)random.Next(4) : null,
                     SkyCoverage = random.Next(100) % 2 == 0 ? (SkyCoverageType?)random.Next(3) : null,
                     UserPreferedTransportationType = random.Next(100) % 2 == 0 ? (TransportationType?)random.Next(4) : null
