@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using NudgeApp.Data.Entities.Generic;
 
     public interface IRepository<TEntity> where TEntity : IDbEntity
@@ -10,6 +11,6 @@
         Guid Insert(TEntity entity);
         void InsertWIthNoSave(TEntity entity);
         void Update(TEntity entity);
-        IEnumerable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll();
     }
 }

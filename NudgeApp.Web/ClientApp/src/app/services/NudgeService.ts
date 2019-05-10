@@ -15,7 +15,6 @@ export class NudgeService {
     var nudgeData = <NudgeData>{};
     nudgeData.forecast = forecast;
     nudgeData.trip = trip;
-    console.log(trip);
     this.http.post('Nudge/AddNudge', nudgeData, { responseType: 'text' }).pipe().subscribe(result => { });
   }
 }

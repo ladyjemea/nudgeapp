@@ -48,7 +48,7 @@
 
         public override EntityEntry Update(object entity)
         {
-            ((DbEntity)entity).Modified = DateTime.UtcNow;
+            ((DbEntity)entity).ModifiedOn = DateTime.UtcNow;
 
             return base.Update(entity);
         }

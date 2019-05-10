@@ -6,15 +6,15 @@
     {
         public Guid Id { get; set; }
 
-        public DateTime Created { get; set; }
+        public DateTime CreatedOn { get; set; }
 
-        public DateTime Modified { get; set; }
+        public DateTime ModifiedOn { get; set; }
 
         public DbEntity()
         {
             this.Id = Guid.NewGuid();
-            this.Created = DateTime.UtcNow;
-            this.Modified = DateTime.UtcNow;
+            this.CreatedOn = DateTime.UtcNow;
+            this.ModifiedOn = DateTime.UtcNow;
         }
     }
 }

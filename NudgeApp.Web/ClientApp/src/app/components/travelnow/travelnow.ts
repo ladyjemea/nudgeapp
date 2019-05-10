@@ -12,11 +12,11 @@ import { NudgeService } from '../../services/NudgeService';
 
 
 @Component({
-  templateUrl: './maindisplay.html',
-  styleUrls: ['./maindisplay.css'],
+  templateUrl: './travelnow.html',
+  styleUrls: ['./travelnow.css'],
   providers: [TravelService, WeatherService, NudgeService],
 })
-export class MainDisplayComponent implements OnInit, OnDestroy {
+export class TravelNowComponent implements OnInit, OnDestroy {
   public walking: string = "";
   public bicycling: string = "";
   public bus: string = "";
@@ -96,8 +96,8 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       var tripLink = trip.link.substr(0, trip.link.indexOf("&travelmode"));
      window.location.href = tripLink;
     }
-    //else
-      // window.location.href = trip.link;
+    else
+      window.location.href = trip.link;
   }
 
   private getTrip(travelType: TransporationType): TripDto {

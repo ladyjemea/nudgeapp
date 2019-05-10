@@ -40,8 +40,6 @@ export class MainaccessComponent implements OnInit {
       var geocoder = new google.maps.Geocoder;
       var latlng = new google.maps.LatLng($event.coords.lat, $event.coords.lng);
       geocoder.geocode({ 'location': latlng }, function (results, status) {
-        console.log("map results");
-        console.log(results);
       });
     });
 

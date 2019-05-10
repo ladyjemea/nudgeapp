@@ -13,9 +13,9 @@
         private const string publicKey = "BD6e5GSCe5_Y08GgTyWlpFcQIPuMkLrEYfAiNBzrc-vkxPuYN3oeJqdvR3gjIGn_VxNu1G58J9zxbsd6-6FR70Y";
         private const string privateKey = "zGZk1mpuMvOdjCedmOCjn8RYfIq4AXks-RNN8zeDlf0";
 
-        private readonly IPushNotificationRepository PushNotificationRepository;
+        private readonly ISubscritionRepository PushNotificationRepository;
 
-        public PushNotificationService(IPushNotificationRepository pushNotificationRepository)
+        public PushNotificationService(ISubscritionRepository pushNotificationRepository)
         {
             this.PushNotificationRepository = pushNotificationRepository;
         }

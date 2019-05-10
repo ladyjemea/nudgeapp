@@ -17,7 +17,7 @@
             services.AddTransient<IBusService, BusService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<INudgeService, NudgeService>();
-            services.AddTransient<IPushNotificationLogic, PushNotificationLogic>();
+            services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IDataAgregator, DataAgregator>();
             services.AddTransient<IPublicCalendarsService, PublicCalendarsService>();
 

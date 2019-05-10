@@ -22,10 +22,11 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login';
 import { SignupComponent } from './components/signup/signup';
 import { MainaccessComponent } from './components/mainaccess/mainaccess';
-//import { FeedbackComponent } from './components/feedback/feedback';
-import { MainDisplayComponent } from './components/maindisplay/maindisplay';
+import { FeedbackComponent } from './components/feedback/feedback';
+import { TravelNowComponent } from './components/travelnow/travelnow';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { JwtInterceptor } from './services/JwtInterceptor';
+import { NotificationHistoryComponent } from './components/notifications/notificationHistory';
 
 let gapiClientConfig: NgGapiClientConfig = {
   client_id: "600101543512-tnhs33cfbs09rqd6no8tajg5ooccoa0q.apps.googleusercontent.com",
@@ -35,12 +36,6 @@ let gapiClientConfig: NgGapiClientConfig = {
   ].join(" ")
 };
 
-//const appRoutes: Routes = [
-//  {
-//    path: "search",
-//    component: MainDisplayComponent,
-//  }]
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,8 +44,9 @@ let gapiClientConfig: NgGapiClientConfig = {
     LoginComponent,
     SignupComponent,
     MainaccessComponent,
-    //FeedbackComponent,
-    MainDisplayComponent
+    FeedbackComponent,
+    TravelNowComponent,
+    NotificationHistoryComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -67,9 +63,9 @@ let gapiClientConfig: NgGapiClientConfig = {
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
       { path: 'mainaccess', component: MainaccessComponent },
-      //{ path: 'feedback', component: FeedbackComponent },
-      { path: 'search', component: MainDisplayComponent },
-      { path: 'maindisplay', component: MainDisplayComponent }
+      { path: 'feedback', component: FeedbackComponent },
+      { path: 'search', component: TravelNowComponent },
+      { path: 'notificationHistory', component: NotificationHistoryComponent }
 
     ]),
     AgmCoreModule.forRoot({

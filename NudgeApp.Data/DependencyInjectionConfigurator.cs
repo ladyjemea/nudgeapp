@@ -15,7 +15,7 @@
             services.AddSingleton<INudgeRepository, NudgeRepository>();
             services.AddSingleton<INudgeOracleConnection, NudgeOracleConnection>();
             services.AddSingleton<INudgeOracleRepository, NudgeOracleRepository>();
-            services.AddSingleton<IPushNotificationRepository, PushNotificationRepository>();
+            services.AddSingleton<ISubscritionRepository, SubscriptionRepository>();
             services.AddSingleton<INotificationRepository, NotificationRepository>();
             services.AddSingleton<IAnonymousNudgeRepository, AnonymousNudgeRepository>();
         }

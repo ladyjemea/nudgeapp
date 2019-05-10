@@ -1,14 +1,12 @@
 ﻿namespace NudgeApp.Data.Repositories
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
-    public class PushNotificationRepository : Repository<PushNotificationEntity>, IPushNotificationRepository
+    public class SubscriptionRepository : Repository<PushNotificationEntity>, ISubscritionRepository
     {
-        public PushNotificationRepository(INudgeDbContext context) : base(context) { }
+        public SubscriptionRepository(INudgeDbContext context) : base(context) { }
 
         public Guid Create(Guid userId, string endpoint, string p256dh, string auth)
         {
