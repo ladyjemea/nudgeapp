@@ -21,7 +21,6 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login';
 import { SignupComponent } from './components/signup/signup';
-import { TravelComponent } from './components/travelnow/travelnow';
 import { MainaccessComponent } from './components/mainaccess/mainaccess';
 //import { FeedbackComponent } from './components/feedback/feedback';
 import { MainDisplayComponent } from './components/maindisplay/maindisplay';
@@ -49,7 +48,6 @@ let gapiClientConfig: NgGapiClientConfig = {
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    TravelComponent,
     MainaccessComponent,
     //FeedbackComponent,
     MainDisplayComponent
@@ -68,7 +66,6 @@ let gapiClientConfig: NgGapiClientConfig = {
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
-      { path: 'travelnow', component: TravelComponent },
       { path: 'mainaccess', component: MainaccessComponent },
       //{ path: 'feedback', component: FeedbackComponent },
       { path: 'search', component: MainDisplayComponent },

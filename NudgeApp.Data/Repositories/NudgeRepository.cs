@@ -26,11 +26,11 @@
                 Duration = trip.Duration.Minutes,
                 SkyCoverage = forecast.SkyCoverage,
                 Probability = forecast.Probabilities,
-                ReafFeelTemperature = forecast.RawData.RealFeelTemperature,
-                Temperature = forecast.RawData.Temperature,
+                ReafFeelTemperature = forecast.RealFeelTemperature,
+                Temperature = forecast.Temperature,
                 RoadCondition = forecast.RoadCondition,
-                Time = forecast.RawData.Time,
-                Wind = forecast.Windy
+                DateTime = forecast.DateTime,
+                WindCondition = forecast.WindCondition
             };
 
             this.Insert(entity);

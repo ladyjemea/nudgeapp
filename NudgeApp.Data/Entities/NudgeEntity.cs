@@ -11,13 +11,17 @@
         public TripType Type { get; set; }
         public int Distance { get; set; }
         public int Duration { get; set; }
-        public DateTime Time { get; set; }
-        public float Temperature { get; set; }
         public float ReafFeelTemperature { get; set; }
+        public float Temperature { get; set; }
+        public float Wind { get; set; }
+        public int PrecipitationProbability { get; set; }
+        public int CloudCoveragePercent { get; set; }
         public SkyCoverageType SkyCoverage { get; set; }
-        public WeatherCondition Wind { get; set; }
+        public WindCondition WindCondition { get; set; }
         public Probabilities Probability { get; set; }
         public RoadCondition RoadCondition { get; set; }
+        public DateTime DateTime { get; set; }
+
         public virtual UserEntity User { get; set; }
         public Guid UserId { get; set; }
     }

@@ -5,7 +5,7 @@
 
     public class QueryFilter
     {
-        public NudgeResult? Result_success { get; set; }
+        public NudgeResult? Result { get; set; }
         public TransportationType? UserPreferedTransportationType { get; set; }
         public TransportationType? ActualTransportationType { get; set; }
         public SkyCoverageType? SkyCoverage { get; set; }
@@ -16,7 +16,6 @@
         public int? MaxWind { get; set; }
         public int? MinPrecipitation { get; set; }
         public int? MaxPrecipitation { get; set; }
-        public NudgeResult Result_fail { get; set; }
         public DateTime? MinDate { get; set; }
         public DateTime? MaxDate { get; set; }
         public DateTime? Time { get; set; }

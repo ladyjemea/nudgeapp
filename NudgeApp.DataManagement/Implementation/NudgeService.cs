@@ -33,12 +33,12 @@
                 this.AnonymousNudgeOracleRepository.Insert(new OracleNudgeEntity
                 {
                     ActualTransportationType = transportationType,
-                    PrecipitationProbability = forecast.RawData.PrecipitationProbability,
+                    PrecipitationProbability = forecast.PrecipitationProbability,
                     Result = NudgeResult.Successful,
                     RoadCondition = forecast.RoadCondition,
                     SkyCoverage = forecast.SkyCoverage,
-                    Temperature = forecast.RawData.Temperature,
-                    Wind = forecast.RawData.Wind,
+                    Temperature = forecast.Temperature,
+                    Wind = forecast.Wind,
                     UserPreferedTransportationType = this.PreferencesRepository.GetPreferences(userId).ActualTransportationType
                 });
             }

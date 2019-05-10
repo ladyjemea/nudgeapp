@@ -45,19 +45,19 @@
 
 
             /* Example: 
-             * if (forecast.RawData.Temperature > 15 && fdsaknflka)
+             * if (forecast.Temperature > 15 && fdsaknflka)
              {
                  var succesfullNudges = nudgeRepository.ApproxCount(new QueryFilter
                  {
                      Result = NudgeResult.Successful,
-                     MinTemperature = (int)(forecast.RawData.Temperature) - 5,
-                     MaxTemperature = (int)(forecast.RawData.Temperature) + 5,
+                     MinTemperature = (int)(forecast.Temperature) - 5,
+                     MaxTemperature = (int)(forecast.Temperature) + 5,
                  });
                   var failed = nudgeRepository.ApproxCount(new QueryFilter
                  {
                      Result = NudgeResult.Failed,
-                     MinTemperature = (int)(forecast.RawData.Temperature) - 5,
-                     MaxTemperature = (int)(forecast.RawData.Temperature) + 5,
+                     MinTemperature = (int)(forecast.Temperature) - 5,
+                     MaxTemperature = (int)(forecast.Temperature) + 5,
                  });
              }*/
             /*

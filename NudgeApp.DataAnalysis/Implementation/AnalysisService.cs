@@ -27,13 +27,12 @@
             var weather = await this.WeatherService.GetCurrentForecast();
             var nudgeOracle = this.nudgeOracleRepository.ApproxCount(new QueryFilter
             {
-                Result_success = Common.Enums.NudgeResult.Successful,
-                Result_fail = Common.Enums.NudgeResult.Failed,
-                MinTemperature = (int)weather.RawData.Temperature - 5,
-                MaxTemperature = (int)weather.RawData.Temperature + 5
+                Result = Common.Enums.NudgeResult.Successful,
+                MinTemperature = (int)weather.Temperature - 5,
+                MaxTemperature = (int)weather.Temperature + 5
             });
 
-            var filteredList = nudges.Where(nudge => nudge.Temperature > (int)weather.RawData.Temperature - 5 && nudge.Temperature < (int)weather.RawData.Temperature + 5);
+            var filteredList = nudges.Where(nudge => nudge.Temperature > (int)weather.Temperature - 5 && nudge.Temperature < (int)weather.Temperature + 5);
 
             var success = filteredList.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Successful);
             var fail = filteredList.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Failed);
@@ -62,8 +61,7 @@
 
             var nudgeOracle = this.nudgeOracleRepository.ApproxCount(new QueryFilter
             {
-                Result_success = Common.Enums.NudgeResult.Successful,
-                Result_fail = Common.Enums.NudgeResult.Failed,
+                Result = Common.Enums.NudgeResult.Successful,
                 ActualTransportationType = Common.Enums.TransportationType.Walk
             });
 
@@ -94,8 +92,7 @@
             var nudges = this.NudgeRepository.GetAll().Where(nudge => nudge.UserId == userId).ToList();
             var nudgeOracle = this.nudgeOracleRepository.ApproxCount(new QueryFilter
             {
-                Result_success = Common.Enums.NudgeResult.Successful,
-                Result_fail = Common.Enums.NudgeResult.Failed,
+                Result = Common.Enums.NudgeResult.Successful,
                 ActualTransportationType = Common.Enums.TransportationType.Walk
             });
 
