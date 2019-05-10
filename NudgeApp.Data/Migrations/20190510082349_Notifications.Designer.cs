@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NudgeApp.Data;
 
 namespace NudgeApp.Data.Migrations
 {
     [DbContext(typeof(NudgeDbContext))]
-    partial class NudgeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190510082349_Notifications")]
+    partial class Notifications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,15 +30,11 @@ namespace NudgeApp.Data.Migrations
 
                     b.Property<DateTime>("Modified");
 
-                    b.Property<Guid>("NudgeId");
-
                     b.Property<int>("Status");
 
                     b.Property<string>("Text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("NudgeId");
 
                     b.ToTable("Notifications");
                 });
@@ -57,6 +55,8 @@ namespace NudgeApp.Data.Migrations
                     b.Property<int>("Duration");
 
                     b.Property<DateTime>("Modified");
+
+                    b.Property<Guid>("NotificationId");
 
                     b.Property<int>("NudgeResult");
 
@@ -83,6 +83,8 @@ namespace NudgeApp.Data.Migrations
                     b.Property<int>("WindCondition");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("NotificationId");
 
                     b.HasIndex("UserId");
 
@@ -195,16 +197,13 @@ namespace NudgeApp.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("NudgeApp.Data.Entities.NotificationEntity", b =>
-                {
-                    b.HasOne("NudgeApp.Data.Entities.NudgeEntity", "Nudge")
-                        .WithMany()
-                        .HasForeignKey("NudgeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("NudgeApp.Data.Entities.NudgeEntity", b =>
                 {
+                    b.HasOne("NudgeApp.Data.Entities.NotificationEntity", "Notification")
+                        .WithMany()
+                        .HasForeignKey("NotificationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("NudgeApp.Data.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

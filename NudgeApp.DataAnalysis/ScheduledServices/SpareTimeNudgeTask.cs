@@ -2,8 +2,8 @@
 {
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using NudgeApp.Common.Enums;
     using NudgeApp.Data.OracleDb.Queries;
+    using NudgeApp.Data.Repositories.Interfaces;
     using NudgeApp.DataAnalysis.Implementation;
     using NudgeApp.DataAnalysis.ScheduledServices.TaskScheduler;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
@@ -22,26 +22,35 @@
 
         protected override string Schedule => "* * 10 * * 6";
 
-        public override Task ScheduledTask(IServiceProvider serviceProvider)
+        public async override Task ScheduledTask(IServiceProvider serviceProvider)
         {
             this.Logger.LogInformation($"Spare time nudge running at {DateTime.UtcNow} UTC.");
 
             var weatherService = serviceProvider.GetService<IWeatherService>();
+            var nudgeService = serviceProvider.GetService<INudgeService>();
+            var notificationRepository = serviceProvider.GetService<INotificationRepository>();
             var nudgeRepository = serviceProvider.GetService<INudgeOracleRepository>();
 
-            //var forecast =  await weatherService.GetCurrentForecast();
+            var forecast =  await weatherService.GetCurrentForecast();
 
             var userLogic = serviceProvider.GetService<IUserService>();
             var pushNotificationService = serviceProvider.GetService<IPushNotificationService>();
 
             var userIds = userLogic.GetAllUserIds();
 
+            var title = "Nudge of the day";
+            var message = "Hello";
             foreach (var userId in userIds)
             {
-                pushNotificationService.PushToUser(userId, "Nudge of the day", "Hello");
+                var nudgeId = nudgeService.AddNudge(userId, forecast);
+                notificationRepository.Insert(new Data.Entities.NotificationEntity
+                {
+                    NudgeId = nudgeId,
+                    Status = Data.Entities.NotificationStatus.Waiting,
+                    Text = message
+                });
+                pushNotificationService.PushToUser(userId, title, message);
             }
-
-            return Task.FromResult(0);
 
 
             /* Example: 

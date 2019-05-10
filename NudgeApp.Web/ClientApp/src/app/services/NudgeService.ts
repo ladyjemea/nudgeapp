@@ -11,17 +11,16 @@ export class NudgeService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  saveNudge(type: TransporationType, forecast: ForecastDto, trip: TripDto): void {
-    var nudgeData: NudgeData = <NudgeData>{};
-    nudgeData.transportationType = type;
+  saveNudge(forecast: ForecastDto, trip: TripDto): void {
+    var nudgeData = <NudgeData>{};
     nudgeData.forecast = forecast;
     nudgeData.trip = trip;
-    this.http.post('Nudge/AddNudge', nudgeData, { responseType: 'text' }).subscribe(result => { });
+    console.log(trip);
+    this.http.post('Nudge/AddNudge', nudgeData, { responseType: 'text' }).pipe().subscribe(result => { });
   }
 }
 
 interface NudgeData {
-  transportationType: TransporationType;
   forecast: ForecastDto;
   trip: TripDto;
 }

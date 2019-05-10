@@ -28,8 +28,23 @@
         {
             var userId = Guid.Parse(HttpContext.User.Identities.First().Name);
 
-            //this.NudgeLogic.AddNudge(userId, nudgeData);
+            var nudge = new NudgeData
+             {
+                 Forecast = new WeatherDto
+                 {
+                     Ceiling = 4,
+                     DateTime = DateTime.Now,
+                     RoadCondition = RoadCondition.Dry
+                 },
+                 Trip = new TripDto
+                 {
+                     Distance = 5,
+                     Duration = 10
+                 }
+             };
 
+             this.NudgeLogic.AddNudge(userId, NudgeResult.Unknown, nudgeData.Forecast, nudgeData.Trip);
+             
             return this.Ok();
         }
 
@@ -44,8 +59,7 @@
 
     public class NudgeData
     {
-        public TransportationType TransportationType { get; set; }
-        public WeatherDto forecast { get; set; }
-        public TripDto trip { get; set; }
+        public WeatherDto Forecast { get; set; }
+        public TripDto Trip { get; set; }
     }
 }

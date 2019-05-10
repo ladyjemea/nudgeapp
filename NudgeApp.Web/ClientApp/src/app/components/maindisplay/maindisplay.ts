@@ -57,7 +57,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
             this.ref.detectChanges();
 
             this.walkingTrip = result;
-            this.walkingTrip.mode = TransporationType.Walk;
+            this.walkingTrip.transportationType = TransporationType.Walk;
           });
 
         this.travelService.GetTrip(this.query, date, google.maps.TravelMode.BICYCLING,
@@ -67,7 +67,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
             this.ref.detectChanges();
 
             this.bikeTrip = result;
-            this.bikeTrip.mode = TransporationType.Walk;
+            this.bikeTrip.transportationType = TransporationType.Bike;
           });
         this.travelService.GetTrip(this.query, date, google.maps.TravelMode.TRANSIT,
           (result) => {
@@ -76,7 +76,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
             this.ref.detectChanges();
 
             this.busTrip = result;
-            this.busTrip.mode = TransporationType.Walk;
+            this.busTrip.transportationType = TransporationType.Bus;
           });
 
       });
@@ -90,15 +90,14 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   Nudge(travelType: TransporationType) {
 
     var trip = this.getTrip(travelType);
-
-    this.nudgeService.saveNudge(travelType, this.travelForecast, trip);
+    this.nudgeService.saveNudge(this.travelForecast, trip);
 
     if (travelType === TransporationType.Car) {
       var tripLink = trip.link.substr(0, trip.link.indexOf("&travelmode"));
-      window.location.href = tripLink;
+     window.location.href = tripLink;
     }
-    else
-      window.location.href = trip.link;
+    //else
+      // window.location.href = trip.link;
   }
 
   private getTrip(travelType: TransporationType): TripDto {

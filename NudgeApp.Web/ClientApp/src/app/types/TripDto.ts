@@ -1,8 +1,8 @@
 import { Time } from "@angular/common";
 
 export interface TripDto {
-  mode: TransporationType;
-  duration: Time;
+  transportationType: TransporationType;
+  duration: number;
   distance: number;
   durationString: string;
   distanceString: string;

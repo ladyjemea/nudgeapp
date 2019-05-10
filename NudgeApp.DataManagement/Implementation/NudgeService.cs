@@ -24,15 +24,15 @@
             this.AnonymousNudgeRepository = anonymousNudgeRepository;
         }
 
-        public void AddNudge(Guid userId, TransportationType transportationType, WeatherDto forecast, TripDto trip)
+        public void AddNudge(Guid userId, NudgeResult nudgeResult, WeatherDto forecast, TripDto trip)
         {
-            this.NudgeRepository.Insert(NudgeResult.Successful, userId, forecast, trip);
+            this.NudgeRepository.Insert(nudgeResult, userId, forecast, trip);
 
             try
             {
                 this.AnonymousNudgeOracleRepository.Insert(new OracleNudgeEntity
                 {
-                    ActualTransportationType = transportationType,
+                    ActualTransportationType = trip.TransportationType,
                     PrecipitationProbability = forecast.PrecipitationProbability,
                     Result = NudgeResult.Successful,
                     RoadCondition = forecast.RoadCondition,
@@ -48,7 +48,46 @@
                 Console.WriteLine(ex.Message);
             }
         }
-        
+
+        public Guid AddNudge(Guid userId, WeatherDto forecast)
+        {
+            var id = this.NudgeRepository.Insert(new NudgeEntity
+            {
+                NudgeResult = NudgeResult.Unknown,
+                UserId = userId,
+                Type = TripType.Walk,
+                SkyCoverage = forecast.SkyCoverage,
+                Probability = forecast.Probabilities,
+                ReafFeelTemperature = forecast.RealFeelTemperature,
+                Temperature = forecast.Temperature,
+                RoadCondition = forecast.RoadCondition,
+                DateTime = forecast.DateTime,
+                WindCondition = forecast.WindCondition
+            });
+
+            try
+            {
+
+                this.AnonymousNudgeOracleRepository.Insert(new OracleNudgeEntity
+                {
+                    PrecipitationProbability = forecast.PrecipitationProbability,
+                    Result = NudgeResult.Successful,
+                    RoadCondition = forecast.RoadCondition,
+                    SkyCoverage = forecast.SkyCoverage,
+                    Temperature = forecast.Temperature,
+                    Wind = forecast.Wind,
+                    UserPreferedTransportationType = this.PreferencesRepository.GetPreferences(userId).ActualTransportationType
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error while inserting into oracle database.");
+                Console.WriteLine(ex.Message);
+            }
+
+            return id;
+        }
+
         public void Test()
         {
             var random = new Random();

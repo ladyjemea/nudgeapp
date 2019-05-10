@@ -30,9 +30,8 @@ export class TravelService {
               travelMode: mode
             }, (result, status) => {
               var res = <TripDto>{}
-              res.duration = <Time>{};
               res.distanceString = result.rows[0].elements[0].distance.text;
-              res.duration.minutes = result.rows[0].elements[0].duration.value;
+              res.duration = result.rows[0].elements[0].duration.value;
               res.durationString = result.rows[0].elements[0].duration.text;
               res.link = "https://www.google.com/maps/dir/?api=1&origin=" + latlng + "&destination=" + results[0].geometry.location + "&travelmode=" + mode.toString().toLocaleLowerCase();
               callback(res);
@@ -52,7 +51,7 @@ export class TravelService {
             travelObject.When = date;
             travelObject.Schedule = TripSchedule.Departure;
 
-            this.http.post('http://localhost:5000/Bus/GetTrip', travelObject, { responseType: 'json' }).pipe()
+            this.http.post('Bus/GetTrip', travelObject, { responseType: 'json' }).pipe()
               .subscribe(result => { callback(<TripDto>result); }, error => console.error(error));
           }
         });
