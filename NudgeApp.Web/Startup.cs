@@ -83,7 +83,7 @@ namespace NudgeApp.Web
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = "localhost";
-                options.InstanceName = "NudgeAppInstance";
+                options.InstanceName = "NudgeApp";
                 /*options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions()
                 {
                     

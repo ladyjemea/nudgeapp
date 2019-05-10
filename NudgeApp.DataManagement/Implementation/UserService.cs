@@ -72,7 +72,6 @@
 
         public void UpdateUserPreferences(Guid userId, TransportationType preferedTravelType)
         {
-            //var user = this.UserRepository.GetUser(userName);
             var preferences = this.PreferencesRepository.GetPreferences(userId) ?? this.PreferencesRepository.AddPreferences(userId);
 
             preferences.PreferedTransportationType = preferedTravelType;
