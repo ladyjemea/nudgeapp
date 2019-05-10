@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NotificationService, NudgeNotification } from '../../services/NotificationService';
 import { NudgeResult } from '../../types/Nudge';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
   templateUrl: './notificationHistory.html',
   providers: [NotificationService],
 })
@@ -12,11 +12,13 @@ export class NotificationHistoryComponent {
 
   notifications: Array<NudgeNotification> = [];
 
-  constructor(private notificationService: NotificationService) {
+  constructor(private notificationService: NotificationService, private router: Router) {
     this.GetNotifications();
   }
 
-  GoodNudge(id: any) {
+  GoodNudge(event, id: any) {
+    event.stopPropagation();
+
     this.notifications.forEach(not => {
       if (not.id == id) {
         not.nudgeResut = NudgeResult.Successful;
@@ -26,7 +28,9 @@ export class NotificationHistoryComponent {
     this.notificationService.SetNudge(id, NudgeResult.Successful).subscribe(result => this.GetNotifications());
   }
 
-  BadNudge(id: any) {
+  BadNudge(event, id: any) {
+    event.stopPropagation();
+
     this.notifications.forEach(not => {
       if (not.id == id) {
         not.nudgeResut = NudgeResult.Failed;
@@ -34,6 +38,10 @@ export class NotificationHistoryComponent {
     });
 
     this.notificationService.SetNudge(id, NudgeResult.Failed).subscribe(result => this.GetNotifications());
+  }
+
+  Details(id: any) {
+    this.router.navigateByUrl('/notification/' + id);
   }
 
   private GetNotifications() {

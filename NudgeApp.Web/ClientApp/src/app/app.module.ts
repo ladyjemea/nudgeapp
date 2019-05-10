@@ -27,6 +27,7 @@ import { TravelNowComponent } from './components/travelnow/travelnow';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { JwtInterceptor } from './services/JwtInterceptor';
 import { NotificationHistoryComponent } from './components/notifications/notificationHistory';
+import { NotificationDetailsComponent } from './components/notifications/notificationDetails';
 
 let gapiClientConfig: NgGapiClientConfig = {
   client_id: "600101543512-tnhs33cfbs09rqd6no8tajg5ooccoa0q.apps.googleusercontent.com",
@@ -46,7 +47,8 @@ let gapiClientConfig: NgGapiClientConfig = {
     MainaccessComponent,
     FeedbackComponent,
     TravelNowComponent,
-    NotificationHistoryComponent
+    NotificationHistoryComponent,
+    NotificationDetailsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -65,8 +67,8 @@ let gapiClientConfig: NgGapiClientConfig = {
       { path: 'mainaccess', component: MainaccessComponent },
       { path: 'feedback', component: FeedbackComponent },
       { path: 'search', component: TravelNowComponent },
-      { path: 'notificationHistory', component: NotificationHistoryComponent }
-
+      { path: 'notificationHistory', component: NotificationHistoryComponent },
+      { path: 'notification/:id', component: NotificationDetailsComponent },
     ]),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCCbgVPkBgwul0cofmo-VSMOefNSzrAOEo',

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import 'rxjs';
 import { Router } from '@angular/router';
 import { ForecastDto } from '../types/ForecastDto';
-import { TripDto, TransporationType } from '../types/TripDto';
+import { TripDto, TransportationType } from '../types/TripDto';
 
 @Injectable()
 export class NudgeService {

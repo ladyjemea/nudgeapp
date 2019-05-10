@@ -4,7 +4,7 @@ import 'rxjs';
 import { TravelService } from '../../services/TravelService';
 import { WeatherService } from '../../services/WeatherService';
 import { MapsAPILoader } from '@agm/core';
-import { TripDto, TransporationType } from '../../types/TripDto';
+import { TripDto, TransportationType } from '../../types/TripDto';
 import { ActivatedRoute } from '@angular/router';
 import { query } from '@angular/core/src/render3/query';
 import { ForecastDto } from '../../types/ForecastDto';
@@ -32,7 +32,7 @@ export class TravelNowComponent implements OnInit, OnDestroy {
   public query: string;
   public routeSub: any;
 
-  get transportationTypes() { return TransporationType; }
+  get transportationTypes() { return TransportationType; }
 
   constructor(private travelService: TravelService, private mapsAPILoader: MapsAPILoader, private ref: ChangeDetectorRef, private route: ActivatedRoute, private weatherService: WeatherService, private nudgeService: NudgeService) {
     this.weatherService.GetCurrentForecast().subscribe((forecast) => {
@@ -57,7 +57,7 @@ export class TravelNowComponent implements OnInit, OnDestroy {
             this.ref.detectChanges();
 
             this.walkingTrip = result;
-            this.walkingTrip.transportationType = TransporationType.Walk;
+            this.walkingTrip.transportationType = TransportationType.Walk;
           });
 
         this.travelService.GetTrip(this.query, date, google.maps.TravelMode.BICYCLING,
@@ -67,7 +67,7 @@ export class TravelNowComponent implements OnInit, OnDestroy {
             this.ref.detectChanges();
 
             this.bikeTrip = result;
-            this.bikeTrip.transportationType = TransporationType.Bike;
+            this.bikeTrip.transportationType = TransportationType.Bike;
           });
         this.travelService.GetTrip(this.query, date, google.maps.TravelMode.TRANSIT,
           (result) => {
@@ -76,7 +76,7 @@ export class TravelNowComponent implements OnInit, OnDestroy {
             this.ref.detectChanges();
 
             this.busTrip = result;
-            this.busTrip.transportationType = TransporationType.Bus;
+            this.busTrip.transportationType = TransportationType.Bus;
           });
 
       });
@@ -87,12 +87,12 @@ export class TravelNowComponent implements OnInit, OnDestroy {
     this.routeSub.unsubscribe()
   }
 
-  Nudge(travelType: TransporationType) {
+  Nudge(travelType: TransportationType) {
 
     var trip = this.getTrip(travelType);
     this.nudgeService.saveNudge(this.travelForecast, trip);
 
-    if (travelType === TransporationType.Car) {
+    if (travelType === TransportationType.Car) {
       var tripLink = trip.link.substr(0, trip.link.indexOf("&travelmode"));
      window.location.href = tripLink;
     }
@@ -100,15 +100,15 @@ export class TravelNowComponent implements OnInit, OnDestroy {
       window.location.href = trip.link;
   }
 
-  private getTrip(travelType: TransporationType): TripDto {
+  private getTrip(travelType: TransportationType): TripDto {
     switch (travelType) {
-      case TransporationType.Walk:
+      case TransportationType.Walk:
         return this.walkingTrip;
-      case TransporationType.Bike:
+      case TransportationType.Bike:
         return this.bikeTrip;
-      case TransporationType.Bus:
+      case TransportationType.Bus:
         return this.busTrip;
-      case TransporationType.Car:
+      case TransportationType.Car:
         return this.walkingTrip;
     }
   }

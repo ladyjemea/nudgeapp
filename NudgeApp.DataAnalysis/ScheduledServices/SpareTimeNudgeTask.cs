@@ -2,6 +2,7 @@
 {
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using NudgeApp.Common.Enums;
     using NudgeApp.Data.OracleDb.Queries;
     using NudgeApp.Data.Repositories.Interfaces;
     using NudgeApp.DataAnalysis.Implementation;
@@ -46,7 +47,7 @@
                 notificationRepository.Insert(new Data.Entities.NotificationEntity
                 {
                     NudgeId = nudgeId,
-                    Status = Data.Entities.NotificationStatus.Waiting,
+                    Status = NotificationStatus.Waiting,
                     Text = message
                 });
                 pushNotificationService.PushToUser(userId, title, message);

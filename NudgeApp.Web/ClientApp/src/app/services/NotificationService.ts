@@ -20,6 +20,13 @@ export class NotificationService {
 
     return this.http.get('Notification/Set', { params: params });
   }
+
+  public NotificationDetails(id: any): Observable<any> {
+    var params = new HttpParams();
+    params = params.append('notificationId', id);
+
+    return this.http.get('Notification/Details', { params: params });
+  }
 }
 
 export interface NudgeNotification {

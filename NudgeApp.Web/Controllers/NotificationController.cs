@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Distributed;
+    using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.DataAnalysis.Implementation;
     using NudgeApp.DataManagement.Implementation;
@@ -39,6 +40,15 @@
             var userId = Guid.Parse(HttpContext.User.Identities.First().Name);
 
             var result = this.PushNotificationLogic.GetAllNotifications(userId);
+
+            return this.Ok(result);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult<NotificationDto> Details(Guid notificationId)
+        {
+            var result = this.PushNotificationLogic.GetNudgeNotification(notificationId);
 
             return this.Ok(result);
         }

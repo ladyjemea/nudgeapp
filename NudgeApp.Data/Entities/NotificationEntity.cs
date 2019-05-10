@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.Data.Entities
 {
     using System;
+    using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities.Generic;
 
     public class NotificationEntity : DbEntity

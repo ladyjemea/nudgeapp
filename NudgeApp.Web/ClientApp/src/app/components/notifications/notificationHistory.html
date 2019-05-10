@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let notification of notifications"   [ngClass]="{'table-success': notification.nudgeResult == 0, 'table-danger': notification.nudgeResult == 1}">
+      <tr *ngFor="let notification of notifications"   [ngClass]="{'table-success': notification.nudgeResult == 0, 'table-danger': notification.nudgeResult == 1}" style="cursor:pointer" (click)="Details(notification.id)">
         <th scope="row" style="vertical-align:inherit; width:15% ">
           {{ notification.createdOn.getHours() + ':' + notification.createdOn.getMinutes() + ' ' + notification.createdOn.getDate() + '/' + notification.createdOn.getMonth() + '/' + notification.createdOn.getFullYear() }}
         </th>
@@ -18,8 +18,8 @@
         </td>
         <td>
           <div style="display:inline-block; float: right">
-            <button class="btn btn-success" style="margin-right:10px" (click)="GoodNudge(notification.id)">Good nudge!</button>
-            <button class="btn btn-danger" (click)="BadNudge(notification.id)">I hate this.</button>
+            <button class="btn btn-success" style="margin-right:10px" (click)="GoodNudge($event, notification.id)">Good nudge!</button>
+            <button class="btn btn-danger" (click)="BadNudge($event, notification.id)">I hate this.</button>
           </div>
         </td>
       </tr>

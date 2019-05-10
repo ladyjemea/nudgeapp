@@ -47,6 +47,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\components\feedback\feedback.ts" />
+    <None Remove="ClientApp\src\app\components\notifications\notificationDetails.ts" />
     <None Remove="ClientApp\src\app\components\notifications\notificationHistory.ts" />
     <None Remove="ClientApp\src\app\components\travelnow\travelnow.ts" />
     <None Remove="ClientApp\src\app\services\EventService.ts" />
@@ -60,12 +61,16 @@
     <None Remove="ClientApp\src\app\services\travelservice.ts" />
     <None Remove="ClientApp\src\app\services\WeatherService.ts" />
     <None Remove="ClientApp\src\app\types\ForecastDto.ts" />
+    <None Remove="ClientApp\src\app\types\NotificationDto.ts" />
     <None Remove="ClientApp\src\app\types\Nudge.ts" />
     <None Remove="ClientApp\src\app\types\TripDto.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\components\feedback\feedback.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\components\notifications\notificationDetails.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\components\notifications\notificationHistory.ts">
@@ -85,6 +90,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\UserService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\WeatherService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\types\ForecastDto.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\types\NotificationDto.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\types\Nudge.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

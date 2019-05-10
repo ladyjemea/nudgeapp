@@ -19,6 +19,22 @@ export enum RoadCondition {
   Snow
 }
 
+export enum WindCondition {
+  StrongWinds,
+  LightWinds,
+  Calm,
+}
+
+export enum Probabilities {
+  Rain,
+  Snow,
+  Ice,
+  Gust,
+  Normal,
+  Slippery,
+  NotEvaluated
+}
+
 export interface IForecastCallback {
   (result: ForecastDto): void;
 }

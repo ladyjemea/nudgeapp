@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.DataManagement.Implementation
 {
     using Microsoft.EntityFrameworkCore;
+    using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
@@ -38,6 +39,35 @@
                     })
                 .OrderBy(not => not.CreatedOn)
                 .ToList();
+        }
+
+        public NotificationDto GetNudgeNotification(Guid notificationId)
+        {
+            var notification = this.NotificationRepository.GetAll()
+                .Include(not => not.Nudge)
+                .FirstOrDefault(not => not.Id == notificationId);
+
+            var notificationDto = new NotificationDto
+            {
+                Text = notification.Text,
+                NudgeResult = notification.Nudge.NudgeResult,
+                CloudCoveragePercent = notification.Nudge.CloudCoveragePercent,
+                DateTime = notification.Nudge.DateTime,
+                Distance = notification.Nudge.Distance,
+                Duration = notification.Nudge.Duration,
+                PrecipitationProbability = notification.Nudge.PrecipitationProbability,
+                Probability = notification.Nudge.Probability,
+                ReafFeelTemperature = notification.Nudge.ReafFeelTemperature,
+                RoadCondition = notification.Nudge.RoadCondition,
+                SkyCoverage = notification.Nudge.SkyCoverage,
+                Temperature = notification.Nudge.Temperature,
+                TransportationType = notification.Nudge.TransportationType,
+                Type = notification.Nudge.Type,
+                Wind = notification.Nudge.Wind,
+                WindCondition = notification.Nudge.WindCondition
+            };
+
+            return notificationDto;
         }
 
         public void SetNudgeResult(Guid notificationId, NudgeResult nudgeResult)

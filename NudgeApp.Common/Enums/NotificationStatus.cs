@@ -1,4 +1,4 @@
-﻿namespace NudgeApp.Data.Entities
+﻿namespace NudgeApp.Common.Enums
 {
     public enum NotificationStatus
     {
