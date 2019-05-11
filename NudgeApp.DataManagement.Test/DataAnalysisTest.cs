@@ -40,26 +40,13 @@
             var userId = Guid.NewGuid();
             var nudgeId = Guid.NewGuid();
 
-            //for (var i = 0; i < 100; i++)
-            //{
-            //    this.nudgeRepository.Insert(new NudgeEntity
-            //    {
-            //        Id = nudgeId,
-            //        NudgeResult = NudgeResult.Successful,
-            //        Duration = this.random.Next(50, 100),
-            //        Temperature = this.random.Next(15,25),
-            //        SkyCoverage = SkyCoverageType.Clear,
-            //        UserId = userId
-            //    });
-            //}
-
             for (var i = 0; i < 100; i++)
             {
                 this.nudgeRepository.Insert(new NudgeEntity
                 {
                     Id = nudgeId,
-                    NudgeResult = (NudgeResult)this.random.Next(2),
-                    Time = new DateTime(2019, 5, random.Next(6,12),17,0,0),
+                    NudgeResult = NudgeResult.Failed,
+                    Time = new DateTime(2019, 5, 6, 17 ,0,0),
                     UserId = userId
                 });
             }

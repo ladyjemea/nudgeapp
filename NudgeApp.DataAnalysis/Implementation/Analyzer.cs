@@ -31,19 +31,21 @@ namespace NudgeApp.DataAnalysis.API
 
         }
 
-        public bool ShouldINudge()
+        public bool ShouldINudge(DayOfWeek dayOfWeek)
         {
-            var succesfulCount = this.NudgeOracleRepository.ApproxCount(new QueryFilter
+            var (succesfulCount, _) = this.NudgeOracleRepository.ApproxCount(new QueryFilter
             {
                 Result = Common.Enums.NudgeResult.Successful,
                 MinTemperature = 15,
+                WeekDay = dayOfWeek,
                 MaxPrecipitation = 50
             });
 
-            var failCount = this.NudgeOracleRepository.ApproxCount(new QueryFilter
+            var (failCount, _) = this.NudgeOracleRepository.ApproxCount(new QueryFilter
             {
                 Result = Common.Enums.NudgeResult.Failed,
                 MinTemperature = 15,
+                WeekDay = dayOfWeek,
                 MaxPrecipitation = 50
             });
 
