@@ -1,4 +1,4 @@
-﻿namespace NudgeApp.DataAnalysis.Implementation
+﻿namespace NudgeApp.DataManagement.Helpers
 {
     using System;
     using System.Collections.Generic;
@@ -6,6 +6,7 @@
     using Newtonsoft.Json;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
+    using NudgeApp.DataManagement.Implementation.Interfaces;
     using WebPush;
 
     public class PushNotificationService : IPushNotificationService
@@ -14,10 +15,12 @@
         private const string privateKey = "zGZk1mpuMvOdjCedmOCjn8RYfIq4AXks-RNN8zeDlf0";
 
         private readonly ISubscritionRepository PushNotificationRepository;
+        private readonly INotificationService NotificationService;
 
-        public PushNotificationService(ISubscritionRepository pushNotificationRepository)
+        public PushNotificationService(ISubscritionRepository pushNotificationRepository, INotificationService notificationService)
         {
             this.PushNotificationRepository = pushNotificationRepository;
+            this.NotificationService = notificationService;
         }
 
         public void PushToUser(Guid userId, string title, string message)
@@ -36,7 +39,7 @@
 
             foreach (var sub in subscriptions)
             {
-              // this.SendNotification(sub, "NudgeApp News", "It is a good day to have some fun in the sun!");
+               this.SendNotification(sub, "NudgeApp News", "It is a good day to have some fun in the sun!", "");
             }
         }
 

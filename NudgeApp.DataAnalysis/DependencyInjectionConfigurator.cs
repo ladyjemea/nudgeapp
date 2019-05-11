@@ -11,7 +11,6 @@
         public static void Configure(IServiceCollection services)
         {
             services.AddSingleton<IAnalyzer, Analyzer>();
-            services.AddSingleton<IPushNotificationService, PushNotificationService>();
 
             services.AddSingleton<IHostedService, SpareTimeNudgeTask>();
         }

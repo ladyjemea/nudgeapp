@@ -23,6 +23,16 @@
             this.NudgeRepository = nudgeRepository;
         }
 
+        public void Insert(string message, Guid nudgeId)
+        {
+            this.NotificationRepository.Insert(new NotificationEntity
+            {
+                NudgeId = nudgeId,
+                Status = NotificationStatus.Waiting,
+                Text = message
+            });
+        }
+
         public IList<Notification> GetAllNotifications(Guid userId)
         {
             return this.NotificationRepository.GetAll()
@@ -37,7 +47,7 @@
                         Text = notification.Text,
                         NudgeResult = notification.Nudge.NudgeResult
                     })
-                .OrderBy(not => not.CreatedOn)
+                .OrderByDescending(not => not.CreatedOn)
                 .ToList();
         }
 
@@ -50,6 +60,7 @@
             var notificationDto = new NotificationDto
             {
                 Text = notification.Text,
+                CreatedOn = notification.CreatedOn,
                 NudgeResult = notification.Nudge.NudgeResult,
                 CloudCoveragePercent = notification.Nudge.CloudCoveragePercent,
                 DateTime = notification.Nudge.DateTime,

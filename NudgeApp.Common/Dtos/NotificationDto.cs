@@ -6,6 +6,7 @@ namespace NudgeApp.Common.Dtos
     public class NotificationDto
     {
         public string Text { get; set; }
+        public DateTime CreatedOn { get; set; }
         public NudgeResult NudgeResult { get; set; }
         public TransportationType TransportationType { get; set; }
         public TripType Type { get; set; }

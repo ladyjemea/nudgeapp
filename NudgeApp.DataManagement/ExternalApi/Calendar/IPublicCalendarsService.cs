@@ -6,5 +6,6 @@
     public interface IPublicCalendarsService
     {
         Task<IList<CalendarEvent>> GetEvents();
+        Task<CalendarEvent> GetTodaysEvent();
     }
 }
