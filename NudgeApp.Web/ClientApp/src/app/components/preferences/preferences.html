@@ -1,7 +1,31 @@
 <div>
   <h2>Preferences</h2>
+  <br />
   <div>
     <h3>Temperature range:</h3>
     <ng5-slider [(value)]="value" [(highValue)]="highValue" [options]="options"></ng5-slider>
   </div>
-</div>
+
+  <br />
+
+  <div class="form-group">
+    <h3> Preferred travel type:</h3>
+    <select class="custom-select">
+      <option selected="">Open this select menu</option>
+      <option value="1">Car</option>
+      <option value="2">Bus</option>
+      <option value="3">Bike</option>
+      <option value="4">Walk</option>
+    </select>
+  </div>
+  <br />
+  <div class="form-group">
+    <h3> Weather preferences:</h3>
+    <div class="custom-control custom-switch">
+      <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
+      <label class="custom-control-label" for="customSwitch1">Snow</label> <br />
+      <label class="custom-control-label" for="customSwitch2">Rain</label>
+    </div>
+    <br />
+    <button type="button" class="btn btn-primary">Save</button>
+  </div>

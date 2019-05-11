@@ -28,8 +28,8 @@
             var nudgeOracle = this.nudgeOracleRepository.ApproxCount(new QueryFilter
             {
                 Result = Common.Enums.NudgeResult.Successful,
-                MinTemperature = (int)weather.RawData.Temperature - 5,
-                MaxTemperature = (int)weather.RawData.Temperature + 5
+                MinTemperature = (int)weather.Temperature - 5,
+                MaxTemperature = (int)weather.Temperature + 5
             });
 
             var filteredList = nudges.Where(nudge => nudge.Temperature > (int)weather.Temperature - 5 && nudge.Temperature < (int)weather.Temperature + 5);

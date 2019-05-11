@@ -1,0 +1,12 @@
+body {
+}
+button.btn {
+  color: white;
+  padding: 12px 18px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}

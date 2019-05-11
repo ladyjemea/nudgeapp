@@ -24,5 +24,6 @@
 
         public virtual UserEntity User { get; set; }
         public Guid UserId { get; set; }
+        public DateTime Time { get; set; }
     }
 }

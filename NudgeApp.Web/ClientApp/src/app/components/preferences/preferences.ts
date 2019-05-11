@@ -4,6 +4,7 @@ import { Options } from 'ng5-slider';
 @Component({
   selector: 'app-range-slider',
   templateUrl: './preferences.html',
+  styleUrls: ['./preferences.css'],
 })
 
 export class PreferencesComponent {
