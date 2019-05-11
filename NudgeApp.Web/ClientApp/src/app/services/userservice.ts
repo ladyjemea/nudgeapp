@@ -23,6 +23,6 @@ export class UserService {
 
   savePreferenecs(preferences: PreferencesDto) {
     this.http.post('Preferences/Set', preferences).pipe()
-      .subscribe(result => { }, error => console.error(error));
+      .subscribe(result => {  }, error => console.error(error));
   }
 }
