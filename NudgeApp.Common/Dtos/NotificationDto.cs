@@ -5,11 +5,12 @@ namespace NudgeApp.Common.Dtos
 {
     public class NotificationDto
     {
+        public Guid Id { get; set; }
         public string Text { get; set; }
         public DateTime CreatedOn { get; set; }
         public NudgeResult NudgeResult { get; set; }
         public TransportationType TransportationType { get; set; }
-        public TripType Type { get; set; }
+        public TripType TripType { get; set; }
         public int Distance { get; set; }
         public int Duration { get; set; }
         public float ReafFeelTemperature { get; set; }

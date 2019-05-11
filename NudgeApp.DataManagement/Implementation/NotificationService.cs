@@ -59,6 +59,7 @@
 
             var notificationDto = new NotificationDto
             {
+                Id = notification.Id,
                 Text = notification.Text,
                 CreatedOn = notification.CreatedOn,
                 NudgeResult = notification.Nudge.NudgeResult,
@@ -73,7 +74,7 @@
                 SkyCoverage = notification.Nudge.SkyCoverage,
                 Temperature = notification.Nudge.Temperature,
                 TransportationType = notification.Nudge.TransportationType,
-                Type = notification.Nudge.Type,
+                TripType = notification.Nudge.Type,
                 Wind = notification.Nudge.Wind,
                 WindCondition = notification.Nudge.WindCondition
             };

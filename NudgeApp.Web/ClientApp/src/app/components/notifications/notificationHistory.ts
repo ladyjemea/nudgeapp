@@ -21,7 +21,7 @@ export class NotificationHistoryComponent {
 
     this.notifications.forEach(not => {
       if (not.id == id) {
-        not.nudgeResut = NudgeResult.Successful;
+        not.nudgeResult = NudgeResult.Successful;
       }
     });
 
@@ -33,7 +33,7 @@ export class NotificationHistoryComponent {
 
     this.notifications.forEach(not => {
       if (not.id == id) {
-        not.nudgeResut = NudgeResult.Failed;
+        not.nudgeResult = NudgeResult.Failed;
       }
     });
 

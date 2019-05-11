@@ -3,11 +3,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import 'rxjs';
 import { Observable } from 'rxjs';
 import { NudgeResult } from '../types/Nudge';
+import { NotificationDto } from '../types/NotificationDto';
 
 @Injectable()
 export class NotificationService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public GetAllNotifications() {
     return this.http.get('Notification/GetAll', { responseType: "json" });
@@ -21,20 +22,20 @@ export class NotificationService {
     return this.http.get('Notification/Set', { params: params });
   }
 
-  public NotificationDetails(id: any): Observable<any> {
+  public NotificationDetails(id: any): Observable<NotificationDto> {
     var params = new HttpParams();
     params = params.append('notificationId', id);
 
-    return this.http.get('Notification/Details', { params: params });
+    return <Observable<NotificationDto>>this.http.get('Notification/Details', { params: params });
   }
 }
 
 export interface NudgeNotification {
   id: any,
-  status: NotificationStatus ,
+  status: NotificationStatus,
   createdOn: Date,
   text: string,
-  nudgeResut: NudgeResult
+  nudgeResult: NudgeResult
 }
 
 export enum NotificationStatus {

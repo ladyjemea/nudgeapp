@@ -3,22 +3,24 @@ import { TransportationType } from "./TripDto";
 import { SkyCoverageType, WindCondition, RoadCondition, Probabilities } from "./ForecastDto";
 
 export interface NotificationDto {
-  Text: string,
-  NudgeResult: NudgeResult,
-  TransportationType: TransportationType,
-  Type: TripType,
-  Distance: number,
-  Duration: number,
-  ReafFeelTemperature: number,
-  Temperature: number,
-  Wind: number,
-  PrecipitationProbability: number,
-  CloudCoveragePercent: number,
-  SkyCoverage: SkyCoverageType,
-  WindCondition: WindCondition,
-  Probability: Probabilities,
-  RoadCondition: RoadCondition,
-  DateTime: Date
+  id: any,
+  text: string,
+  createdOn: Date,
+  nudgeResult: NudgeResult,
+  transportationType: TransportationType,
+  tripType: TripType,
+  distance: number,
+  duration: number,
+  reafFeelTemperature: number,
+  temperature: number,
+  wind: number,
+  precipitationProbability: number,
+  cloudCoveragePercent: number,
+  skyCoverage: SkyCoverageType,
+  windCondition: WindCondition,
+  probability: Probabilities,
+  roadCondition: RoadCondition,
+  dateTime: Date
 }
 
 export enum TripType {
