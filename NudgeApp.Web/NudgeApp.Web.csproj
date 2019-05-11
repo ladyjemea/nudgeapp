@@ -64,6 +64,7 @@
     <None Remove="ClientApp\src\app\types\ForecastDto.ts" />
     <None Remove="ClientApp\src\app\types\NotificationDto.ts" />
     <None Remove="ClientApp\src\app\types\Nudge.ts" />
+    <None Remove="ClientApp\src\app\types\PreferencesDto.ts" />
     <None Remove="ClientApp\src\app\types\TripDto.ts" />
   </ItemGroup>
 
@@ -100,6 +101,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\types\Nudge.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\types\PreferencesDto.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\types\TravelVariant.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\types\TripDto.ts" />
   </ItemGroup>

@@ -77,13 +77,6 @@
             return this.Unauthorized();
         }
 
-        public class GoogleUser
-        {
-            public string Id { get; set; }
-            public string TokenId { get; set; }
-            public string Email { get; set; }
-        }
-
         [Authorize]
         [HttpGet]
         public ActionResult CheckToken()
@@ -107,6 +100,13 @@
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        public class GoogleUser
+        {
+            public string Id { get; set; }
+            public string TokenId { get; set; }
+            public string Email { get; set; }
         }
     }
 }
