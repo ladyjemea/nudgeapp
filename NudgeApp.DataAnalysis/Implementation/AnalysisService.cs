@@ -28,8 +28,8 @@
             var nudgeOracle = this.nudgeOracleRepository.ApproxCount(new QueryFilter
             {
                 Result = Common.Enums.NudgeResult.Successful,
-                MinTemperature = (int)weather.Temperature - 5,
-                MaxTemperature = (int)weather.Temperature + 5
+                MinTemperature = (int)weather.RawData.Temperature - 5,
+                MaxTemperature = (int)weather.RawData.Temperature + 5
             });
 
             var filteredList = nudges.Where(nudge => nudge.Temperature > (int)weather.Temperature - 5 && nudge.Temperature < (int)weather.Temperature + 5);
@@ -61,7 +61,7 @@
 
             var nudgeOracle = this.nudgeOracleRepository.ApproxCount(new QueryFilter
             {
-                Result = Common.Enums.NudgeResult.Successful,
+                Result= Common.Enums.NudgeResult.Successful,
                 ActualTransportationType = Common.Enums.TransportationType.Walk
             });
 
@@ -96,7 +96,7 @@
                 ActualTransportationType = Common.Enums.TransportationType.Walk
             });
 
-            var distancefilter = nudges.Where(nudge => nudge.TransportationType == Common.Enums.TransportationType.Walk && nudge.Distance > tripDistance - 10 && nudge.Distance < tripDistance + 10);
+            var distancefilter = nudges.Where(nudge => nudge.TransportationType == Common.Enums.TransportationType.Walk && nudge.Distance > tripDistance- 10 && nudge.Distance < tripDistance + 10);
 
             var success = distancefilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Successful);
             var fail = distancefilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Failed);

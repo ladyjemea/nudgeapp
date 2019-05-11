@@ -40,15 +40,16 @@
             var userId = Guid.NewGuid();
             var nudgeId = Guid.NewGuid();
 
-            this.nudgeRepository.Insert(new NudgeEntity
+            for (var i = 0; i < 100; i++)
             {
-                Id = nudgeId,
-                Duration = this.random.Next(50, 100),
-                NudgeResult = (NudgeResult)this.random.Next(3),
-                Temperature = this.random.Next(80) - 40,
-                UserId = userId
-            });
-
+                this.nudgeRepository.Insert(new NudgeEntity
+                {
+                    Id = nudgeId,
+                    NudgeResult = NudgeResult.Failed,
+                    Time = new DateTime(2019, 5, 6, 17 ,0,0),
+                    UserId = userId
+                });
+            }
 
             var result = this.nudgeRepository.Get(nudgeId);
 
