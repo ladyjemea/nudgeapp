@@ -10,9 +10,9 @@
     {
         public static void Configure(IServiceCollection services)
         {
-            services.AddSingleton<IAnalyzer, Analyzer>();
-
-            services.AddSingleton<IHostedService, SpareTimeNudgeTask>();
+            services.AddScoped<IAnalyzer, Analyzer>();
+            services.AddTransient<IHostedService, SpareTimeNudgeTask>();
+            services.AddTransient<IHostedService, ScheduleTask>();
         }
     }
 }

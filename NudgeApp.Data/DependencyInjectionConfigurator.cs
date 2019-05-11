@@ -10,15 +10,15 @@
     {
         public static void Configure(IServiceCollection services)
         {
-            services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<IPreferencesRepository, PreferencesRepository>();
-            services.AddSingleton<IActualPreferencesRepository, ActualPreferencesRepository>();
-            services.AddSingleton<INudgeRepository, NudgeRepository>();
-            services.AddSingleton<INudgeOracleConnection, NudgeOracleConnection>();
-            services.AddSingleton<INudgeOracleRepository, NudgeOracleRepository>();
-            services.AddSingleton<ISubscritionRepository, SubscriptionRepository>();
-            services.AddSingleton<INotificationRepository, NotificationRepository>();
-            services.AddSingleton<IAnonymousNudgeRepository, AnonymousNudgeRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPreferencesRepository, PreferencesRepository>();
+            services.AddScoped<IActualPreferencesRepository, ActualPreferencesRepository>();
+            services.AddScoped<INudgeRepository, NudgeRepository>();
+            services.AddScoped<INudgeOracleConnection, NudgeOracleConnection>();
+            services.AddScoped<INudgeOracleRepository, NudgeOracleRepository>();
+            services.AddScoped<ISubscritionRepository, SubscriptionRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<IAnonymousNudgeRepository, AnonymousNudgeRepository>();
         }
     }
 }

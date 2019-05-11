@@ -14,13 +14,14 @@
     /* Example from:
      * https://thinkrethink.net/2018/05/31/run-scheduled-background-tasks-in-asp-net-core/
      * https://github.com/pgroene/ASPNETCoreScheduler
-     *  ┌───────────── minute (0 - 59)
-     *  │ ┌───────────── hour (0 - 23)
-     *  │ │ ┌───────────── day of month (1 - 31)
-     *  │ │ │ ┌───────────── month (1 - 12)
-     *  │ │ │ │ ┌───────────── day of week (0 - 6) (Sunday to Saturday; 7 is also Sunday on some systems)
-     *  │ │ │ │ │                                       
-     *  * * * * *
+     *  ┌───────────── second (0 - 59)
+     *    ┌───────────── minute (0 - 59)
+     *    │ ┌───────────── hour (0 - 23)
+     *    │ │ ┌───────────── day of month (1 - 31)
+     *    │ │ │ ┌───────────── month (1 - 12)
+     *    │ │ │ │ ┌───────────── day of week (0 - 6) (Sunday to Saturday; 7 is also Sunday on some systems)
+     *    │ │ │ │ │                                       
+     *    * * * * *
      */
     public class ScheduleTask : TimeTaskScheduler
     {
@@ -31,7 +32,7 @@
             this.Logger = logger;
         }
 
-        protected override string Schedule => "* */1 * * * *";
+        protected override string Schedule => "*/5 * * * * *";
 
         public async override Task ScheduledTask(IServiceProvider serviceProvider)
         {

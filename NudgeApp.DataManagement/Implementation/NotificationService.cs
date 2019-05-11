@@ -1,6 +1,7 @@
 ﻿namespace NudgeApp.DataManagement.Implementation
 {
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
@@ -15,12 +16,14 @@
         private readonly ISubscritionRepository SubscritionRepository;
         private readonly INotificationRepository NotificationRepository;
         private readonly INudgeRepository NudgeRepository;
+        private readonly ILogger<NotificationService> logger;
 
-        public NotificationService(ISubscritionRepository subscritionRepository, INotificationRepository notificationRepository, INudgeRepository nudgeRepository)
+        public NotificationService(ILogger<NotificationService> logger,  ISubscritionRepository subscritionRepository, INotificationRepository notificationRepository, INudgeRepository nudgeRepository)
         {
             this.SubscritionRepository = subscritionRepository;
             this.NotificationRepository = notificationRepository;
             this.NudgeRepository = nudgeRepository;
+            this.logger = logger;
         }
 
         public void Insert(string message, Guid nudgeId)
@@ -84,6 +87,13 @@
 
         public void SetNudgeResult(Guid notificationId, NudgeResult nudgeResult)
         {
+            if (notificationId == Guid.Empty)
+            {
+                this.logger.LogWarning("Guid is empty");
+
+                return;
+            }
+
             var notification = this.NotificationRepository.Get(notificationId);
             var nudge = this.NudgeRepository.Get(notification.NudgeId);
 

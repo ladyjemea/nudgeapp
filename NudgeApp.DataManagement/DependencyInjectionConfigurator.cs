@@ -21,8 +21,8 @@
             services.AddTransient<IDataAgregator, DataAgregator>();
             services.AddTransient<IPublicCalendarsService, PublicCalendarsService>();
 
-            services.AddSingleton<IMemoryCacheService, MemoryCacheService>();
-            services.AddSingleton<IPushNotificationService, PushNotificationService>();
+            services.AddScoped<IMemoryCacheService, MemoryCacheService>();
+            services.AddScoped<IPushNotificationService, PushNotificationService>();
         }
     }
 }
