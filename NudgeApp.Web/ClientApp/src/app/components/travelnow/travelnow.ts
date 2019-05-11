@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { query } from '@angular/core/src/render3/query';
 import { ForecastDto } from '../../types/ForecastDto';
 import { NudgeService } from '../../services/NudgeService';
+import { NudgeResult } from '../../types/Nudge';
 
 
 @Component({
@@ -90,14 +91,16 @@ export class TravelNowComponent implements OnInit, OnDestroy {
   Nudge(travelType: TransportationType) {
 
     var trip = this.getTrip(travelType);
-    this.nudgeService.saveNudge(this.travelForecast, trip);
 
     if (travelType === TransportationType.Car) {
+      this.nudgeService.saveNudge(NudgeResult.Failed, this.travelForecast, trip);
       var tripLink = trip.link.substr(0, trip.link.indexOf("&travelmode"));
-     window.location.href = tripLink;
+      window.location.href = tripLink;
     }
-    else
+    else {
+      this.nudgeService.saveNudge(NudgeResult.Successful, this.travelForecast, trip);
       window.location.href = trip.link;
+    }
   }
 
   private getTrip(travelType: TransportationType): TripDto {

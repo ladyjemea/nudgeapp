@@ -49,6 +49,7 @@
     <None Remove="ClientApp\src\app\components\feedback\feedback.ts" />
     <None Remove="ClientApp\src\app\components\notifications\notificationDetails.ts" />
     <None Remove="ClientApp\src\app\components\notifications\notificationHistory.ts" />
+    <None Remove="ClientApp\src\app\components\preferences\preferences.ts" />
     <None Remove="ClientApp\src\app\components\travelnow\travelnow.ts" />
     <None Remove="ClientApp\src\app\services\EventService.ts" />
     <None Remove="ClientApp\src\app\services\JwtInterceptor.ts" />
@@ -74,6 +75,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\components\notifications\notificationHistory.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\components\preferences\preferences.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\components\travelnow\travelnow.ts" />

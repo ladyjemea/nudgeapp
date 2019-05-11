@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes, Route } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Ng5SliderModule } from 'ng5-slider';
 
 import { AgmCoreModule } from '@agm/core';
 
@@ -28,6 +29,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { JwtInterceptor } from './services/JwtInterceptor';
 import { NotificationHistoryComponent } from './components/notifications/notificationHistory';
 import { NotificationDetailsComponent } from './components/notifications/notificationDetails';
+import { PreferencesComponent } from './components/preferences/preferences';
 
 let gapiClientConfig: NgGapiClientConfig = {
   client_id: "600101543512-tnhs33cfbs09rqd6no8tajg5ooccoa0q.apps.googleusercontent.com",
@@ -48,7 +50,8 @@ let gapiClientConfig: NgGapiClientConfig = {
     FeedbackComponent,
     TravelNowComponent,
     NotificationHistoryComponent,
-    NotificationDetailsComponent
+    NotificationDetailsComponent,
+    PreferencesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -58,6 +61,7 @@ let gapiClientConfig: NgGapiClientConfig = {
     }),
     HttpClientModule,
     FormsModule,
+    Ng5SliderModule,
     CommonModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: true }),
     RouterModule.forRoot([
@@ -69,6 +73,7 @@ let gapiClientConfig: NgGapiClientConfig = {
       { path: 'search', component: TravelNowComponent },
       { path: 'notificationHistory', component: NotificationHistoryComponent },
       { path: 'notification/:id', component: NotificationDetailsComponent },
+      { path: 'preferences', component: PreferencesComponent },
     ]),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCCbgVPkBgwul0cofmo-VSMOefNSzrAOEo',

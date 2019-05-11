@@ -38,8 +38,7 @@
                     RoadCondition = forecast.RoadCondition,
                     SkyCoverage = forecast.SkyCoverage,
                     Temperature = forecast.Temperature,
-                    Wind = forecast.Wind,
-                    UserPreferedTransportationType = this.PreferencesRepository.GetPreferences(userId).ActualTransportationType
+                    Wind = forecast.Wind
                 });
             }
             catch (Exception ex)
@@ -76,7 +75,6 @@
                     SkyCoverage = forecast.SkyCoverage,
                     Temperature = forecast.Temperature,
                     Wind = forecast.Wind,
-                    UserPreferedTransportationType = this.PreferencesRepository.GetPreferences(userId).ActualTransportationType
                 });
             }
             catch (Exception ex)

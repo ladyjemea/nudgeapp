@@ -26,7 +26,8 @@ export enum TransportationType {
   Car,
   Bus,
   Bike,
-  Walk
+  Walk,
+  Unknown
 }
 
 export interface TravelObject {

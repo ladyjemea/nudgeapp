@@ -50,7 +50,7 @@
 
                 var trip = new TripDto();
 
-                this.nudgeService.AddNudge(userIds[random.Next(userIds.Count)], (TransportationType)(random.Next(3)), forecast, trip);
+             //   this.nudgeService.AddNudge(userIds[random.Next(userIds.Count)], (TransportationType)(random.Next(3)), forecast, trip);
             }
         }
 

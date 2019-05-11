@@ -4,10 +4,9 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
-    using System.Text;
     using System.Threading.Tasks;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
-    using NudgeApp.DataManagement.Implementation.Interfaces;
+    using NudgeApp.DataManagement.Helpers;
     using NudgeApp.Testing.Tests.Interfaces;
 
     public class InMemoryStoreTesting : IInMemoryStoreTesting

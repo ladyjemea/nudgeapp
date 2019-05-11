@@ -28,22 +28,7 @@
         {
             var userId = Guid.Parse(HttpContext.User.Identities.First().Name);
 
-            var nudge = new NudgeData
-             {
-                 Forecast = new WeatherDto
-                 {
-                     Ceiling = 4,
-                     DateTime = DateTime.Now,
-                     RoadCondition = RoadCondition.Dry
-                 },
-                 Trip = new TripDto
-                 {
-                     Distance = 5,
-                     Duration = 10
-                 }
-             };
-
-             this.NudgeLogic.AddNudge(userId, NudgeResult.Unknown, nudgeData.Forecast, nudgeData.Trip);
+             this.NudgeLogic.AddNudge(userId, nudgeData.NudgeResult, nudgeData.Forecast, nudgeData.Trip);
              
             return this.Ok();
         }
@@ -59,6 +44,7 @@
 
     public class NudgeData
     {
+        public NudgeResult NudgeResult { get; set; }
         public WeatherDto Forecast { get; set; }
         public TripDto Trip { get; set; }
     }

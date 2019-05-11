@@ -4,9 +4,9 @@
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities.Generic;
 
-    public class PreferencesEntity : DbEntity
+    public class ActualPreferencesEntity : DbEntity
     {
-        public TransportationType PreferedTransportationType { get; set; }
+        public TransportationType TransportationType { get; set; }
         public int MinTemperature { get; set; }
         public int MaxTemperature { get; set; }
         public bool RainyTrip { get; set; }

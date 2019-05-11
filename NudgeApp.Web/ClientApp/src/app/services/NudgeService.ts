@@ -4,6 +4,7 @@ import 'rxjs';
 import { Router } from '@angular/router';
 import { ForecastDto } from '../types/ForecastDto';
 import { TripDto, TransportationType } from '../types/TripDto';
+import { NudgeResult } from '../types/Nudge';
 
 @Injectable()
 export class NudgeService {
@@ -11,7 +12,7 @@ export class NudgeService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  saveNudge(forecast: ForecastDto, trip: TripDto): void {
+  saveNudge(nudgeResult: NudgeResult, forecast: ForecastDto, trip: TripDto): void {
     var nudgeData = <NudgeData>{};
     nudgeData.forecast = forecast;
     nudgeData.trip = trip;
@@ -20,6 +21,7 @@ export class NudgeService {
 }
 
 interface NudgeData {
+  nudgeResult: NudgeResult;
   forecast: ForecastDto;
   trip: TripDto;
 }
