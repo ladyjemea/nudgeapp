@@ -7,5 +7,6 @@
     {
         void RunTestAnonymousDatabase();
         void InsertRows(int entryCount, List<Guid> userIds = null);
+        void Run();
     }
 }

@@ -1,8 +1,6 @@
 ﻿namespace NudgeApp.Data.OracleDb.Queries
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
     using NudgeApp.Common.Enums;
 
     public class QueryFilter
@@ -18,5 +16,9 @@
         public int? MaxWind { get; set; }
         public int? MinPrecipitation { get; set; }
         public int? MaxPrecipitation { get; set; }
+        public NudgeResult Result_fail { get; set; }
+        public DateTime? MinDate { get; set; }
+        public DateTime? MaxDate { get; set; }
+        public DateTime? Time { get; set; }
     }
 }

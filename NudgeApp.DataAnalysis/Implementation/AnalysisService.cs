@@ -12,8 +12,8 @@
         private readonly IWeatherService WeatherService;
         private readonly INudgeRepository NudgeRepository;
         private readonly INudgeOracleRepository nudgeOracleRepository;
-        
-        
+
+
         public AnalysisService(IWeatherService weather, INudgeRepository nudge, INudgeOracleRepository nudgeOracle)
         {
             this.WeatherService = weather;
@@ -30,7 +30,7 @@
                 Result = Common.Enums.NudgeResult.Successful,
                 MinTemperature = (int)weather.RawData.Temperature - 5,
                 MaxTemperature = (int)weather.RawData.Temperature + 5
-            } );
+            });
 
             var filteredList = nudges.Where(nudge => nudge.Temperature > (int)weather.RawData.Temperature - 5 && nudge.Temperature < (int)weather.RawData.Temperature + 5);
 
@@ -58,7 +58,7 @@
         public bool Duration(Guid userId, int tripDuration)
         {
             var nudges = this.NudgeRepository.GetAll().Where(nudge => nudge.UserId == userId).ToList();
-            
+
             var nudgeOracle = this.nudgeOracleRepository.ApproxCount(new QueryFilter
             {
                 Result= Common.Enums.NudgeResult.Successful,
@@ -72,11 +72,11 @@
             var result_success = durationfilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Successful);
             var result_fail = durationfilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Failed);
 
-            if(success  > fail)
+            if (success > fail)
             {
                 return true;
             }
-            else if(result_success > result_fail)
+            else if (result_success > result_fail)
             {
                 return true;
             }
@@ -118,6 +118,4 @@
 
         }
     }
-    }
-
-
+}

@@ -127,8 +127,8 @@
             return (Convert.ToInt32(result), watch.ElapsedMilliseconds);
         }
 
-        //public (int result, long duration) ApproxCount(QueryFilter queryFilter = null)
-        public int ApproxCount(QueryFilter queryFilter = null)
+        public (int result, long duration) ApproxCount(QueryFilter queryFilter = null)
+        //public int ApproxCount(QueryFilter queryFilter = null)
         {
             var filter = AddQuery(queryFilter);
 
@@ -138,8 +138,8 @@
             var result = this.NudgeOracleConnection.SelectCommand(query).First().Trim();
             watch.Stop();
 
-            //return (Convert.ToInt32(result), watch.ElapsedMilliseconds);
-            return Convert.ToInt32(result);
+            return (Convert.ToInt32(result), watch.ElapsedMilliseconds);
+            //return Convert.ToInt32(result);
         }
 
         private string AddQuery(QueryFilter filter)

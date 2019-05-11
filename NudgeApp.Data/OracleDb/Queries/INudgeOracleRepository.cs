@@ -9,7 +9,7 @@ namespace NudgeApp.Data.OracleDb.Queries
         void SelectAll();
         (int, long) Count(QueryFilter queryFilter = null);
         (int, long) CountDistinct(QueryFilter queryFilter = null);
-        //(int result, long duration) ApproxCount(QueryFilter queryFilter = null);
-        int ApproxCount(QueryFilter queryFilter = null);
+        (int result, long duration) ApproxCount(QueryFilter queryFilter = null);
+        //int ApproxCount(QueryFilter queryFilter = null);
     }
 }
