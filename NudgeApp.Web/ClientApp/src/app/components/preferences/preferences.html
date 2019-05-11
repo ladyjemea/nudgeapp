@@ -12,11 +12,11 @@
     <div class="form-group">
       <h3> Preferred travel type:</h3>
       <select (change) ="Selected($event.target.value)" [value]="selectedTravelType" class="custom-select">
-        <option selected="">Select travel type</option>
-        <option value="1">Car</option>
-        <option value="2">Bus</option>
-        <option value="3">Bike</option>
-        <option value="4">Walk</option>
+        <option value="0">Car</option>
+        <option value="1">Bus</option>
+        <option value="2">Bike</option>
+        <option value="3">Walk</option>
+        <option value="4">Unknown</option>
       </select>
     </div>
 
