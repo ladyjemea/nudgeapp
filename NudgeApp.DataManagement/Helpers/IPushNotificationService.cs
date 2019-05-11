@@ -1,4 +1,4 @@
-﻿namespace NudgeApp.DataAnalysis.Implementation
+﻿namespace NudgeApp.DataManagement.Helpers
 {
     using System;
 

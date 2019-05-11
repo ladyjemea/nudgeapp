@@ -2,13 +2,8 @@
 {
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using NudgeApp.Common.Enums;
-    using NudgeApp.Data.OracleDb.Queries;
-    using NudgeApp.Data.Repositories.Interfaces;
-    using NudgeApp.DataAnalysis.Implementation;
     using NudgeApp.DataAnalysis.ScheduledServices.TaskScheduler;
-    using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
-    using NudgeApp.DataManagement.Implementation.Interfaces;
+    using NudgeApp.DataManagement.ExternalApi.Calendar;
     using System;
     using System.Threading.Tasks;
 
@@ -21,37 +16,21 @@
             this.Logger = logger;
         }
 
-        protected override string Schedule => "30 * * * * *";
+        protected override string Schedule => "* * * 10 * *";
 
         public async override Task ScheduledTask(IServiceProvider serviceProvider)
         {
             this.Logger.LogInformation($"Spare time nudge running at {DateTime.UtcNow} UTC.");
 
-            var weatherService = serviceProvider.GetService<IWeatherService>();
-            var nudgeService = serviceProvider.GetService<INudgeService>();
-            var notificationRepository = serviceProvider.GetService<INotificationRepository>();
-            var nudgeRepository = serviceProvider.GetService<INudgeOracleRepository>();
+            var isWeekend = DateTime.Now.DayOfWeek == DayOfWeek.Saturday || DateTime.Now.DayOfWeek == DayOfWeek.Sunday;
+            var publicEvent = await serviceProvider.GetService<IPublicCalendarsService>().GetTodaysEvent();
 
-            var forecast =  await weatherService.GetCurrentForecast();
-
-            var userLogic = serviceProvider.GetService<IUserService>();
-            var pushNotificationService = serviceProvider.GetService<IPushNotificationService>();
-
-            var userIds = userLogic.GetAllUserIds();
-
-            var title = "Nudge of the day";
-            var message = "Hello";
-            foreach (var userId in userIds)
+            if(isWeekend || publicEvent != null)
             {
-                var nudgeId = nudgeService.AddNudge(userId, forecast);
-                notificationRepository.Insert(new Data.Entities.NotificationEntity
-                {
-                    NudgeId = nudgeId,
-                    Status = NotificationStatus.Waiting,
-                    Text = message
-                });
-                pushNotificationService.PushToUser(userId, title, message);
+                // do stuff
             }
+
+
 
 
             /* Example: 

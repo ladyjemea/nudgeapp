@@ -22,6 +22,7 @@
             services.AddTransient<IPublicCalendarsService, PublicCalendarsService>();
 
             services.AddSingleton<IMemoryCacheService, MemoryCacheService>();
+            services.AddSingleton<IPushNotificationService, PushNotificationService>();
         }
     }
 }

@@ -16,6 +16,7 @@
     <PackageReference Include="ODP.NetCore" Version="2.0.12" />
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.18.6" />
     <PackageReference Include="RestSharp" Version="106.6.9" />
+    <PackageReference Include="WebPush" Version="1.0.11" />
   </ItemGroup>
 
   <ItemGroup>

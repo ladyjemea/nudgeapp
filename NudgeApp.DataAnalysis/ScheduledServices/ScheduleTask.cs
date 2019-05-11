@@ -2,7 +2,12 @@
 {
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using NudgeApp.Common.Enums;
+    using NudgeApp.Data.Repositories.Interfaces;
     using NudgeApp.DataAnalysis.ScheduledServices.TaskScheduler;
+    using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
+    using NudgeApp.DataManagement.Helpers;
+    using NudgeApp.DataManagement.Implementation.Interfaces;
     using System;
     using System.Threading.Tasks;
 
@@ -28,11 +33,31 @@
 
         protected override string Schedule => "* */1 * * * *";
 
-        public override Task ScheduledTask(IServiceProvider serviceProvider)
+        public async override Task ScheduledTask(IServiceProvider serviceProvider)
         {
             this.Logger.LogInformation("Running task " + DateTime.UtcNow);
 
-            return Task.CompletedTask;
+
+            var weatherService = serviceProvider.GetService<IWeatherService>();
+            var nudgeService = serviceProvider.GetService<INudgeService>();
+            var notificationService = serviceProvider.GetService<INotificationService>();
+
+            var forecast = await weatherService.GetCurrentForecast();
+
+            var pushNotificationService = serviceProvider.GetService<IPushNotificationService>();
+
+            var userIds = serviceProvider.GetService<IUserService>().GetAllUserIds();
+
+            var title = "Nudge of the day";
+            var message = "Hello";
+            foreach (var userId in userIds)
+            {
+                var nudgeId = nudgeService.AddNudge(userId, forecast);
+                notificationService.Insert(message, nudgeId);
+                pushNotificationService.PushToUser(userId, title, message);
+            }
+
+            // return Task.CompletedTask;
         }
     }
 }

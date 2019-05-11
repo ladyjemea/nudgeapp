@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Google.Apis.Calendar.v3;
     using Google.Apis.Services;
@@ -31,6 +32,13 @@
             }
 
             return eventList;
+        }
+
+        public async Task<CalendarEvent> GetTodaysEvent()
+        {
+            var events = await this.GetEvents();
+
+            return events.FirstOrDefault(ev => ev.Start.Date == DateTime.Now.Date);
         }
     }
 }
