@@ -19,7 +19,7 @@
 
         [HttpPost]
         [Authorize]
-        public IActionResult Set(PreferencesDto preferences)
+        public IActionResult Set([FromBody] PreferencesDto preferences)
         {
             var userId = Guid.Parse(HttpContext.User.Identities.First().Name);
 

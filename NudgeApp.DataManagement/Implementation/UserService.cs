@@ -125,7 +125,7 @@
 
         public void UpdatePreferences(Guid userId, PreferencesDto preferencesDto)
         {
-            var preferences = this.PreferencesRepository.GetPreferences(userId);
+            var preferences = this.PreferencesRepository.GetAll().FirstOrDefault(p => p.UserId == userId);
 
             var exists = true;
             if (preferences == null)
@@ -140,7 +140,7 @@
             preferences.MinTemperature = preferencesDto.MinTemperature;
             preferences.MaxTemperature = preferencesDto.MaxTemperature;
             preferences.TransportationType = preferencesDto.TransportationType;
-            preferences.RainyTrip = preferencesDto.SnowyTrip;
+            preferences.RainyTrip = preferencesDto.RainyTrip;
             preferences.SnowyTrip = preferencesDto.SnowyTrip;
 
             if (exists)
