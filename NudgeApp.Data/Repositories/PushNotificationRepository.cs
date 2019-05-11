@@ -4,13 +4,13 @@
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
-    public class SubscriptionRepository : Repository<PushNotificationEntity>, ISubscritionRepository
+    public class SubscriptionRepository : Repository<PushNotificationSubscriptionEntity>, ISubscritionRepository
     {
         public SubscriptionRepository(INudgeDbContext context) : base(context) { }
 
         public Guid Create(Guid userId, string endpoint, string p256dh, string auth)
         {
-            var entity = new PushNotificationEntity
+            var entity = new PushNotificationSubscriptionEntity
             {
                 UserId = userId,
                 Endpoint = endpoint,

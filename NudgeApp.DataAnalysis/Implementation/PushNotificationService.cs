@@ -40,7 +40,7 @@
             }
         }
 
-        private void SendNotification(PushNotificationEntity pushNotificationEntity, string title, string message, string link)
+        private void SendNotification(PushNotificationSubscriptionEntity pushNotificationEntity, string title, string message, string link)
         {
             var pushEndpoint = pushNotificationEntity.Endpoint;
             var p256dh = pushNotificationEntity.P256DH;

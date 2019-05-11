@@ -15,8 +15,9 @@
 
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<PreferencesEntity> Preferences { get; set; }
+        public DbSet<ActualPreferencesEntity> ActualPreferences { get; set; }
         public DbSet<NudgeEntity> Nudges { get; set; }
-        public DbSet<PushNotificationEntity> PushNotifications { get; set; }
+        public DbSet<PushNotificationSubscriptionEntity> PushNotificationSubscriptions { get; set; }
         public DbSet<NotificationEntity> Notifications { get; set; }
         public DbSet<OracleNudgeEntity> AnonymousNudges { get; set; }
 

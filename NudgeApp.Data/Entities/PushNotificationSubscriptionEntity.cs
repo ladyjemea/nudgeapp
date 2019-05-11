@@ -3,7 +3,7 @@
     using NudgeApp.Data.Entities.Generic;
     using System;
 
-    public class PushNotificationEntity : DbEntity
+    public class PushNotificationSubscriptionEntity : DbEntity
     {
         public string Endpoint { get; set; }
         public string P256DH { get; set; }
