@@ -46,7 +46,7 @@
                 {
                     Id = nudgeId,
                     NudgeResult = NudgeResult.Failed,
-                    Time = new DateTime(2019, 5, 6, 17 ,0,0),
+                    DateTime = new DateTime(2019, 5, 6, 17 ,0,0),
                     UserId = userId
                 });
             }
