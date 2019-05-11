@@ -19,4 +19,14 @@ var WindCondition;
     WindCondition[WindCondition["LightWinds"] = 1] = "LightWinds";
     WindCondition[WindCondition["Calm"] = 2] = "Calm";
 })(WindCondition = exports.WindCondition || (exports.WindCondition = {}));
+var Probabilities;
+(function (Probabilities) {
+    Probabilities[Probabilities["Rain"] = 0] = "Rain";
+    Probabilities[Probabilities["Snow"] = 1] = "Snow";
+    Probabilities[Probabilities["Ice"] = 2] = "Ice";
+    Probabilities[Probabilities["Gust"] = 3] = "Gust";
+    Probabilities[Probabilities["Normal"] = 4] = "Normal";
+    Probabilities[Probabilities["Slippery"] = 5] = "Slippery";
+    Probabilities[Probabilities["NotEvaluated"] = 6] = "NotEvaluated";
+})(Probabilities = exports.Probabilities || (exports.Probabilities = {}));
 //# sourceMappingURL=ForecastDto.js.map

@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
+    using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
@@ -53,7 +54,7 @@
                 this.ActualPreferencesRepository.Update(preferences);
         }
 
-        public bool CreateUser(string userName, string password, string name, string email, string address, TransportationType travelType)
+        public bool CreateUser(string userName, string password, string name, string email, string address, TransportationType transportationType)
         {
             var user = this.UserRepository.GetUser(userName);
 
@@ -77,7 +78,7 @@
                 PasswordSalt = passwordSalt
             });
 
-            this.UpdateUserPreferences(userId, travelType);
+            this.UpdatePreferences(userId, new PreferencesDto { TransportationType = transportationType });
             return true;
         }
 
@@ -96,13 +97,56 @@
             return user;
         }
 
-        public void UpdateUserPreferences(Guid userId, TransportationType preferedTravelType)
+        public PreferencesDto GetPreferences(Guid userId)
         {
-            var preferences = this.PreferencesRepository.GetPreferences(userId) ;
+            var preferences = this.PreferencesRepository.GetAll().FirstOrDefault(p => p.UserId == userId);
 
-            preferences.PreferedTransportationType = preferedTravelType;
+            if (preferences == null)
+            {
+                return new PreferencesDto
+                {
+                    MinTemperature = -50,
+                    MaxTemperature = 50,
+                    RainyTrip = true,
+                    SnowyTrip = true,
+                    TransportationType = TransportationType.Unknown
+                };
+            }
 
-            this.PreferencesRepository.Update(preferences);
+            return new PreferencesDto
+            {
+                MaxTemperature = preferences.MaxTemperature,
+                MinTemperature = preferences.MinTemperature,
+                RainyTrip = preferences.RainyTrip,
+                SnowyTrip = preferences.SnowyTrip,
+                TransportationType = preferences.TransportationType
+            };
+        }
+
+        public void UpdatePreferences(Guid userId, PreferencesDto preferencesDto)
+        {
+            var preferences = this.PreferencesRepository.GetPreferences(userId);
+
+            var exists = true;
+            if (preferences == null)
+            {
+                exists = false;
+                preferences = new PreferencesEntity
+                {
+                    UserId = userId
+                };
+            }
+
+            preferences.MinTemperature = preferencesDto.MinTemperature;
+            preferences.MaxTemperature = preferencesDto.MaxTemperature;
+            preferences.TransportationType = preferencesDto.TransportationType;
+            preferences.RainyTrip = preferencesDto.SnowyTrip;
+            preferences.SnowyTrip = preferencesDto.SnowyTrip;
+
+            if (exists)
+                this.PreferencesRepository.Update(preferences);
+            else
+                this.PreferencesRepository.Insert(preferences);
         }
 
         private static void GenerateHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

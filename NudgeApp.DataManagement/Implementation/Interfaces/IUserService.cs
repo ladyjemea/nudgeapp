@@ -1,5 +1,6 @@
 ﻿namespace NudgeApp.DataManagement.Implementation.Interfaces
 {
+    using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
     using System;
@@ -11,5 +12,7 @@
         UserEntity CheckPassword(string userName, string password);
         IList<Guid> GetAllUserIds();
         Guid VerifyGoogle(string id, string tokenId);
+        void UpdatePreferences(Guid userId, PreferencesDto preferencesDto);
+        PreferencesDto GetPreferences(Guid userId);
     }
 }
