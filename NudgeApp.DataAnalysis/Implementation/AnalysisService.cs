@@ -32,7 +32,7 @@
                 MaxTemperature = (int)weather.RawData.Temperature + 5
             });
 
-            var filteredList = nudges.Where(nudge => nudge.Temperature > (int)weather.RawData.Temperature - 5 && nudge.Temperature < (int)weather.RawData.Temperature + 5);
+            var filteredList = nudges.Where(nudge => nudge.Temperature > (int)weather.Temperature - 5 && nudge.Temperature < (int)weather.Temperature + 5);
 
             var success = filteredList.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Successful);
             var fail = filteredList.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Failed);

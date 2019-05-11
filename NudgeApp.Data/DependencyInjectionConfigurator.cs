@@ -12,10 +12,12 @@
         {
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IPreferencesRepository, PreferencesRepository>();
+            services.AddSingleton<IActualPreferencesRepository, ActualPreferencesRepository>();
             services.AddSingleton<INudgeRepository, NudgeRepository>();
             services.AddSingleton<INudgeOracleConnection, NudgeOracleConnection>();
             services.AddSingleton<INudgeOracleRepository, NudgeOracleRepository>();
-            services.AddSingleton<IPushNotificationRepository, PushNotificationRepository>();
+            services.AddSingleton<ISubscritionRepository, SubscriptionRepository>();
+            services.AddSingleton<INotificationRepository, NotificationRepository>();
             services.AddSingleton<IAnonymousNudgeRepository, AnonymousNudgeRepository>();
         }
     }

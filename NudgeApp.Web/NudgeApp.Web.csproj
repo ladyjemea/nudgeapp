@@ -46,9 +46,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\components\maindisplay\maindisplay.ts" />
+    <None Remove="ClientApp\src\app\components\feedback\feedback.ts" />
+    <None Remove="ClientApp\src\app\components\notifications\notificationDetails.ts" />
+    <None Remove="ClientApp\src\app\components\notifications\notificationHistory.ts" />
+    <None Remove="ClientApp\src\app\components\preferences\preferences.ts" />
+    <None Remove="ClientApp\src\app\components\travelnow\travelnow.ts" />
     <None Remove="ClientApp\src\app\services\EventService.ts" />
     <None Remove="ClientApp\src\app\services\JwtInterceptor.ts" />
+    <None Remove="ClientApp\src\app\services\NotificationService.ts" />
     <None Remove="ClientApp\src\app\services\NudgeService.ts" />
     <None Remove="ClientApp\src\app\services\PushNotificationService.ts" />
     <None Remove="ClientApp\src\app\services\SubscriptionService.ts" />
@@ -57,13 +62,30 @@
     <None Remove="ClientApp\src\app\services\travelservice.ts" />
     <None Remove="ClientApp\src\app\services\WeatherService.ts" />
     <None Remove="ClientApp\src\app\types\ForecastDto.ts" />
+    <None Remove="ClientApp\src\app\types\NotificationDto.ts" />
+    <None Remove="ClientApp\src\app\types\Nudge.ts" />
     <None Remove="ClientApp\src\app\types\TripDto.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\components\maindisplay\maindisplay.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\feedback\feedback.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\components\notifications\notificationDetails.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\components\notifications\notificationHistory.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\components\preferences\preferences.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\components\travelnow\travelnow.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\EventService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\JwtInterceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\NotificationService.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\services\NudgeService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\PushNotificationService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\SubscriptionService.ts" />
@@ -72,6 +94,12 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\UserService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\WeatherService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\types\ForecastDto.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\types\NotificationDto.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\types\Nudge.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\types\TravelVariant.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\types\TripDto.ts" />
   </ItemGroup>

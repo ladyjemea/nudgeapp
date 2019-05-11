@@ -13,18 +13,44 @@
 
     public class UserService : IUserService
     {
-        private IUserRepository UserRepository;
-        private IPreferencesRepository PreferencesRepository;
+        private readonly IUserRepository UserRepository;
+        private readonly IPreferencesRepository PreferencesRepository;
+        private readonly IActualPreferencesRepository ActualPreferencesRepository;
 
-        public UserService(IUserRepository userRepository, IPreferencesRepository preferencesRepository)
+        public UserService(IUserRepository userRepository, IPreferencesRepository preferencesRepository, IActualPreferencesRepository actualPreferencesRepository)
         {
             this.UserRepository = userRepository;
             this.PreferencesRepository = preferencesRepository;
+            this.ActualPreferencesRepository = actualPreferencesRepository;
         }
 
         public IList<Guid> GetAllUserIds()
         {
             return this.UserRepository.GetAllIds().ToList();
+        }
+
+        public ActualPreferencesEntity GetActualPreferences(Guid userId)
+        {
+            var result = this.ActualPreferencesRepository.GetAll().FirstOrDefault(a => a.UserId == userId);
+
+            if (result == null)
+                result = new ActualPreferencesEntity();
+
+            return result;
+        }
+
+        public void SetActualPreferences(Guid userId, ActualPreferencesEntity preferences)
+        {
+
+            var exists = this.ActualPreferencesRepository.Get(preferences.Id);
+
+            if (exists == null)
+            {
+                preferences.UserId = userId;
+                this.ActualPreferencesRepository.Insert(preferences);
+            }
+            else
+                this.ActualPreferencesRepository.Update(preferences);
         }
 
         public bool CreateUser(string userName, string password, string name, string email, string address, TransportationType travelType)
@@ -72,8 +98,7 @@
 
         public void UpdateUserPreferences(Guid userId, TransportationType preferedTravelType)
         {
-            //var user = this.UserRepository.GetUser(userName);
-            var preferences = this.PreferencesRepository.GetPreferences(userId) ?? this.PreferencesRepository.AddPreferences(userId);
+            var preferences = this.PreferencesRepository.GetPreferences(userId) ;
 
             preferences.PreferedTransportationType = preferedTravelType;
 

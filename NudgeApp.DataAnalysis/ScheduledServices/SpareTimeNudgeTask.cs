@@ -4,6 +4,7 @@
     using Microsoft.Extensions.Logging;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.OracleDb.Queries;
+    using NudgeApp.Data.Repositories.Interfaces;
     using NudgeApp.DataAnalysis.Implementation;
     using NudgeApp.DataAnalysis.ScheduledServices.TaskScheduler;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
@@ -20,44 +21,53 @@
             this.Logger = logger;
         }
 
-        protected override string Schedule => "* * 10 * * 6";
+        protected override string Schedule => "30 * * * * *";
 
-        public override Task ScheduledTask(IServiceProvider serviceProvider)
+        public async override Task ScheduledTask(IServiceProvider serviceProvider)
         {
             this.Logger.LogInformation($"Spare time nudge running at {DateTime.UtcNow} UTC.");
 
             var weatherService = serviceProvider.GetService<IWeatherService>();
+            var nudgeService = serviceProvider.GetService<INudgeService>();
+            var notificationRepository = serviceProvider.GetService<INotificationRepository>();
             var nudgeRepository = serviceProvider.GetService<INudgeOracleRepository>();
 
-            //var forecast =  await weatherService.GetCurrentForecast();
+            var forecast =  await weatherService.GetCurrentForecast();
 
             var userLogic = serviceProvider.GetService<IUserService>();
             var pushNotificationService = serviceProvider.GetService<IPushNotificationService>();
 
             var userIds = userLogic.GetAllUserIds();
 
+            var title = "Nudge of the day";
+            var message = "Hello";
             foreach (var userId in userIds)
             {
-                pushNotificationService.PushToUser(userId, "Nudge of the day", "Hello");
+                var nudgeId = nudgeService.AddNudge(userId, forecast);
+                notificationRepository.Insert(new Data.Entities.NotificationEntity
+                {
+                    NudgeId = nudgeId,
+                    Status = NotificationStatus.Waiting,
+                    Text = message
+                });
+                pushNotificationService.PushToUser(userId, title, message);
             }
-
-            return Task.FromResult(0);
 
 
             /* Example: 
-             * if (forecast.RawData.Temperature > 15 && fdsaknflka)
+             * if (forecast.Temperature > 15 && fdsaknflka)
              {
                  var succesfullNudges = nudgeRepository.ApproxCount(new QueryFilter
                  {
                      Result = NudgeResult.Successful,
-                     MinTemperature = (int)(forecast.RawData.Temperature) - 5,
-                     MaxTemperature = (int)(forecast.RawData.Temperature) + 5,
+                     MinTemperature = (int)(forecast.Temperature) - 5,
+                     MaxTemperature = (int)(forecast.Temperature) + 5,
                  });
                   var failed = nudgeRepository.ApproxCount(new QueryFilter
                  {
                      Result = NudgeResult.Failed,
-                     MinTemperature = (int)(forecast.RawData.Temperature) - 5,
-                     MaxTemperature = (int)(forecast.RawData.Temperature) + 5,
+                     MinTemperature = (int)(forecast.Temperature) - 5,
+                     MaxTemperature = (int)(forecast.Temperature) + 5,
                  });
              }*/
             /*

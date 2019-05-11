@@ -4,10 +4,9 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
-    using System.Text;
     using System.Threading.Tasks;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
-    using NudgeApp.DataManagement.Implementation.Interfaces;
+    using NudgeApp.DataManagement.Helpers;
     using NudgeApp.Testing.Tests.Interfaces;
 
     public class InMemoryStoreTesting : IInMemoryStoreTesting
@@ -26,7 +25,8 @@
 
             this.stream = new StreamWriter("in memory tests.txt", true);
         }
-
+        public async Task TestWeatherService() { }
+        /*
         public async Task TestWeatherService()
         {
             var watchT = Stopwatch.StartNew();
@@ -79,7 +79,7 @@
             Console.WriteLine($"Weather forecast offline average: {(double)(offlineSaveTime / 10)}");
 
         }
-
+        */
         public async Task TestCachingSpeed()
         {
             var objects = new List<TestObject>();

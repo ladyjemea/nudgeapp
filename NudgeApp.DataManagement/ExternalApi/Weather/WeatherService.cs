@@ -9,7 +9,6 @@
     using NudgeApp.Common.Enums;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
     using NudgeApp.DataManagement.Helpers;
-    using NudgeApp.DataManagement.Implementation.Interfaces;
     using RestSharp;
 
     public class WeatherService : IWeatherService
@@ -19,12 +18,12 @@
         private const string serviceString = "http://dataservice.accuweather.com";
 
         private readonly IMemoryCacheService MemoryCacheService;
-        private readonly IAnalysisConversion AnalysisConversion;
+        private readonly IDataAgregator DataAgregator;
 
-        public WeatherService(IMemoryCacheService memoryCacheService, IAnalysisConversion analysisConversion)
+        public WeatherService(IMemoryCacheService memoryCacheService, IDataAgregator dataAgregator)
         {
             this.MemoryCacheService = memoryCacheService;
-            this.AnalysisConversion = analysisConversion;
+            this.DataAgregator = dataAgregator;
         }
 
         public IList<HourlyForecast> Get12HTromsWeather()
@@ -40,48 +39,7 @@
 
             return JsonConvert.DeserializeObject<List<HourlyForecast>>(response.Content);
         }
-
-        public IList<DateInfo> AnalyseWeather()
-        {
-            var results = this.Get12HTromsWeather();
-            var neededResults = results.Select(r => new DateInfo
-            {
-                date = r.DateTime,
-                temp = r.Temperature,
-                realfeel = r.RealFeelTemperature,
-                ceiling = r.Ceiling,
-                visibility = r.Visibility,
-                rain = r.Rain,
-                rainprobability = r.RainProbability,
-                snow = r.Snow,
-                snowprobability = r.SnowProbability,
-                ice = r.Ice,
-                iceprobability = r.IceProbability,
-                wind = r.Wind,
-                daylight = r.IsDaylight
-            }).ToList();
-
-            return neededResults;
-        }
-
-        public class DateInfo
-        {
-            public DateTime date;
-            public UnitInfo temp;
-            public UnitInfo ceiling;
-            public UnitInfo realfeel;
-            public UnitInfo rain;
-            public UnitInfo visibility;
-            public UnitInfo snow;
-            public UnitInfo ice;
-            public int rainprobability;
-            public int snowprobability;
-            public int iceprobability;
-            public WindInfo wind;
-            public bool daylight;
-            public int PrecipitationProbability;
-        }
-
+        
         public WeatherDto GetForecast(DateTime dateTime)
         {
             if (DateTime.Now.AddHours(12) < dateTime)
@@ -92,30 +50,19 @@
 
             var weatherDto = new WeatherDto
             {
-                RawData = new WeatherRawData
-                {
-                    Date = dateTime,
-                    Temperature = forecast.Temperature.Value,
-                    RealFeelTemperature = forecast.RealFeelTemperature.Value,
-                    Ceiling = forecast.Ceiling.Value,
-                    Precipitation = forecast.PrecipitationProbability,
-                    Rain = forecast.Rain.Value,
-                    RainProbability = forecast.RainProbability,
-                    Snow = forecast.Snow.Value,
-                    SnowProbability = forecast.SnowProbability,
-                    Ice = forecast.Ice.Value,
-                    IceProbability = forecast.IceProbability,
-                    Visibility = forecast.Visibility.Value,
-                    Wind = forecast.Wind.Speed.Value,
-                    WindGust = forecast.WindGust.Speed.Value,
-                    Daylight = forecast.IsDaylight
-                },
-                RoadCondition = this.AnalysisConversion.GetRoadCondition(forecast),
-                SkyCoverage = this.AnalysisConversion.GetSkyCoverage(forecast.CloudCover),
-                PrecipitationCondition = this.AnalysisConversion.GetPrecipitation(forecast),
-                WeatherCondition = this.AnalysisConversion.GetWeatherCondition(forecast),
-                Others = this.AnalysisConversion.GetOthers(forecast),
-                Probabilities = this.AnalysisConversion.GetProbabilities(forecast)
+                DateTime = dateTime,
+                RealFeelTemperature = forecast.RealFeelTemperature.Value,
+                Temperature = forecast.Temperature.Value,
+                Wind = forecast.Wind.Speed.Value,
+                Ceiling = forecast.Ceiling.Value,
+                PrecipitationProbability = forecast.PrecipitationProbability,
+                RoadCondition = this.DataAgregator.GetRoadCondition(forecast),
+                SkyCoverage = this.DataAgregator.GetSkyCoverage(forecast.CloudCover),
+                PrecipitationCondition = this.DataAgregator.GetPrecipitation(forecast),
+                WeatherCondition = this.DataAgregator.GetWeatherCondition(forecast),
+                Others = this.DataAgregator.GetOthers(forecast),
+                Probabilities = this.DataAgregator.GetProbabilities(forecast),
+                WindCondition = this.DataAgregator.GetWindCondition(forecast)
             };
 
             return weatherDto;
@@ -128,49 +75,28 @@
 
             if (weatherDto == null)
             {
-                weatherDto = await this.GetCurrentForecastNoMemory();
+                var forecastList = await this.GetCurrentTromsForecast();
+                var forecast = forecastList.First();
 
-                await this.MemoryCacheService.SaveAsync(key, weatherDto);
-            }
-
-            return weatherDto;
-        }
-        
-        public async Task<WeatherDto> GetCurrentForecastRandom()
-        {
-            var key = Guid.NewGuid().ToString();
-            var weatherDto = await this.MemoryCacheService.GetAsync<WeatherDto>(key);
-
-            if (weatherDto == null)
-            {
-                weatherDto = await this.GetCurrentForecastNoMemory();
-
-                await this.MemoryCacheService.SaveAsync(key, weatherDto);
-            }
-
-            return weatherDto;
-        }
-
-        public async Task<WeatherDto> GetCurrentForecastNoMemory()
-        {
-            var forecastList = await this.GetCurrentTromsForecast();
-            var forecast = forecastList.First();
-
-            var weatherDto = new WeatherDto
-            {
-                RawData = new WeatherRawData()
+                weatherDto = new WeatherDto
                 {
-                    Date = forecast.LocalObservationDateTime,
-                    Time = forecast.LocalObservationDateTime,
-                    Temperature = forecast.Temperature.Metric.Value,
+                    DateTime = DateTime.Now,
                     RealFeelTemperature = forecast.RealFeelTemperature.Metric.Value,
-                    Ceiling = forecast.Ceiling.Metric.Value,
+                    Temperature = forecast.Temperature.Metric.Value,
                     Wind = forecast.Wind.Speed.Value,
+                    Ceiling = forecast.Ceiling.Metric.Value,
                     PrecipitationProbability = forecast.HasPrecipitation ? 100 : 0,
-                    CloudCoveragePercent = forecast.CloudCover
-                },
-                RoadCondition = forecast.HasPrecipitation ? RoadCondition.Wet : RoadCondition.Dry
-            };
+                    SkyCoverage = this.DataAgregator.GetSkyCoverage(forecast.CloudCover),
+                    PrecipitationCondition = this.DataAgregator.GetPrecipitation(forecast),
+                    WeatherCondition = this.DataAgregator.GetWeatherCondition(forecast),
+                    Others = this.DataAgregator.GetOthers(forecast),
+                    Probabilities = this.DataAgregator.GetProbabilities(forecast),
+                    WindCondition = this.DataAgregator.GetWindCondition(forecast),
+                    RoadCondition = forecast.HasPrecipitation ? RoadCondition.Wet : RoadCondition.Dry
+                };
+
+                await this.MemoryCacheService.SaveAsync(key, weatherDto);
+            }
 
             return weatherDto;
         }

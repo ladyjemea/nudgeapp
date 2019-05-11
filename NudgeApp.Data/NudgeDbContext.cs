@@ -17,6 +17,7 @@
         public DbSet<PreferencesEntity> Preferences { get; set; }
         public DbSet<NudgeEntity> Nudges { get; set; }
         public DbSet<PushNotificationEntity> PushNotifications { get; set; }
+        public DbSet<NotificationEntity> Notifications { get; set; }
         public DbSet<OracleNudgeEntity> AnonymousNudges { get; set; }
 
         public NudgeDbContext() : base() { }
@@ -27,7 +28,7 @@
         {
             base.OnConfiguring(optionsBuilder);
                         
-            // optionsBuilder.UseSqlServer(NudgeDbContext.onlineConnectionString);
+            optionsBuilder.UseSqlServer(NudgeDbContext.connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,7 +48,7 @@
 
         public override EntityEntry Update(object entity)
         {
-            ((DbEntity)entity).Modified = DateTime.UtcNow;
+            ((DbEntity)entity).ModifiedOn = DateTime.UtcNow;
 
             return base.Update(entity);
         }

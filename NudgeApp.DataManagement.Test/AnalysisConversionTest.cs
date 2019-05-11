@@ -8,12 +8,12 @@ namespace NudgeApp.DataManagement.Test
     [TestClass]
     public class UnitTest1
     {
-        public AnalysisConversion SuT { get; set; }
+        public DataAgregator SuT { get; set; }
 
         [TestInitialize]
         public void Initialize()
         {
-            this.SuT = new AnalysisConversion();
+            this.SuT = new DataAgregator();
         }
 
         [TestMethod]

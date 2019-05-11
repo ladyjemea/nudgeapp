@@ -119,7 +119,7 @@
                         Type = TransportationType.Walk
                     });
 
-                busTrip.Duration = busTrip.Duration.Add(TimeSpan.FromSeconds(walkToStartDuration));
+                busTrip.Duration += walkToStartDuration;
                 busTrip.Start = busTrip.Start.AddSeconds(-1 * walkToStartDuration);
             }
 
@@ -134,20 +134,20 @@
                         Type = TransportationType.Walk
                     });
 
-                busTrip.Duration = busTrip.Duration.Add(TimeSpan.FromSeconds(walkToDestinationtDuration));
+                busTrip.Duration += walkToDestinationtDuration;
                 busTrip.Stop = busTrip.Stop.AddSeconds(walkToDestinationtDuration);
             }
 
             busTrip.DurationString = "";
-            if (busTrip.Duration.Hours > 0)
+            if (busTrip.Duration >= 60)
             {
-                busTrip.DurationString += busTrip.Duration.Hours.ToString();
-                busTrip.DurationString += busTrip.Duration.Hours == 1 ? " Hour" : " Hours";
+                busTrip.DurationString += busTrip.Duration / 60;
+                busTrip.DurationString += busTrip.Duration / 60 == 1 ? " Hour" : " Hours";
                 busTrip.DurationString += " and ";
             }
 
-            busTrip.DurationString += busTrip.Duration.Minutes.ToString();
-            busTrip.DurationString += busTrip.Duration.Minutes == 1 ? " Minute" : " Minutes";
+            busTrip.DurationString += busTrip.Duration % 60;
+            busTrip.DurationString += busTrip.Duration % 6 == 1 ? " Minute" : " Minutes";
 
 
             return busTrip;
@@ -169,7 +169,7 @@
             {
                 Start = Convert.ToDateTime(trip.Start),
                 Stop = Convert.ToDateTime(trip.Stop),
-                Duration = TimeSpan.FromMinutes(Convert.ToInt64(trip.Duration)),
+                Duration = Convert.ToInt32(trip.Duration),
                 ChangeNb = Convert.ToInt32(trip.Changecount),
                 Link = link,
                 StartCoordinates = new Coordinates

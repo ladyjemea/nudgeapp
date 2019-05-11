@@ -1,12 +1,9 @@
-﻿using NudgeApp.Common.Enums;
-using NudgeApp.DataManagement.ExternalApi.Weather;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NudgeApp.DataManagement.Helpers
+﻿namespace NudgeApp.DataManagement.Helpers
 {
-    public class AnalysisConversion : IAnalysisConversion
+    using NudgeApp.Common.Enums;
+    using NudgeApp.DataManagement.ExternalApi.Weather;
+
+    public class DataAgregator : IDataAgregator
     {
         public SkyCoverageType GetSkyCoverage(int cloudCoverPercentage)
         {
@@ -55,41 +52,71 @@ namespace NudgeApp.DataManagement.Helpers
             {
                 if (forecast.RainProbability > forecast.SnowProbability)
                 {
-                    precipitation = PrecipitationCondition.Rainy;
+                    precipitation = PrecipitationCondition.Rain;
                 }
                 else
                 {
-                    precipitation = PrecipitationCondition.Snowy;
+                    precipitation = PrecipitationCondition.Snow;
                 }
 
             }
             else
             {
-                precipitation = PrecipitationCondition.NoPrecipitation;
+                precipitation = PrecipitationCondition.None;
             }
             return precipitation;
         }
 
-        public WeatherCondition GetWeatherCondition(HourlyForecast forecast)
+        public WindCondition GetWindCondition(HourlyForecast forecast)
         {
-            WeatherCondition weather;
+            WindCondition windCondition;
 
             if (forecast.WindGust.Speed.Value >= 25 && forecast.Wind.Speed.Value >= 20)
             {
-                weather = WeatherCondition.StrongWinds;
+                windCondition = WindCondition.StrongWinds;
             }
             else
             {
                 if (forecast.WindGust.Speed.Value >= 10 && 24 >= forecast.WindGust.Speed.Value
                     || forecast.Wind.Speed.Value >= 10 && 24 >= forecast.Wind.Speed.Value)
                 {
-                    weather = WeatherCondition.LightWinds;
+                    windCondition = WindCondition.LightWinds;
                 }
                 else
                 {
-                    weather = WeatherCondition.Calm;
+                    windCondition = WindCondition.Calm;
                 }
             }
+
+            return windCondition;
+        }
+
+        public WindCondition GetWindCondition(CurrentForecast forecast)
+        {
+            WindCondition windCondition;
+
+            if (forecast.Wind.Speed.Value >= 20)
+            {
+                windCondition = WindCondition.StrongWinds;
+            }
+            else
+            {
+                if (forecast.Wind.Speed.Value >= 10 && 24 >= forecast.Wind.Speed.Value)
+                {
+                    windCondition = WindCondition.LightWinds;
+                }
+                else
+                {
+                    windCondition = WindCondition.Calm;
+                }
+            }
+
+            return windCondition;
+        }
+
+        public WeatherCondition GetWeatherCondition(HourlyForecast forecast)
+        {
+            WeatherCondition weather;
 
             if (forecast.Rain.Value >= 20)
             {
@@ -97,7 +124,7 @@ namespace NudgeApp.DataManagement.Helpers
             }
             else
             {
-                weather = WeatherCondition.NoRain;
+                weather = WeatherCondition.None;
             }
 
             if (forecast.Snow.Value >= 20)
@@ -134,29 +161,13 @@ namespace NudgeApp.DataManagement.Helpers
         {
             WeatherCondition weather;
 
-            if (forecast.Wind.Speed.Value >= 20)
-            {
-                weather = WeatherCondition.StrongWinds;
-            }
-            else
-            {
-                if (forecast.Wind.Speed.Value >= 10 && 24 >= forecast.Wind.Speed.Value)
-                {
-                    weather = WeatherCondition.LightWinds;
-                }
-                else
-                {
-                    weather = WeatherCondition.Calm;
-                }
-            }
-
             if (forecast.HasPrecipitation)
             {
                 weather = WeatherCondition.Rain;
             }
             else
             {
-                weather = WeatherCondition.NoRain;
+                weather = WeatherCondition.None;
             }
 
             if (forecast.HasSnow)
@@ -351,7 +362,31 @@ namespace NudgeApp.DataManagement.Helpers
             return others;
         }
 
-        
+        public PrecipitationCondition GetPrecipitation(CurrentForecast forecast)
+        {
+            PrecipitationCondition precipitation = PrecipitationCondition.None;
 
+            if (forecast.HasPrecipitation)
+            {
+                if (forecast.PrecipitationType == "Rain")
+                {
+                    precipitation = PrecipitationCondition.Rain;
+                }
+                else if (forecast.PrecipitationType == "Snow")
+                {
+                    precipitation = PrecipitationCondition.Snow;
+                }
+                else if (forecast.PrecipitationType == "Ice")
+                {
+                    precipitation = PrecipitationCondition.Ice;
+                }
+                else if (forecast.PrecipitationType == "Mixed")
+                {
+                    precipitation = PrecipitationCondition.Mixed;
+                }
+            }
+
+            return precipitation;
+        }
     }
 }

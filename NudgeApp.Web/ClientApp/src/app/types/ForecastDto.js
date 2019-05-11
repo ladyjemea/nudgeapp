@@ -13,4 +13,10 @@ var RoadCondition;
     RoadCondition[RoadCondition["Ice"] = 2] = "Ice";
     RoadCondition[RoadCondition["Snow"] = 3] = "Snow";
 })(RoadCondition = exports.RoadCondition || (exports.RoadCondition = {}));
+var WindCondition;
+(function (WindCondition) {
+    WindCondition[WindCondition["StrongWinds"] = 0] = "StrongWinds";
+    WindCondition[WindCondition["LightWinds"] = 1] = "LightWinds";
+    WindCondition[WindCondition["Calm"] = 2] = "Calm";
+})(WindCondition = exports.WindCondition || (exports.WindCondition = {}));
 //# sourceMappingURL=ForecastDto.js.map

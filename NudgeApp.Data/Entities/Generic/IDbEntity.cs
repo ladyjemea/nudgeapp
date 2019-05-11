@@ -6,9 +6,9 @@
     {
         Guid Id { get; set; }
 
-        DateTime Created { get; set; }
+        DateTime CreatedOn { get; set; }
 
-        DateTime Modified { get; set; }
+        DateTime ModifiedOn { get; set; }
 
     }
 }

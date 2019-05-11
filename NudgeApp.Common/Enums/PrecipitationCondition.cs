@@ -6,12 +6,11 @@
 
     public enum PrecipitationCondition
     {
-        Rainy,
-        NoPrecipitation,
-        Snowy
-        
-       
-        
+        None,
+        Rain,
+        Snow,
+        Ice,
+        Mixed
     }
 }
 

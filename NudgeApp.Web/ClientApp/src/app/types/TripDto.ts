@@ -1,8 +1,8 @@
 import { Time } from "@angular/common";
 
 export interface TripDto {
-  mode: TransporationType;
-  duration: Time;
+  transportationType: TransportationType;
+  duration: number;
   distance: number;
   durationString: string;
   distanceString: string;
@@ -18,15 +18,16 @@ export interface TripDto {
 export interface TravelPart {
   departureName: string;
   arrivalName: string;
-  type: TransporationType;
+  type: TransportationType;
   duration: Time;
 }
 
-export enum TransporationType {
+export enum TransportationType {
   Car,
   Bus,
   Bike,
-  Walk
+  Walk,
+  Unknown
 }
 
 export interface TravelObject {

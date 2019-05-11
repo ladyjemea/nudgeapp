@@ -1,18 +1,13 @@
 /// <reference path="../../../../node_modules/@types/googlemaps/index.d.ts"/>
 
 import { Component, Input, OnInit, NgZone } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { SwPush } from '@angular/service-worker';
 import { SubscriptionService } from '../../services/SubscriptionService'
 import { Subscription } from '../../types/Subscription'
 import { MapsAPILoader } from '@agm/core';
-import { UserService } from '../../services/UserService';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TravelVariant } from '../../types/TravelVariant';
-import { TravelService } from '../../services/TravelService';
-import { query } from '@angular/animations';
 import { CalendarService } from 'src/app/services/CalendarService';
 import { EventService } from 'src/app/services/EventService';
 
@@ -27,7 +22,6 @@ import { EventService } from 'src/app/services/EventService';
 export class MainaccessComponent implements OnInit {
   [x: string]: any;
 
-  public _url: string = "/assets/data/streets.json";
   readonly VAPID_PUBLIC_KEY = "BD6e5GSCe5_Y08GgTyWlpFcQIPuMkLrEYfAiNBzrc-vkxPuYN3oeJqdvR3gjIGn_VxNu1G58J9zxbsd6-6FR70Y";
 
   lat: number;
@@ -40,8 +34,6 @@ export class MainaccessComponent implements OnInit {
       var geocoder = new google.maps.Geocoder;
       var latlng = new google.maps.LatLng($event.coords.lat, $event.coords.lng);
       geocoder.geocode({ 'location': latlng }, function (results, status) {
-        console.log("map results");
-        console.log(results);
       });
     });
 

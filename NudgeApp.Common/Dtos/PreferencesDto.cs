@@ -1,10 +1,12 @@
 ﻿namespace NudgeApp.Common.Dtos
 {
     using NudgeApp.Common.Enums;
-    public class PreferemcesDto
+    public class PreferencesDto
     {
         public TransportationType PreferedTravelType { get; set; }
-        public TransportationType ActualTravelType { get; set; }
-        public TransportationType AimedTransportationType { get; set; }
+        public int MinTemperature { get; set; }
+        public int MaxTemperature { get; set; }
+        public bool RainyTrip { get; set; }
+        public bool SnowyTrip { get; set; }
     }
 }

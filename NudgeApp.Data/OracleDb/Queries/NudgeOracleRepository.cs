@@ -23,54 +23,7 @@
             this.NudgeOracleConnection = nudgeOracleConnection;
         }
 
-        public void GetEntries(QueryFilter filter)
-        {
-            var query = select + " where ";
-            var queryList = new List<string>();
-            PropertyInfo[] properties = typeof(QueryFilter).GetProperties();
-            foreach (PropertyInfo property in properties)
-            {
-                var value = property.GetValue(filter);
-                if (value != null)
-                {
-                    var name = property.Name;
-                    if (name.StartsWith("Min"))
-                    {
-                        name = name.Remove(0, 3);
-                        queryList.Add(name + " >= " + (int)value);
-                    }
-                    else
-                    if (name.StartsWith("Max"))
-                    {
-                        name = name.Remove(0, 3);
-                        queryList.Add(name + " <= " + (int)value);
-                    }
-                    else
-                    {
-                        queryList.Add(name + " = " + (int)value);
-                    }
-
-                    queryList.Add(" AND ");
-                }
-            }
-
-            if (queryList.Count > 0)
-            {
-                queryList.RemoveAt(queryList.Count - 1);
-                foreach (var queryFilter in queryList)
-                {
-                    query += queryFilter;
-                }
-
-                this.NudgeOracleConnection.SelectCommand(query);
-            }
-            else
-            {
-                throw new Exception("There are no elements to flilter by");
-            }
-
-        }
-
+       
         public void GetAllEntries()
         {
             this.NudgeOracleConnection.InsertCommand(select);

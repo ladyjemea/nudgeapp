@@ -41,7 +41,7 @@
                 this.Context.Entry(local).State = EntityState.Detached;
             }
 
-            entity.Modified = DateTime.UtcNow;
+            entity.ModifiedOn = DateTime.UtcNow;
             this.DbSet.Update(entity);
             this.Context.SaveChanges();
         }
@@ -57,9 +57,9 @@
             return this.DbSet.Find(id);
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll()
         {
-            return this.DbSet.AsEnumerable();
+            return this.DbSet.AsQueryable();
         }
     }
 }

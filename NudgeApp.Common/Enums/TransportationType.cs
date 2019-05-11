@@ -5,6 +5,7 @@
         Car,
         Bus,
         Bike,
-        Walk
+        Walk,
+        Unknown
     }
 }

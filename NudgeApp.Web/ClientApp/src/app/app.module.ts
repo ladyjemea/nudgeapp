@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes, Route } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Ng5SliderModule } from 'ng5-slider';
 
 import { AgmCoreModule } from '@agm/core';
 
@@ -21,12 +22,14 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login';
 import { SignupComponent } from './components/signup/signup';
-import { TravelComponent } from './components/travelnow/travelnow';
 import { MainaccessComponent } from './components/mainaccess/mainaccess';
-//import { FeedbackComponent } from './components/feedback/feedback';
-import { MainDisplayComponent } from './components/maindisplay/maindisplay';
+import { FeedbackComponent } from './components/feedback/feedback';
+import { TravelNowComponent } from './components/travelnow/travelnow';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { JwtInterceptor } from './services/JwtInterceptor';
+import { NotificationHistoryComponent } from './components/notifications/notificationHistory';
+import { NotificationDetailsComponent } from './components/notifications/notificationDetails';
+import { PreferencesComponent } from './components/preferences/preferences';
 
 let gapiClientConfig: NgGapiClientConfig = {
   client_id: "600101543512-tnhs33cfbs09rqd6no8tajg5ooccoa0q.apps.googleusercontent.com",
@@ -36,12 +39,6 @@ let gapiClientConfig: NgGapiClientConfig = {
   ].join(" ")
 };
 
-//const appRoutes: Routes = [
-//  {
-//    path: "search",
-//    component: MainDisplayComponent,
-//  }]
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,10 +46,12 @@ let gapiClientConfig: NgGapiClientConfig = {
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    TravelComponent,
     MainaccessComponent,
-    //FeedbackComponent,
-    MainDisplayComponent
+    FeedbackComponent,
+    TravelNowComponent,
+    NotificationHistoryComponent,
+    NotificationDetailsComponent,
+    PreferencesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -62,18 +61,19 @@ let gapiClientConfig: NgGapiClientConfig = {
     }),
     HttpClientModule,
     FormsModule,
+    Ng5SliderModule,
     CommonModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: true }),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent },
-      { path: 'travelnow', component: TravelComponent },
       { path: 'mainaccess', component: MainaccessComponent },
-      //{ path: 'feedback', component: FeedbackComponent },
-      { path: 'search', component: MainDisplayComponent },
-      { path: 'maindisplay', component: MainDisplayComponent }
-
+      { path: 'feedback', component: FeedbackComponent },
+      { path: 'search', component: TravelNowComponent },
+      { path: 'notificationHistory', component: NotificationHistoryComponent },
+      { path: 'notification/:id', component: NotificationDetailsComponent },
+      { path: 'preferences', component: PreferencesComponent },
     ]),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCCbgVPkBgwul0cofmo-VSMOefNSzrAOEo',

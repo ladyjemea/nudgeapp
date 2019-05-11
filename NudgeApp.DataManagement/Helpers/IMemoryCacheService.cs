@@ -1,4 +1,4 @@
-﻿namespace NudgeApp.DataManagement.Implementation.Interfaces
+﻿namespace NudgeApp.DataManagement.Helpers
 {
     using System;
     using System.Threading.Tasks;
