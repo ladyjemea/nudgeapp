@@ -1,28 +1,49 @@
-﻿using NudgeApp.Common.Dtos;
-using NudgeApp.Data.OracleDb.Queries;
-using NudgeApp.DataManagement.ExternalApi.Weather;
-using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace NudgeApp.DataAnalysis.API
+﻿namespace NudgeApp.DataAnalysis.API
 {
+    using NudgeApp.Common.Dtos;
+    using NudgeApp.Data.OracleDb.Queries;
+    using NudgeApp.DataManagement.ExternalApi.Travel;
+    using NudgeApp.DataManagement.ExternalApi.Weather;
+    using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
+    using NudgeApp.DataManagement.Helpers;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class Analyzer : IAnalyzer
     {
         private readonly IWeatherService WeatherService;
         private readonly INudgeOracleRepository NudgeOracleRepository;
+        private readonly IWalkService WalkService;
+        private readonly IPushNotificationService PushNotificationService;
 
         private Random random;
 
-        public Analyzer(IWeatherService weather, INudgeOracleRepository nudgeOracleRepository)
+        public Analyzer(IWeatherService weather, INudgeOracleRepository nudgeOracleRepository, IWalkService walkService, IPushNotificationService pushNotificationService)
         {
             this.WeatherService = weather;
             this.NudgeOracleRepository = nudgeOracleRepository;
+            this.WalkService = walkService;
+            this.PushNotificationService = pushNotificationService;
 
             this.random = new Random();
         }
+
+
+
+        public async Task AnalyseEvent(Guid userId, UserEvent userEvent, Coordinates userLocation)
+        {
+            if (DateTime.Now.AddHours(-1) <= userEvent.Start &&  userEvent.Start <= DateTime.Now)
+            {
+                var result = await this.WalkService.WalkInfo(userLocation, userEvent.Location);
+
+                var duration = result.rows.FirstOrDefault().elements.FirstOrDefault().duration;
+
+                this.PushNotificationService.PushToUser(userId, "You have a meeting!", $"If you leave now walking, you'll make {duration} minutes to your event. Check Google maps");
+                
+            }
+        }
+
 
         public WeatherDto AnalyseWeather()
         {

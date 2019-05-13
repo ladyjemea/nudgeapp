@@ -3,6 +3,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using NudgeApp.DataManagement.ExternalApi.Bus;
     using NudgeApp.DataManagement.ExternalApi.Calendar;
+    using NudgeApp.DataManagement.ExternalApi.Travel;
     using NudgeApp.DataManagement.ExternalApi.Weather;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
     using NudgeApp.DataManagement.Helpers;
@@ -20,6 +21,7 @@
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IDataAgregator, DataAgregator>();
             services.AddTransient<IPublicCalendarsService, PublicCalendarsService>();
+            services.AddTransient<IWalkService, WalkService>();
 
             services.AddScoped<IMemoryCacheService, MemoryCacheService>();
             services.AddScoped<IPushNotificationService, PushNotificationService>();
