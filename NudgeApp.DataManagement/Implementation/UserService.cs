@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
+    using Microsoft.EntityFrameworkCore;
     using NudgeApp.Common.Dtos;
     using NudgeApp.Common.Enums;
     using NudgeApp.Data.Entities;
@@ -17,12 +18,14 @@
         private readonly IUserRepository UserRepository;
         private readonly IPreferencesRepository PreferencesRepository;
         private readonly IActualPreferencesRepository ActualPreferencesRepository;
+        private readonly IAccountRepository AccountRepository;
 
-        public UserService(IUserRepository userRepository, IPreferencesRepository preferencesRepository, IActualPreferencesRepository actualPreferencesRepository)
+        public UserService(IUserRepository userRepository, IAccountRepository accountRepository,IPreferencesRepository preferencesRepository, IActualPreferencesRepository actualPreferencesRepository)
         {
             this.UserRepository = userRepository;
             this.PreferencesRepository = preferencesRepository;
             this.ActualPreferencesRepository = actualPreferencesRepository;
+            this.AccountRepository = accountRepository;
         }
 
         public IList<Guid> GetAllUserIds()
@@ -54,9 +57,9 @@
                 this.ActualPreferencesRepository.Update(preferences);
         }
 
-        public bool CreateUser(string userName, string password, string name, string email, string address, TransportationType transportationType)
+        public bool CreateUser(string password, string name, string email, string address, TransportationType transportationType)
         {
-            var user = this.UserRepository.GetUser(userName);
+            var user = this.UserRepository.GetUser(email);
 
             if (user != null)
             {
@@ -66,19 +69,26 @@
             byte[] passwordHash, passwordSalt;
             GenerateHash(password, out passwordHash, out passwordSalt);
 
-            var userId = Guid.NewGuid();
-            this.UserRepository.Insert(new UserEntity
+            var accountId = Guid.NewGuid();
+            this.AccountRepository.InsertWIthNoSave(new AccountEntity
             {
-                Id = userId,
-                UserName = userName,
-                Address = address,
-                Email = email,
-                Name = name,
+                Id = accountId,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
             });
 
+            var userId = Guid.NewGuid();
+            this.UserRepository.InsertWIthNoSave(new UserEntity
+            {
+                Id = userId,
+                Address = address,
+                Email = email,
+                Name = name,
+                AccountId = accountId
+            });
+
             this.UpdatePreferences(userId, new PreferencesDto { TransportationType = transportationType });
+
             return true;
         }
 
@@ -89,7 +99,7 @@
             if (user == null)
                 return null;
 
-            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            if (!VerifyPasswordHash(password, user.Account.PasswordHash, user.Account.PasswordSalt))
             {
                 return null;
             }
@@ -192,25 +202,32 @@
 
         private Guid GoogleLogin(string email, string name)
         {
-            var user = this.UserRepository.GetAll().Where(u => u.Email == email).FirstOrDefault();
+            var user = this.UserRepository.GetAll().Include(u => u.Account).Where(u => u.Email == email).FirstOrDefault();
 
             Guid id;
             if (user == null)
             {
+                var accountId = Guid.NewGuid();
+                this.AccountRepository.InsertWIthNoSave(new AccountEntity
+                {
+                    Id = accountId,
+                    Google = true
+                });
+
                 id = this.UserRepository.Insert(new UserEntity
                 {
                     Email = email,
                     Name = name,
-                    Google = true
+                    AccountId = accountId
                 });
             }
             else
             {
                 id = user.Id;
-                if (user.Google == false)
+                if (user.Account.Google == false)
                 {
-                    user.Google = true;
-                    this.UserRepository.Update(user);
+                    user.Account.Google = true;
+                    this.AccountRepository.Update(user.Account);
                 }
             }
 

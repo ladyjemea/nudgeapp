@@ -26,10 +26,10 @@ export class SignupComponent {
 
   public registerUser(form: NgForm) {
 
-    this.userService.createuser(form.value.username, form.value.password, form.value.name, form.value.email, form.value.address, this.selectedTravelType)
+    this.userService.createuser(form.value.password, form.value.name, form.value.email, form.value.address, this.selectedTravelType)
       .subscribe(() => {
-        this.authenticationService.login(form.value.username, form.value.password);
-        this.router.navigateByUrl('/mainaccess');
+        this.authenticationService.login(form.value.email, form.value.password).subscribe((result) =>
+          this.router.navigateByUrl('mainaccess'));
       });
 
   }

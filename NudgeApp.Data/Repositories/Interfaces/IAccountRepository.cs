@@ -2,7 +2,7 @@
 {
     using NudgeApp.Data.Entities;
 
-    public interface IActualPreferencesRepository : IRepository<ActualPreferencesEntity>
+    public interface IAccountRepository : IRepository<AccountEntity>
     {
     }
 }

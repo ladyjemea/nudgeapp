@@ -26,10 +26,10 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register(string username, string password, string name, string email, string address, TransportationType travelType)
+        public IActionResult Register(string password, string name, string email, string address, TransportationType travelType)
         {
 
-            if (this.UserLogic.CreateUser(username, password, name, email, address, travelType))
+            if (this.UserLogic.CreateUser(password, name, email, address, travelType))
             {
                 return this.Ok();
             }
@@ -39,9 +39,9 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Authenticate(string username, string password)
+        public IActionResult Authenticate(string email, string password)
         {
-            var user = this.UserLogic.CheckPassword(username, password);
+            var user = this.UserLogic.CheckPassword(email, password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -51,7 +51,6 @@
             return Ok(new
             {
                 Id = user.Id,
-                Username = user.UserName,
                 Token = tokenString
             });
         }

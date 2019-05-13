@@ -13,9 +13,9 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient, private googleAuth: GoogleAuthService) { }
 
-  login(username: string, password: string) {
+  login(email: string, password: string) {
     var params = new HttpParams();
-    params = params.append('username', username);
+    params = params.append('email', email);
     params = params.append('password', password);
 
     return this.http.get('User/authenticate', { params: params }).pipe(map(user => {

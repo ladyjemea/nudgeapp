@@ -6,7 +6,7 @@
 
     public interface IUserRepository : IRepository<UserEntity>
     {
-        UserEntity GetUser(string userName);
+        UserEntity GetUser(string email);
         IEnumerable<Guid> GetAllIds();
     }
 }

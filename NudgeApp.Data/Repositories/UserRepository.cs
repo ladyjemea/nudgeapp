@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.EntityFrameworkCore;
     using NudgeApp.Data.Entities;
     using NudgeApp.Data.Repositories.Interfaces;
 
@@ -15,9 +16,9 @@
             this.Db = context;
         }
 
-        public UserEntity GetUser(string userName)
+        public UserEntity GetUser(string email)
         {
-            return this.Db.GetAll<UserEntity>().Where(u => u.UserName == userName).FirstOrDefault();
+            return this.Db.GetAll<UserEntity>().Include(u => u.Account).Where(u => u.Email == email).FirstOrDefault();
         }
 
         public IEnumerable<Guid> GetAllIds()

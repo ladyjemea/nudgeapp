@@ -13,8 +13,8 @@ export class UserService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  createuser(username: string, password: string, name: string, email: string, address: string, selectedTransporationType: TransportationType): Observable<string> {
-    return this.http.get('User/register?username=' + username + '&password=' + password + '&name=' + name + '&email=' + email + '&address=' + address + '&travelType=' + selectedTransporationType, { responseType: 'text' });
+  createuser(password: string, name: string, email: string, address: string, selectedTransporationType: TransportationType): Observable<string> {
+    return this.http.get('User/register?password=' + password + '&name=' + name + '&email=' + email + '&address=' + address + '&travelType=' + selectedTransporationType, { responseType: 'text' });
   }
 
   getPreferences(): Observable<PreferencesDto> {

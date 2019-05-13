@@ -118,7 +118,6 @@ export class TravelNowComponent implements OnInit, OnDestroy {
 
   public pickTravelMode(form: NgForm) {
 
-    //this.authenticationService.checkpassword(form.value.username, form.value.password);
   }
   showmaps(event) {
 

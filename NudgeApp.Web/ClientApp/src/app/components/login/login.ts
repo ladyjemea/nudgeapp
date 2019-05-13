@@ -15,9 +15,8 @@ export class LoginComponent {
   constructor(private authenticationService: AuthenticationService, private router: Router, private ngZone: NgZone) { }
 
   public loginUser(form: NgForm) {
-    this.authenticationService.login(form.value.username, form.value.password).subscribe((result) =>
+    this.authenticationService.login(form.value.email, form.value.password).subscribe((result) =>
       this.router.navigateByUrl('mainaccess'));
-    
   }
   
   public GoogleSignIn() {

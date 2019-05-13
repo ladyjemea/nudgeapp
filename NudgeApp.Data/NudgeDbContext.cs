@@ -14,12 +14,12 @@
         public const string onlineConnectionString = @"Server=nudgeapp.cz12dzdjwlt5.eu-central-1.rds.amazonaws.com,1433; Database=NudgeAppDatabase; Trusted_Connection = False; uid=nudgeuser; pwd=46AEcnT5RPPe4Mcu";
 
         public DbSet<UserEntity> Users { get; set; }
+        public DbSet<AccountEntity> Accounts { get; set; }
         public DbSet<PreferencesEntity> Preferences { get; set; }
         public DbSet<ActualPreferencesEntity> ActualPreferences { get; set; }
         public DbSet<NudgeEntity> Nudges { get; set; }
         public DbSet<PushNotificationSubscriptionEntity> PushNotificationSubscriptions { get; set; }
         public DbSet<NotificationEntity> Notifications { get; set; }
-        public DbSet<OracleNudgeEntity> AnonymousNudges { get; set; }
 
         public NudgeDbContext() : base() { }
 

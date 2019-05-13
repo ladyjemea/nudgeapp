@@ -18,7 +18,8 @@
             services.AddScoped<INudgeOracleRepository, NudgeOracleRepository>();
             services.AddScoped<ISubscritionRepository, SubscriptionRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
-            services.AddScoped<IAnonymousNudgeRepository, AnonymousNudgeRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            //services.AddScoped<IAnonymousNudgeRepository, AnonymousNudgeRepository>();
         }
     }
 }
