@@ -35,22 +35,23 @@
       </h2>
       <div>
         <div>
-          Temperature: {{notification.temperature}}
+          Temperature: {{notification.temperature}} &#8451;
           <br />
         </div><div>
-          Real feel: {{notification.reafFeelTemperature}}
-          <br />
-        </div><div>
-          Coverage: {{notification.skyCoverage}}
-          <br />
-        </div><div>
-          Wind: {{windCondition}}
+        Feels like: {{notification.reafFeelTemperature}} &#8451;
+  <br />
+</div><div>
+  <!--Coverage: {{notification.skyCoverage}}
+    <br />  -->
+
+</div><div>
+          Wind Condition: {{windCondition}}
           <br />
         </div><div  *ngIf="showWeather">
           Weather: {{weather}}
           <br />
         </div><div>
-          Road: {{roadCondition}}
+          Road Condition: {{roadCondition}}
         </div>
       </div>
     </div>
