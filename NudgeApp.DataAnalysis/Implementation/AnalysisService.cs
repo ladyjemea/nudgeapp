@@ -1,5 +1,6 @@
 ﻿namespace NudgeApp.DataAnalysis.Implementation
 {
+    using NudgeApp.Common.Dtos;
     using NudgeApp.Data.OracleDb.Queries;
     using NudgeApp.Data.Repositories.Interfaces;
     using NudgeApp.DataManagement.ExternalApi.Weather.Interfaces;
@@ -19,8 +20,8 @@
             this.WeatherService = weather;
             this.NudgeRepository = nudge;
             this.nudgeOracleRepository = nudgeOracle;
-        }
-
+        } 
+        
         public async Task<bool> AnalyseUser(Guid userId)
         {
             var nudges = this.NudgeRepository.GetAll().Where(nudge => nudge.UserId == userId).ToList();
@@ -53,7 +54,6 @@
                 return false;
             }
         }
-
 
         public bool Duration(Guid userId, int tripDuration)
         {

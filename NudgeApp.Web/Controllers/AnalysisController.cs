@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using NudgeApp.DataAnalysis.API;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace NudgeApp.Web.Controllers
+﻿namespace NudgeApp.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using NudgeApp.Common.Dtos;
+    using NudgeApp.DataAnalysis.API;
+    using System;
+    using System.Linq;
+
     [Route("[controller]/[action]")]
     public class AnalysisController : Controller
     {
@@ -18,29 +18,28 @@ namespace NudgeApp.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Analyze ()
+        public IActionResult Analyze()
         {
             var result = this.Analyzer.AnalyseWeather();
 
             return this.Ok(result);
         }
 
+        [Authorize]
         [HttpPost]
-        public IActionResult GetEvent([FromBody] Event ev)
+        public IActionResult AnalyseEvent([FromBody]  AnalyseEventRequest analyseEventRequest)
         {
-            
-            // this.AnalysisService.Analyze(event)
-            Console.WriteLine(ev);
+            var userId = Guid.Parse(HttpContext.User.Identities.First().Name);
+
+            this.Analyzer.AnalyseEvent(userId, analyseEventRequest.UserEvent, analyseEventRequest.UserCoordinates);
 
             return this.Ok();
         }
     }
 
-    public class Event
+    public class AnalyseEventRequest
     {
-        public string Location { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-        public string Name { get; set; }
+        public UserEvent UserEvent { get; set; }
+        public Coordinates UserCoordinates { get; set; }
     }
 }

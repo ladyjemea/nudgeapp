@@ -8,8 +8,9 @@ import { Subscription } from '../../types/Subscription'
 import { MapsAPILoader } from '@agm/core';
 import { Router } from '@angular/router';
 import { TravelVariant } from '../../types/TravelVariant';
-import { CalendarService } from 'src/app/services/CalendarService';
+import { CalendarService, UserEvent } from 'src/app/services/CalendarService';
 import { EventService } from 'src/app/services/EventService';
+import { NudgeCoordinates } from '../../types/TripDto';
 
 
 @Component({
@@ -44,17 +45,23 @@ export class MainaccessComponent implements OnInit {
     private subscriptionservice: SubscriptionService, private mapsAPILoader: MapsAPILoader,
     private calendarService: CalendarService, private ngZone: NgZone, private eventService: EventService) {
 
-    this.calendarService.GetEvents((events) => {
-      events.forEach((event) => {
-        this.eventService.sendEvent(event);
-      });
-    })
 
     this.subscribeToNotifications();
 
     navigator.geolocation.getCurrentPosition((position) => {
       this.lat = position.coords.latitude;
       this.lng = position.coords.longitude;
+
+      this.calendarService.GetEvents((events) => {
+        console.log(events);
+        events.forEach((event) => {
+          let coordinates: NudgeCoordinates = <NudgeCoordinates>{};
+          coordinates.Latitude = this.lat;
+          coordinates.Longitude = this.lng;
+
+          this.eventService.sendEvent(event, coordinates);
+        });
+      })
     }); 
   }
 

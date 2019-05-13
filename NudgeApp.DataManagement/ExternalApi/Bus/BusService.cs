@@ -10,12 +10,20 @@
     using NudgeApp.Common.Enums;
     using NudgeApp.DataManagement.ExternalApi.Bus.HelperObjects;
     using NudgeApp.DataManagement.ExternalApi.Bus.HelperObjects.BusStop;
+    using NudgeApp.DataManagement.ExternalApi.Travel;
     using RestSharp;
 
     public class BusService : IBusService
     {
         private readonly string tromskortetLink = "https://www.tromskortet.no/reiseplanlegger/category245.html";
 
+        private readonly IWalkService WalkService;
+
+        public BusService(IWalkService walkService)
+        {
+            this.WalkService = walkService;
+        }
+         
         /// <summary>
         /// Searches for trips between 2 stops.
         /// </summary>
@@ -82,7 +90,7 @@
                 Longitude = Convert.ToDouble(destinationStop.Group.First().X.Replace(',', '.'), CultureInfo.InvariantCulture)
             };
 
-            var walkToDestination = await this.WalkInfo(destinationStopCoordinates, to);
+            var walkToDestination = await this.WalkService.WalkInfo(destinationStopCoordinates, to);
             var walkToDestinationtDuration = walkToDestination.rows.First()?.elements.First()?.duration?.value ?? 0;
 
             var busArrivalTime = travelTime.AddSeconds((-1) * walkToDestinationtDuration);
@@ -105,7 +113,7 @@
             if (busTrip == null || busTrip.TravelParts.Count == 0)
                 return busTrip;
 
-            var walkToStart = await this.WalkInfo(from, busTrip.StartCoordinates);
+            var walkToStart = await this.WalkService.WalkInfo(from, busTrip.StartCoordinates);
             var walkToStartDuration = walkToStart.rows.FirstOrDefault()?.elements.FirstOrDefault()?.duration?.value ?? 0;
 
             if (walkToStartDuration > 0)
@@ -198,23 +206,6 @@
             }
 
             return busTripDto;
-        }
-
-        private async Task<RootObject> WalkInfo(Coordinates from, Coordinates to)
-        {
-            var client = new RestClient("https://maps.googleapis.com");
-            var request = new RestRequest("maps/api/distancematrix/json", Method.GET);
-            request.AddParameter("units", "metric");
-            request.AddParameter("origins", from.Latitude.ToString() + ',' + from.Longitude.ToString());
-            request.AddParameter("destinations", to.Latitude.ToString() + ',' + to.Longitude.ToString());
-            request.AddParameter("mode", "walking");
-            request.AddParameter("key", "AIzaSyCCbgVPkBgwul0cofmo-VSMOefNSzrAOEo");
-            request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; resp.ContentEncoding = "UTF-8"; };
-
-            var taskCompletionSource = new TaskCompletionSource<RootObject>();
-            client.ExecuteAsync<RootObject>(request, response => taskCompletionSource.SetResult(response.Data));
-
-            return await taskCompletionSource.Task;
         }
     }
 }

@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { GoogleApiService } from 'ng-gapi';
-import { Request } from '@angular/http';
-import { Event } from 'src/app/services/CalendarService';
+import { HttpClient } from '@angular/common/http';
+import { UserEvent } from './CalendarService';
+import { NudgeCoordinates } from '../types/TripDto';
 
 @Injectable()
 export class EventService {
@@ -13,16 +10,20 @@ export class EventService {
 
   constructor(private http: HttpClient) { }
 
-  sendEvent(event: Event) {
-    var sendEvent: Event = <Event>{};
+  sendEvent(event: UserEvent, userCoordinates: NudgeCoordinates) {
+    var userEvent: UserEvent = <UserEvent>{};
     // @ts-ignore
-    sendEvent.Start = new Date(event.Start.dateTime);
+    userEvent.start = new Date(event.start.dateTime);
     // @ts-ignore
-    sendEvent.End = new Date(event.End.dateTime);
-    sendEvent.Name = event.Name;
-    sendEvent.Location = event.Location;
+    userEvent.end = new Date(event.end.dateTime);
+    userEvent.name = event.name;
+    userEvent.location = event.location;
 
-    this.http.post('Analysis/GetEvent', sendEvent, { responseType: 'text' }).pipe()
+    var parameters = {
+      userEvent, userCoordinates
+    };
+
+    this.http.post('Analysis/AnalyseEvent', parameters).pipe()
       .subscribe(result => { }, error => console.error(error));
   }
 }
