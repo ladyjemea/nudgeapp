@@ -12,7 +12,7 @@
         {
             services.AddScoped<IAnalyzer, Analyzer>();
             services.AddTransient<IHostedService, SpareTimeNudgeTask>();
-            // services.AddTransient<IHostedService, ScheduleTask>();
+           // services.AddTransient<IHostedService, ScheduleTask>();
         }
     }
 }
