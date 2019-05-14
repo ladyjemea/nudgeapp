@@ -45,7 +45,7 @@
                 this.nudgeRepository.Insert(new NudgeEntity
                 {
                     Id = nudgeId,
-                    NudgeResult = NudgeResult.Failed,
+                    Result = NudgeResult.Failed,
                     DateTime = new DateTime(2019, 5, 6, 17 ,0,0),
                     UserId = userId
                 });

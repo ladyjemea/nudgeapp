@@ -13,15 +13,12 @@
         private readonly INudgeRepository NudgeRepository;
         private readonly IPreferencesRepository PreferencesRepository;
         private readonly INudgeOracleRepository AnonymousNudgeOracleRepository;
-        private readonly IAnonymousNudgeRepository AnonymousNudgeRepository;
 
-        public NudgeService(INudgeRepository nudgeRepository, IPreferencesRepository preferencesRepository,
-            INudgeOracleRepository anonymousNudgesRepository, IAnonymousNudgeRepository anonymousNudgeRepository)
+        public NudgeService(INudgeRepository nudgeRepository, IPreferencesRepository preferencesRepository, INudgeOracleRepository anonymousNudgesRepository)
         {
             this.NudgeRepository = nudgeRepository;
             this.PreferencesRepository = preferencesRepository;
             this.AnonymousNudgeOracleRepository = anonymousNudgesRepository;
-            this.AnonymousNudgeRepository = anonymousNudgeRepository;
         }
 
         public void AddNudge(Guid userId, NudgeResult nudgeResult, WeatherDto forecast, TripDto trip)
@@ -52,11 +49,11 @@
         {
             var id = this.NudgeRepository.Insert(new NudgeEntity
             {
-                NudgeResult = NudgeResult.Unknown,
+                Result = NudgeResult.Unknown,
                 UserId = userId,
                 Type = TripType.Walk,
                 SkyCoverage = forecast.SkyCoverage,
-                Probability = forecast.Probabilities,
+                WeatherProbability = forecast.Probabilities,
                 ReafFeelTemperature = forecast.RealFeelTemperature,
                 Temperature = forecast.Temperature,
                 RoadCondition = forecast.RoadCondition,
@@ -84,46 +81,6 @@
             }
 
             return id;
-        }
-
-        public void Test()
-        {
-            var random = new Random();
-
-            for (int j = 0; j < 1000; j++)
-            {
-                for (int i = 0; i < 1000; i++)
-                {
-                    var entity = new OracleNudgeEntity()
-                    {
-                        ActualTransportationType = (TransportationType)(random.Next() % 3),
-                        PrecipitationProbability = random.Next() % 100,
-                        Result = (NudgeResult)(random.Next() % 3),
-                        RoadCondition = (RoadCondition)(random.Next() % 3),
-                        SkyCoverage = (SkyCoverageType)(random.Next() % 3),
-                        Temperature = random.Next() % 100 - 50,
-                        UserPreferedTransportationType = (TransportationType)(random.Next() % 5),
-                        Wind = random.Next() % 100
-                    };
-
-                    this.AnonymousNudgeRepository.InsertWIthNoSave(entity);
-                }
-
-                var entity2 = new OracleNudgeEntity()
-                {
-                    ActualTransportationType = (TransportationType)(random.Next() % 3),
-                    PrecipitationProbability = random.Next() % 100,
-                    Result = (NudgeResult)(random.Next() % 3),
-                    RoadCondition = (RoadCondition)(random.Next() % 3),
-                    SkyCoverage = (SkyCoverageType)(random.Next() % 3),
-                    Temperature = random.Next() % 100 - 50,
-                    UserPreferedTransportationType = (TransportationType)(random.Next() % 5),
-                    Wind = random.Next() % 100
-                };
-
-                this.AnonymousNudgeRepository.Insert(entity2);
-            }
-            // this.AnonymousNudgesRepository.SelectAll();
         }
     }
 }

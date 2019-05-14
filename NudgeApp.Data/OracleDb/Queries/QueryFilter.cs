@@ -9,7 +9,7 @@
         public TransportationType? UserPreferedTransportationType { get; set; }
         public TransportationType? ActualTransportationType { get; set; }
         public SkyCoverageType? SkyCoverage { get; set; }
-        public RoadStateType? Road { get; set; }
+        public RoadCondition? Road { get; set; }
         public int? MinTemperature { get; set; }
         public int? MaxTemperature { get; set; }
         public int? MinWind { get; set; }

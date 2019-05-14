@@ -35,10 +35,10 @@
 
             var filteredList = nudges.Where(nudge => nudge.Temperature > (int)weather.Temperature - 5 && nudge.Temperature < (int)weather.Temperature + 5);
 
-            var success = filteredList.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Successful);
-            var fail = filteredList.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Failed);
-            var result_success = filteredList.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Successful);
-            var result_fail = filteredList.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Failed);
+            var success = filteredList.Count(n => n.Result == Common.Enums.NudgeResult.Successful);
+            var fail = filteredList.Count(n => n.Result == Common.Enums.NudgeResult.Failed);
+            var result_success = filteredList.Count(n => n.Result == Common.Enums.NudgeResult.Successful);
+            var result_fail = filteredList.Count(n => n.Result == Common.Enums.NudgeResult.Failed);
 
 
             if (success > fail)
@@ -67,10 +67,10 @@
 
             var durationfilter = nudges.Where(nudge => nudge.TransportationType == Common.Enums.TransportationType.Walk && (nudge.Duration > tripDuration - 10 && nudge.Duration < tripDuration + 10));
 
-            var success = durationfilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Successful);
-            var fail = durationfilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Failed);
-            var result_success = durationfilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Successful);
-            var result_fail = durationfilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Failed);
+            var success = durationfilter.Count(n => n.Result == Common.Enums.NudgeResult.Successful);
+            var fail = durationfilter.Count(n => n.Result == Common.Enums.NudgeResult.Failed);
+            var result_success = durationfilter.Count(n => n.Result == Common.Enums.NudgeResult.Successful);
+            var result_fail = durationfilter.Count(n => n.Result == Common.Enums.NudgeResult.Failed);
 
             if (success > fail)
             {
@@ -98,10 +98,10 @@
 
             var distancefilter = nudges.Where(nudge => nudge.TransportationType == Common.Enums.TransportationType.Walk && nudge.Distance > tripDistance- 10 && nudge.Distance < tripDistance + 10);
 
-            var success = distancefilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Successful);
-            var fail = distancefilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Failed);
-            var result_success = distancefilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Successful);
-            var result_fail = distancefilter.Count(n => n.NudgeResult == Common.Enums.NudgeResult.Failed);
+            var success = distancefilter.Count(n => n.Result == Common.Enums.NudgeResult.Successful);
+            var fail = distancefilter.Count(n => n.Result == Common.Enums.NudgeResult.Failed);
+            var result_success = distancefilter.Count(n => n.Result == Common.Enums.NudgeResult.Successful);
+            var result_fail = distancefilter.Count(n => n.Result == Common.Enums.NudgeResult.Failed);
 
             if (success > fail)
             {

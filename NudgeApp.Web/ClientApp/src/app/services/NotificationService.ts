@@ -32,13 +32,7 @@ export class NotificationService {
 
 export interface NudgeNotification {
   id: any,
-  status: NotificationStatus,
   createdOn: Date,
   text: string,
   nudgeResult: NudgeResult
-}
-
-export enum NotificationStatus {
-  Waiting,
-  Set
 }

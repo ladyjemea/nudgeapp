@@ -57,7 +57,7 @@
         private void AddUsers(int userCount)
         {
             for (int i = 0; i < userCount; i++)
-                this.userService.CreateUser(random.Next().ToString(), random.Next().ToString(), random.Next().ToString(), random.Next().ToString(), random.Next().ToString(), (TransportationType)(random.Next(3)));
+                this.userService.CreateUser(random.Next().ToString(), random.Next().ToString(), random.Next().ToString(), random.Next().ToString(), (TransportationType)(random.Next(3)));
         }
 
         public void RunTestAnonymousDatabase()
@@ -169,7 +169,7 @@
                     MaxWind = random.Next(100) % 2 == 0 ? (int?)(random.Next(25) + 25) : null,
                     MinWind = random.Next(100) % 2 == 0 ? (int?)random.Next(25) : null,
                     Result = random.Next(100) % 2 == 0 ? (NudgeResult?)random.Next(3) : null,
-                    Road = random.Next(100) % 2 == 0 ? (RoadStateType?)random.Next(4) : null,
+                    Road = random.Next(100) % 2 == 0 ? (RoadCondition?)random.Next(4) : null,
                     SkyCoverage = random.Next(100) % 2 == 0 ? (SkyCoverageType?)random.Next(3) : null,
                     UserPreferedTransportationType = random.Next(100) % 2 == 0 ? (TransportationType?)random.Next(4) : null
                 };
@@ -188,7 +188,7 @@
                     MaxWind = random.Next(100) % 2 == 0 ? (int?)(random.Next(25) + 25) : null,
                     MinWind = random.Next(100) % 2 == 0 ? (int?)random.Next(25) : null,
                     Result = random.Next(100) % 2 == 0 ? (NudgeResult?)random.Next(3) : null,
-                    Road = random.Next(100) % 2 == 0 ? (RoadStateType?)random.Next(4) : null,
+                    Road = random.Next(100) % 2 == 0 ? (RoadCondition?)random.Next(4) : null,
                     SkyCoverage = random.Next(100) % 2 == 0 ? (SkyCoverageType?)random.Next(3) : null,
                     UserPreferedTransportationType = random.Next(100) % 2 == 0 ? (TransportationType?)random.Next(4) : null
                 };

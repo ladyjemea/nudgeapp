@@ -7,7 +7,6 @@
     public interface INudgeService
     {
         void AddNudge(Guid userId, NudgeResult nudgeResult, WeatherDto forecast, TripDto trip);
-        void Test();
         Guid AddNudge(Guid userId, WeatherDto forecast);
     }
 }

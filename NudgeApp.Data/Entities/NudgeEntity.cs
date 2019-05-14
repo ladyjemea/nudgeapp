@@ -6,7 +6,7 @@
 
     public class NudgeEntity : DbEntity
     {
-        public NudgeResult NudgeResult { get; set; }
+        public NudgeResult Result { get; set; }
         public TransportationType TransportationType { get; set; }
         public TripType Type { get; set; }
         public int Distance { get; set; }
@@ -18,12 +18,11 @@
         public int CloudCoveragePercent { get; set; }
         public SkyCoverageType SkyCoverage { get; set; }
         public WindCondition WindCondition { get; set; }
-        public Probabilities Probability { get; set; }
+        public Probabilities WeatherProbability { get; set; }
         public RoadCondition RoadCondition { get; set; }
         public DateTime DateTime { get; set; }
 
         public virtual UserEntity User { get; set; }
         public Guid UserId { get; set; }
-        public DateTime Time { get; set; }
     }
 }

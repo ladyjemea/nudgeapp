@@ -31,7 +31,6 @@
             this.NotificationRepository.Insert(new NotificationEntity
             {
                 NudgeId = nudgeId,
-                Status = NotificationStatus.Waiting,
                 Text = message
             });
         }
@@ -45,10 +44,9 @@
                     new Notification
                     {
                         Id = notification.Id,
-                        Status = notification.Status,
                         CreatedOn = notification.CreatedOn,
                         Text = notification.Text,
-                        NudgeResult = notification.Nudge.NudgeResult
+                        NudgeResult = notification.Nudge.Result
                     })
                 .OrderByDescending(not => not.CreatedOn)
                 .ToList();
@@ -65,13 +63,13 @@
                 Id = notification.Id,
                 Text = notification.Text,
                 CreatedOn = notification.CreatedOn,
-                NudgeResult = notification.Nudge.NudgeResult,
+                NudgeResult = notification.Nudge.Result,
                 CloudCoveragePercent = notification.Nudge.CloudCoveragePercent,
                 DateTime = notification.Nudge.DateTime,
                 Distance = notification.Nudge.Distance,
                 Duration = notification.Nudge.Duration,
                 PrecipitationProbability = notification.Nudge.PrecipitationProbability,
-                Probability = notification.Nudge.Probability,
+                Probability = notification.Nudge.WeatherProbability,
                 ReafFeelTemperature = notification.Nudge.ReafFeelTemperature,
                 RoadCondition = notification.Nudge.RoadCondition,
                 SkyCoverage = notification.Nudge.SkyCoverage,
@@ -97,8 +95,7 @@
             var notification = this.NotificationRepository.Get(notificationId);
             var nudge = this.NudgeRepository.Get(notification.NudgeId);
 
-            nudge.NudgeResult = nudgeResult;
-            notification.Status = NotificationStatus.Set;
+            nudge.Result = nudgeResult;
 
             this.NudgeRepository.Update(nudge);
             this.NotificationRepository.Update(notification);
@@ -128,7 +125,6 @@
     public class Notification
     {
         public Guid Id { get; set; }
-        public NotificationStatus Status { get; set; }
         public DateTime CreatedOn { get; set; }
         public string Text { get; set; }
         public NudgeResult NudgeResult { get; set; }

@@ -19,7 +19,6 @@
             services.AddScoped<ISubscritionRepository, SubscriptionRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
-            //services.AddScoped<IAnonymousNudgeRepository, AnonymousNudgeRepository>();
         }
     }
 }

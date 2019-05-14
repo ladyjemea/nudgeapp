@@ -20,12 +20,12 @@
             var entity = new NudgeEntity
             {
                 UserId = userId,
-                NudgeResult = result,
+                Result = result,
                 TransportationType = trip.TransportationType,
                 Distance = trip.Distance,
                 Duration = trip.Duration,
                 SkyCoverage = forecast.SkyCoverage,
-                Probability = forecast.Probabilities,
+                WeatherProbability = forecast.Probabilities,
                 ReafFeelTemperature = forecast.RealFeelTemperature,
                 Temperature = forecast.Temperature,
                 RoadCondition = forecast.RoadCondition,
